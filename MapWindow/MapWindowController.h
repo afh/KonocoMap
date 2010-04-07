@@ -8,9 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class MapView;
 
 @interface MapWindowController : NSWindowController {
-	
+	IBOutlet MapView *mapView;
 }
+
+@property (nonatomic, readonly) IBOutlet MapView *mapView;
 
 @end
