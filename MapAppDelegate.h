@@ -25,4 +25,9 @@
 - (IBAction)showNavigation:(id)sender;
 - (IBAction)showPreference:(id)sender;
 
+- (IBAction)zoomIn:(id)sender;
+- (IBAction)zoomOut:(id)sender;
+
+- (IBAction)toggleFullscreen:(id)sender;
+
 @end

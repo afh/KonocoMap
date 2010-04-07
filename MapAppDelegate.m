@@ -27,6 +27,7 @@
 		mapWindowController = [MapWindowController new];
 	}
 	[mapWindowController showWindow:self];
+	[mapWindowController.window makeKeyAndOrderFront:nil];
 }
 
 - (IBAction)showNavigation:(id)sender {
@@ -41,6 +42,24 @@
 		preferenceController = [PreferenceController new];
 	}
 	[preferenceController showWindow:self];
+}
+
+- (IBAction)zoomIn:(id)sender {
+	if (mapWindowController) {
+		[mapWindowController zoomIn:self];
+	}
+}
+
+- (IBAction)zoomOut:(id)sender {
+	if (mapWindowController) {
+		[mapWindowController zoomOut:self];
+	}
+}
+
+- (IBAction)toggleFullscreen:(id)sender {
+	if (mapWindowController) {
+		[mapWindowController toggleFullscreen:self];
+	}
 }
 
 @end

@@ -16,4 +16,11 @@
 
 @property (nonatomic, readonly) IBOutlet MapView *mapView;
 
+#pragma mark -
+#pragma mark Actions
+
+- (IBAction)zoomIn:(id)sender;
+- (IBAction)zoomOut:(id)sender;
+- (IBAction)toggleFullscreen:(id)sender;
+
 @end

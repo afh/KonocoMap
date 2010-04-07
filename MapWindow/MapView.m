@@ -55,7 +55,7 @@
 
 - (CGFloat)zoom {
 	CGAffineTransform aTransform = mapLayer.affineTransform;
-	return sqrt(aTransform.a);
+	return log2f(aTransform.a);
 }
 
 - (void)setZoom:(CGFloat)level {
@@ -63,7 +63,7 @@
 }
 
 - (void)setZoom:(CGFloat)level animated:(BOOL)animated {
-
+	
 	if (!animated) {
 		[CATransaction setValue:(id)kCFBooleanTrue
 						 forKey:kCATransactionDisableActions];
