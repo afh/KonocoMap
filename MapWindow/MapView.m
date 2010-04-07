@@ -48,6 +48,16 @@
 	
 	mapLayer.position = CGPointMake(self.bounds.size.width / 2,
 									self.bounds.size.height / 2);
+	
+	CGFloat minScale = MAX(self.bounds.size.height / mapLayer.tileSize.height,
+						   self.bounds.size.width / mapLayer.tileSize.width);
+	
+	CGAffineTransform aTransform = mapLayer.affineTransform;
+	CGFloat scale = MAX(aTransform.a, minScale);
+	
+	aTransform = CGAffineTransformIdentity;
+	aTransform = CGAffineTransformScale(aTransform, scale, scale);
+	mapLayer.affineTransform = aTransform;
 }
 
 #pragma mark -
@@ -69,8 +79,13 @@
 						 forKey:kCATransactionDisableActions];
 	}
 	
+	
+	CGFloat minScale = MAX(self.bounds.size.height / mapLayer.tileSize.height,
+						   self.bounds.size.width / mapLayer.tileSize.width);
+	
+	CGFloat scale = MAX(powf(2, level), minScale);
+	
 	CGAffineTransform aTransform = CGAffineTransformIdentity;
-	CGFloat scale = powf(2, level);
 	aTransform = CGAffineTransformScale(aTransform, scale, scale);
 	mapLayer.affineTransform = aTransform;
 }
@@ -90,8 +105,13 @@
 						 forKey:kCATransactionDisableActions];
 	}
 	
-	mapLayer.anchorPoint = CGPointMake(MAX(MIN(point.x, 1), 0),
-									   MAX(MIN(point.y, 1), 0));
+	CGFloat scale = powf(2, self.zoom);
+	
+	CGFloat marginX = self.bounds.size.width / 2 / (scale * mapLayer.tileSize.width);
+	CGFloat marginY = self.bounds.size.height / 2 / (scale * mapLayer.tileSize.height);
+	
+	mapLayer.anchorPoint = CGPointMake(MAX(MIN(point.x, 1 - marginX), 0 + marginX),
+									   MAX(MIN(point.y, 1 - marginY), 0 + marginY));
 }
 
 #pragma mark -
@@ -107,8 +127,11 @@
 	CGFloat deltaX = [theEvent deltaX];
 	CGFloat deltaY = [theEvent deltaY];
 	
-    mapLayer.anchorPoint = CGPointMake(MAX(MIN(mapLayer.anchorPoint.x - deltaX / (scale * mapLayer.tileSize.width), 1), 0),
-									   MAX(MIN(mapLayer.anchorPoint.y + deltaY / (scale * mapLayer.tileSize.height), 1), 0));
+	CGFloat marginX = self.bounds.size.width / 2 / (scale * mapLayer.tileSize.width);
+	CGFloat marginY = self.bounds.size.height / 2 / (scale * mapLayer.tileSize.height);
+	
+    mapLayer.anchorPoint = CGPointMake(MAX(MIN(mapLayer.anchorPoint.x - deltaX / (scale * mapLayer.tileSize.width), 1 - marginX), 0 + marginX),
+									   MAX(MIN(mapLayer.anchorPoint.y + deltaY / (scale * mapLayer.tileSize.height), 1 - marginY), 0 + marginY));
 }
 
 #pragma mark -
@@ -123,8 +146,13 @@
 	mapLayer.position = CGPointMake(self.bounds.size.width / 2,
 									self.bounds.size.height / 2);
 	[self.layer addSublayer:mapLayer];
-	self.zoom = 2;
-	self.center = CGPointMake(0.5, 0.5);
+	
+	CGFloat scale = MAX(self.bounds.size.height / mapLayer.tileSize.height,
+						self.bounds.size.width / mapLayer.tileSize.width);
+	CGAffineTransform aTransform;
+	aTransform = CGAffineTransformIdentity;
+	aTransform = CGAffineTransformScale(aTransform, scale, scale);
+	mapLayer.affineTransform = aTransform;
 }
 
 @end
