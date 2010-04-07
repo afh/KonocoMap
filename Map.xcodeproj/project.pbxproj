@@ -174,9 +174,9 @@
 		F6DC7D83116C8292005DE7F1 /* Preference */ = {
 			isa = PBXGroup;
 			children = (
-				F6DC7D84116C8319005DE7F1 /* Preference.xib */,
 				F6DC7D86116C8339005DE7F1 /* PreferenceController.h */,
 				F6DC7D87116C8339005DE7F1 /* PreferenceController.m */,
+				F6DC7D84116C8319005DE7F1 /* Preference.xib */,
 			);
 			name = Preference;
 			sourceTree = "<group>";

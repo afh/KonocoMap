@@ -8,10 +8,21 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class MapWindowController;
+@class NavigationPanelController;
+@class PreferenceController;
+
 @interface MapAppDelegate : NSObject {
-    NSWindow *window;
+	MapWindowController *mapWindowController;
+	NavigationPanelController *navigationPanelController;
+	PreferenceController *preferenceController;
 }
 
-@property (assign) IBOutlet NSWindow *window;
+#pragma mark -
+#pragma mark Actions
+
+- (IBAction)showMapWindow:(id)sender;
+- (IBAction)showNavigation:(id)sender;
+- (IBAction)showPreference:(id)sender;
 
 @end

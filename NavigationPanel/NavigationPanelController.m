@@ -11,4 +11,11 @@
 
 @implementation NavigationPanelController
 
+- (id)init {
+	if (self = [super initWithWindowNibName:@"NavigationPanel"]) {
+
+	}
+	return self;
+}
+
 @end

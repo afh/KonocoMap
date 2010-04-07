@@ -11,4 +11,11 @@
 
 @implementation MapWindowController
 
+- (id)init {
+	if (self = [super initWithWindowNibName:@"MapWindow"]) {
+		[self.window setExcludedFromWindowsMenu:YES];
+	}
+	return self;
+}
+
 @end
