@@ -11,24 +11,46 @@
 
 @implementation MapWindowController
 
-@synthesize mapView;
-
 - (id)init {
 	if (self = [super initWithWindowNibName:@"MapWindow"]) {
 		[self.window setExcludedFromWindowsMenu:YES];
+		
+		// register the controllerr as an obserrver for the properties
+		// 'zoom', 'center' and 'region' of the map view
+		[mapView addObserver:self
+				  forKeyPath:@"zoom"
+					 options:NSKeyValueObservingOptionNew
+					 context:NULL];
+		
+		[mapView addObserver:self
+				  forKeyPath:@"center"
+					 options:NSKeyValueObservingOptionNew
+					 context:NULL];
+		
+		[mapView addObserver:self
+				  forKeyPath:@"region"
+					 options:NSKeyValueObservingOptionNew
+					 context:NULL];
 	}
 	return self;
+}
+
+- (void)dealloc {
+	[mapView removeObserver:self forKeyPath:@"zoom"];
+	[mapView removeObserver:self forKeyPath:@"center"];
+	[mapView removeObserver:self forKeyPath:@"region"];
+	[super dealloc];
 }
 
 #pragma mark -
 #pragma mark Actions
 
 - (IBAction)zoomIn:(id)sender {
-	[self.mapView setZoom:floor(self.mapView.zoom) + 1 animated:YES];
+	[mapView setZoom:floor(mapView.zoom) + 1 animated:YES];
 }
 
 - (IBAction)zoomOut:(id)sender {
-	[self.mapView setZoom:floor(self.mapView.zoom) - 1 animated:YES];
+	[mapView setZoom:floor(mapView.zoom) - 1 animated:YES];
 }
 
 - (IBAction)toggleFullscreen:(id)sender {
@@ -39,13 +61,68 @@
 	{
 		err = CGDisplayFade (token, 0.25, kCGDisplayBlendNormal, kCGDisplayBlendSolidColor, 0, 0, 0, true);
 		err = CGDisplayCapture (kCGDirectMainDisplay);
-		if ([self.mapView isInFullScreenMode]) {
-			[self.mapView exitFullScreenModeWithOptions:NULL];
+		if ([mapView isInFullScreenMode]) {
+			[mapView exitFullScreenModeWithOptions:NULL];
 		} else {
-			[self.mapView enterFullScreenMode:[self.mapView.window screen] withOptions:NULL];
+			[mapView enterFullScreenMode:[mapView.window screen] withOptions:NULL];
 		}
 		err = CGDisplayFade (token, 0.25, kCGDisplayBlendSolidColor, kCGDisplayBlendNormal, 0, 0, 0, true);
 		err = CGReleaseDisplayFadeReservation (token);
+	}
+}
+
+#pragma mark -
+#pragma mark Zoom, Center & Region
+
+- (CGFloat)zoom {
+	return mapView.zoom;
+}
+
+- (void)setZoom:(CGFloat)level {
+	[mapView setZoom:level];
+}
+
+- (void)setZoom:(CGFloat)level animated:(BOOL)animated {
+	[mapView setZoom:level animated:animated];
+}
+
+- (CGPoint)center {
+	return mapView.center;
+}
+
+- (void)setCenter:(CGPoint)point {
+	[mapView setCenter:point];
+}
+
+- (void)setCenter:(CGPoint)point animated:(BOOL)animated {
+	[mapView setCenter:point animated:animated];
+}
+
+- (CGRect)region {
+	return mapView.region;
+}
+
+- (void)setRegion:(CGRect)rect {
+	[mapView setRegion:rect];
+}
+
+- (void)setRegion:(CGRect)rect animated:(BOOL)animated {
+	[mapView setRegion:rect animated:animated];
+}
+
+#pragma mark -
+#pragma mark Observing Properties of the Map View
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+					  ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context {
+	if (object == mapView) {
+		if ([keyPath isEqual:@"zoom"] || [keyPath isEqual:@"center"] || [keyPath isEqual:@"region"]) {
+			// OPTIMIZE: Find a better solution for the observing
+			[self willChangeValueForKey:keyPath];
+			[self didChangeValueForKey:keyPath];
+		}
 	}
 }
 
