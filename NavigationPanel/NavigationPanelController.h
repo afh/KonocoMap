@@ -8,9 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class NavigationView;
 
 @interface NavigationPanelController : NSWindowController {
-
+	IBOutlet NavigationView *navigationView;
 }
+
+#pragma mark -
+#pragma mark Region
+
+- (void)setRegion:(CGRect)rect;
 
 @end

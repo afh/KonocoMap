@@ -13,10 +13,13 @@
 #import "NavigationPanelController.h"
 #import "PreferenceController.h"
 
+
 @implementation MapAppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	// Insert code here to initialize your application 
+	// Insert code here to initialize your application
+	
+	[self showMapWindow:self];
 }
 
 #pragma mark -
@@ -25,6 +28,10 @@
 - (IBAction)showMapWindow:(id)sender {
 	if (!mapWindowController) {
 		mapWindowController = [MapWindowController new];
+		[mapWindowController addObserver:self
+							  forKeyPath:@"region"
+								 options:NSKeyValueObservingOptionNew
+								 context:NULL];
 	}
 	[mapWindowController showWindow:self];
 	[mapWindowController.window makeKeyAndOrderFront:nil];
@@ -33,6 +40,9 @@
 - (IBAction)showNavigation:(id)sender {
 	if (!navigationPanelController) {
 		navigationPanelController = [NavigationPanelController new];
+		if (mapWindowController) {
+			[navigationPanelController setRegion:mapWindowController.region];
+		}
 	}
 	[navigationPanelController showWindow:self];
 }
@@ -59,6 +69,22 @@
 - (IBAction)toggleFullscreen:(id)sender {
 	if (mapWindowController) {
 		[mapWindowController toggleFullscreen:self];
+	}
+}
+
+#pragma mark -
+#pragma mark KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+					  ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context {
+	if (object == mapWindowController) {
+		if ([keyPath isEqual:@"region"]) {
+			if (navigationPanelController) {
+				[navigationPanelController setRegion:mapWindowController.region];
+			}
+		}
 	}
 }
 

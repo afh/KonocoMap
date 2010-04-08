@@ -7,15 +7,21 @@
 //
 
 #import "NavigationPanelController.h"
-
+#import "NavigationView.h"
 
 @implementation NavigationPanelController
 
 - (id)init {
 	if (self = [super initWithWindowNibName:@"NavigationPanel"]) {
-
 	}
 	return self;
+}
+
+#pragma mark -
+#pragma mark Region
+
+- (void)setRegion:(CGRect)rect {
+	navigationView.region = rect;
 }
 
 @end

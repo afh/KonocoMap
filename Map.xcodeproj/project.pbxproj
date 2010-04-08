@@ -13,6 +13,7 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		F6931CAE116CED4500F35008 /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6931CAD116CED4500F35008 /* MapView.m */; };
+		F6931F1D116D18BE00F35008 /* NavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6931F1C116D18BE00F35008 /* NavigationView.m */; };
 		F6DC7D65116C80B3005DE7F1 /* MapWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6DC7D64116C80B3005DE7F1 /* MapWindowController.m */; };
 		F6DC7D67116C80E0005DE7F1 /* MapWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6DC7D66116C80E0005DE7F1 /* MapWindow.xib */; };
 		F6DC7D6C116C8149005DE7F1 /* NavigationPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6DC7D6B116C8149005DE7F1 /* NavigationPanel.xib */; };
@@ -38,6 +39,8 @@
 		8D1107320486CEB800E47090 /* Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Map.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6931CAC116CED4500F35008 /* MapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapView.h; path = MapWindow/MapView.h; sourceTree = "<group>"; };
 		F6931CAD116CED4500F35008 /* MapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapView.m; path = MapWindow/MapView.m; sourceTree = "<group>"; };
+		F6931F1B116D18BE00F35008 /* NavigationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NavigationView.h; path = NavigationPanel/NavigationView.h; sourceTree = "<group>"; };
+		F6931F1C116D18BE00F35008 /* NavigationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NavigationView.m; path = NavigationPanel/NavigationView.m; sourceTree = "<group>"; };
 		F6DC7D63116C80B3005DE7F1 /* MapWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapWindowController.h; path = MapWindow/MapWindowController.h; sourceTree = "<group>"; };
 		F6DC7D64116C80B3005DE7F1 /* MapWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapWindowController.m; path = MapWindow/MapWindowController.m; sourceTree = "<group>"; };
 		F6DC7D66116C80E0005DE7F1 /* MapWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MapWindow.xib; path = MapWindow/MapWindow.xib; sourceTree = "<group>"; };
@@ -162,6 +165,8 @@
 			children = (
 				F6DC7D73116C820C005DE7F1 /* NavigationPanelController.h */,
 				F6DC7D74116C820C005DE7F1 /* NavigationPanelController.m */,
+				F6931F1B116D18BE00F35008 /* NavigationView.h */,
+				F6931F1C116D18BE00F35008 /* NavigationView.m */,
 				F6DC7D6B116C8149005DE7F1 /* NavigationPanel.xib */,
 			);
 			name = "Navigation Panel";
@@ -254,6 +259,7 @@
 				F6DC7D79116C8235005DE7F1 /* MapLayer.m in Sources */,
 				F6DC7D88116C8339005DE7F1 /* PreferenceController.m in Sources */,
 				F6931CAE116CED4500F35008 /* MapView.m in Sources */,
+				F6931F1D116D18BE00F35008 /* NavigationView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,7 +326,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.6;
 			};
 			name = Debug;
 		};
@@ -332,7 +338,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.6;
 			};
 			name = Release;
 		};
