@@ -17,8 +17,6 @@
 
 @implementation MapView
 
-@synthesize zoom;
-@synthesize center;
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -43,6 +41,11 @@
 - (void)setFrame:(NSRect)frameRect {
 	[super setFrame:frameRect];
 	
+	// TODO: Check which "attributes" where modified by this operation
+	[self willChangeValueForKey:@"region"];
+	[self willChangeValueForKey:@"center"];
+	[self willChangeValueForKey:@"zoom"];
+	
 	[CATransaction setValue:(id)kCFBooleanTrue
 					 forKey:kCATransactionDisableActions];
 	
@@ -58,10 +61,20 @@
 	aTransform = CGAffineTransformIdentity;
 	aTransform = CGAffineTransformScale(aTransform, scale, scale);
 	mapLayer.affineTransform = aTransform;
+	
+	CGFloat marginX = self.bounds.size.width / 2 / (scale * mapLayer.tileSize.width);
+	CGFloat marginY = self.bounds.size.height / 2 / (scale * mapLayer.tileSize.height);
+	
+	mapLayer.anchorPoint = CGPointMake(MAX(MIN(mapLayer.anchorPoint.x, 1 - marginX), 0 + marginX),
+									   MAX(MIN(mapLayer.anchorPoint.y, 1 - marginY), 0 + marginY));
+	
+	[self didChangeValueForKey:@"region"];
+	[self didChangeValueForKey:@"center"];
+	[self didChangeValueForKey:@"zoom"];
 }
 
 #pragma mark -
-#pragma mark Zoom & Center
+#pragma mark Zoom, Center & Region
 
 - (CGFloat)zoom {
 	CGAffineTransform aTransform = mapLayer.affineTransform;
@@ -73,6 +86,9 @@
 }
 
 - (void)setZoom:(CGFloat)level animated:(BOOL)animated {
+	// TODO: Check which "attributes" where modified by this operation
+	[self willChangeValueForKey:@"region"];
+	[self willChangeValueForKey:@"zoom"];
 	
 	if (!animated) {
 		[CATransaction setValue:(id)kCFBooleanTrue
@@ -88,6 +104,9 @@
 	CGAffineTransform aTransform = CGAffineTransformIdentity;
 	aTransform = CGAffineTransformScale(aTransform, scale, scale);
 	mapLayer.affineTransform = aTransform;
+	
+	[self didChangeValueForKey:@"region"];
+	[self didChangeValueForKey:@"zoom"];
 }
 
 - (CGPoint)center {
@@ -99,6 +118,9 @@
 }
 
 - (void)setCenter:(CGPoint)point animated:(BOOL)animated {
+	// TODO: Check which "attributes" where modified by this operation
+	[self willChangeValueForKey:@"region"];
+	[self willChangeValueForKey:@"center"];
 	
 	if (!animated) {
 		[CATransaction setValue:(id)kCFBooleanTrue
@@ -112,12 +134,38 @@
 	
 	mapLayer.anchorPoint = CGPointMake(MAX(MIN(point.x, 1 - marginX), 0 + marginX),
 									   MAX(MIN(point.y, 1 - marginY), 0 + marginY));
+	
+	[self didChangeValueForKey:@"region"];
+	[self didChangeValueForKey:@"center"];
+}
+
+- (CGRect)region {
+	CGFloat scale = powf(2, self.zoom);
+	
+	CGFloat width = self.bounds.size.width / (mapLayer.tileSize.width * scale);
+	CGFloat height = self.bounds.size.height / (mapLayer.tileSize.height * scale);
+	
+	return CGRectMake(mapLayer.anchorPoint.x - width / 2,
+					  mapLayer.anchorPoint.y - height / 2,
+					  width,
+					  height);
+}
+
+- (void)setRegion:(CGRect)rect {
+	[self setRegion:rect animated:NO];
+}
+
+- (void)setRegion:(CGRect)rect animated:(BOOL)animated {
+	// TODO: set the region
 }
 
 #pragma mark -
 #pragma mark Mouse Event Handling
 
 - (void)mouseDragged:(NSEvent *)theEvent {
+	// TODO: Check which "attributes" where modified by this operation
+	[self willChangeValueForKey:@"region"];
+	[self willChangeValueForKey:@"center"];
 	
 	[CATransaction setValue:(id)kCFBooleanTrue
                      forKey:kCATransactionDisableActions];
@@ -132,6 +180,9 @@
 	
     mapLayer.anchorPoint = CGPointMake(MAX(MIN(mapLayer.anchorPoint.x - deltaX / (scale * mapLayer.tileSize.width), 1 - marginX), 0 + marginX),
 									   MAX(MIN(mapLayer.anchorPoint.y + deltaY / (scale * mapLayer.tileSize.height), 1 - marginY), 0 + marginY));
+	
+	[self didChangeValueForKey:@"region"];
+	[self didChangeValueForKey:@"center"];
 }
 
 #pragma mark -

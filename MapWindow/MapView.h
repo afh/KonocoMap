@@ -15,12 +15,14 @@
 }
 
 #pragma mark -
-#pragma mark Zoom & Center
+#pragma mark Zoom, Center & Region
 
 @property (nonatomic, assign) CGFloat zoom;
 @property (nonatomic, assign) CGPoint center;
+@property (nonatomic, assign) CGRect region;
 
 - (void)setZoom:(CGFloat)level animated:(BOOL)animated;
 - (void)setCenter:(CGPoint)point animated:(BOOL)animated;
+- (void)setRegion:(CGRect)rect animated:(BOOL)animated;
 
 @end
