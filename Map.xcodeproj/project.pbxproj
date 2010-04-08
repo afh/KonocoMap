@@ -15,6 +15,7 @@
 		F67D60BC116E33F90088CFA8 /* MapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D60B7116E33F90088CFA8 /* MapLayer.m */; };
 		F67D60BD116E33F90088CFA8 /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D60B9116E33F90088CFA8 /* MapView.m */; };
 		F67D60BE116E33F90088CFA8 /* NavigationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D60BB116E33F90088CFA8 /* NavigationView.m */; };
+		F67D60C5116E34BA0088CFA8 /* MapTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D60C4116E34BA0088CFA8 /* MapTileSource.m */; };
 		F6DC7D65116C80B3005DE7F1 /* MapWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6DC7D64116C80B3005DE7F1 /* MapWindowController.m */; };
 		F6DC7D67116C80E0005DE7F1 /* MapWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6DC7D66116C80E0005DE7F1 /* MapWindow.xib */; };
 		F6DC7D6C116C8149005DE7F1 /* NavigationPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6DC7D6B116C8149005DE7F1 /* NavigationPanel.xib */; };
@@ -43,6 +44,9 @@
 		F67D60B9116E33F90088CFA8 /* MapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapView.m; path = Views/MapView.m; sourceTree = "<group>"; };
 		F67D60BA116E33F90088CFA8 /* NavigationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NavigationView.h; path = Views/NavigationView.h; sourceTree = "<group>"; };
 		F67D60BB116E33F90088CFA8 /* NavigationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NavigationView.m; path = Views/NavigationView.m; sourceTree = "<group>"; };
+		F67D60C3116E34BA0088CFA8 /* MapTileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapTileSource.h; path = DataSources/MapTileSource.h; sourceTree = "<group>"; };
+		F67D60C4116E34BA0088CFA8 /* MapTileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapTileSource.m; path = DataSources/MapTileSource.m; sourceTree = "<group>"; };
+		F67D60D4116E35D00088CFA8 /* TileSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TileSourceProtocol.h; path = DataSources/TileSourceProtocol.h; sourceTree = "<group>"; };
 		F6DC7D63116C80B3005DE7F1 /* MapWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapWindowController.h; path = MapWindow/MapWindowController.h; sourceTree = "<group>"; };
 		F6DC7D64116C80B3005DE7F1 /* MapWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapWindowController.m; path = MapWindow/MapWindowController.m; sourceTree = "<group>"; };
 		F6DC7D66116C80E0005DE7F1 /* MapWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MapWindow.xib; path = MapWindow/MapWindow.xib; sourceTree = "<group>"; };
@@ -107,6 +111,7 @@
 		29B97314FDCFA39411CA2CEA /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				F67D60C2116E348B0088CFA8 /* Data Sources */,
 				F6DC7D83116C8292005DE7F1 /* Preference */,
 				F6DC7D76116C8217005DE7F1 /* Views & Layer */,
 				F6DC7D69116C80FA005DE7F1 /* Navigation Panel */,
@@ -146,6 +151,16 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F67D60C2116E348B0088CFA8 /* Data Sources */ = {
+			isa = PBXGroup;
+			children = (
+				F67D60D4116E35D00088CFA8 /* TileSourceProtocol.h */,
+				F67D60C3116E34BA0088CFA8 /* MapTileSource.h */,
+				F67D60C4116E34BA0088CFA8 /* MapTileSource.m */,
+			);
+			name = "Data Sources";
 			sourceTree = "<group>";
 		};
 		F6DC7D62116C8062005DE7F1 /* Map Window */ = {
@@ -260,6 +275,7 @@
 				F67D60BC116E33F90088CFA8 /* MapLayer.m in Sources */,
 				F67D60BD116E33F90088CFA8 /* MapView.m in Sources */,
 				F67D60BE116E33F90088CFA8 /* NavigationView.m in Sources */,
+				F67D60C5116E34BA0088CFA8 /* MapTileSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

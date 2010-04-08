@@ -9,8 +9,14 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 
-@interface MapLayer : CATiledLayer {
+#import "TileSourceProtocol.h"
 
+@interface MapLayer : CATiledLayer {
+	NSObject <TileSourceProtocol> *tileSource;
 }
+
+@property (nonatomic, readonly) NSObject <TileSourceProtocol> *tileSource;
+
+- (id)initWithTileSource:(NSObject<TileSourceProtocol>*)source;
 
 @end

@@ -8,35 +8,40 @@
 
 #import "MapLayer.h"
 
-@interface MapLayer ()
-- (NSImage *)tileWithZoom:(NSUInteger)zoom x:(NSUInteger)x y:(NSUInteger)y;
-@end
+#import "MapTileSource.h"
 
 
 @implementation MapLayer
+
+@synthesize tileSource;
 
 + (CFTimeInterval)fadeDuration {
     return 0.25; 
 }
 
-- (id)init {
+- (id)initWithTileSource:(NSObject<TileSourceProtocol>*)source {
 	if (self = [super init]) {
-		self.bounds = CGRectMake(0,0,256,256);
+		tileSource = [source retain];
+		
+		self.bounds = CGRectMake(0,0,tileSource.tileSize.width,tileSource.tileSize.height);
         self.masksToBounds = NO;
         self.levelsOfDetail = 1;
-        self.levelsOfDetailBias = 18;
+        self.levelsOfDetailBias = tileSource.maxZoomLevel;
 	}
 	return self;
 }
 
+- (id)init {
+	return [self initWithTileSource:[MapTileSource sharedMapSource]];
+}
+
+- (void)dealloc {
+	[tileSource release];
+	[super dealloc];
+}
+
 #pragma mark -
 #pragma mark Draw Layer
-
-- (NSImage *)tileWithZoom:(NSUInteger)zoom x:(NSUInteger)x y:(NSUInteger)y {
-	NSURL *tileURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%d/%d/%d.png", @"http://tile.openstreetmap.org", zoom, x, y]];
-	NSImage *tile = [[NSImage alloc] initWithContentsOfURL:tileURL];
-	return [tile autorelease];
-}
 
 - (void)drawInContext:(CGContextRef)ctx {
 	
@@ -47,7 +52,7 @@
 	NSUInteger x = -transform.tx / self.tileSize.width;
 	NSUInteger y = pow(2, zoom) + (transform.ty / self.tileSize.height) - 1;
 	
-	NSImage *tile = [self tileWithZoom:zoom x:x y:y];
+	NSImage *tile = [tileSource tileWithZoom:zoom x:x y:y];
 	if (tile) {
         NSData * imageData = [tile TIFFRepresentation];
         if(imageData)
