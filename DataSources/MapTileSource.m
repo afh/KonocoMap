@@ -10,6 +10,12 @@
 
 NSObject<TileSourceProtocol> *sharedMapSource = nil;
 
+@interface MapTileSource ()
+@property (nonatomic, readonly) NSString *applicationSupportDirectory;
+@property (nonatomic, readonly) NSString *mapCacheDirectory;
+@end
+
+
 @implementation MapTileSource
 
 #pragma mark -
@@ -73,9 +79,39 @@ NSObject<TileSourceProtocol> *sharedMapSource = nil;
 }
 
 - (NSImage *)tileWithZoom:(NSUInteger)zoom x:(NSUInteger)x y:(NSUInteger)y {
-	NSURL *tileURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%d/%d/%d.png", @"http://tile.openstreetmap.org", zoom, x, y]];
-	NSImage *tile = [[NSImage alloc] initWithContentsOfURL:tileURL];
-	return [tile autorelease];
+    
+    // OPTIMIZE: Find a smarter solution to build the path for the tile and its folder
+    NSString *tileFolder = [self.mapCacheDirectory stringByAppendingPathComponent:[NSString pathWithComponents:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%d", zoom], [NSString stringWithFormat:@"%d", x], nil]]];
+    NSString *localPath = [tileFolder stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.png", y]];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    if ([fileManager fileExistsAtPath:localPath]) {
+        NSImage *tile = [[NSImage alloc] initWithContentsOfFile:localPath];
+        return [tile autorelease];
+    } else {
+        NSURL *tileURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%d/%d/%d.png", @"http://tile.openstreetmap.org", zoom, x, y]];
+        NSData *tileData = [NSData dataWithContentsOfURL:tileURL];
+        NSError *error;
+        [fileManager createDirectoryAtPath:tileFolder withIntermediateDirectories:YES attributes:nil error:&error];
+        [tileData writeToFile:localPath atomically:YES];
+        NSImage *tile = [[NSImage alloc] initWithData:tileData];
+        return [tile autorelease];
+    }
+}
+
+#pragma mark -
+#pragma mark Private Methods
+
+// TODO: Put this method in the app delegate
+- (NSString *)applicationSupportDirectory {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
+    return [basePath stringByAppendingPathComponent:@"Map"];
+}
+
+- (NSString *)mapCacheDirectory {
+    return [self.applicationSupportDirectory stringByAppendingPathComponent:@"MapTileCache"];
 }
 
 @end
