@@ -18,6 +18,8 @@
 		F67D60C5116E34BA0088CFA8 /* MapTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D60C4116E34BA0088CFA8 /* MapTileSource.m */; };
 		F6977776116F80650089854D /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = F6977775116F80650089854D /* AUTHORS */; };
 		F697777A116F80920089854D /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = F6977779116F80920089854D /* COPYING */; };
+		F6D5965A1199F06A007E3C56 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D596591199F06A007E3C56 /* CoreLocation.framework */; };
+		F6D596941199FE4F007E3C56 /* libproj.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D596931199FE4F007E3C56 /* libproj.dylib */; };
 		F6DC7D65116C80B3005DE7F1 /* MapWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6DC7D64116C80B3005DE7F1 /* MapWindowController.m */; };
 		F6DC7D67116C80E0005DE7F1 /* MapWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6DC7D66116C80E0005DE7F1 /* MapWindow.xib */; };
 		F6DC7D6C116C8149005DE7F1 /* NavigationPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6DC7D6B116C8149005DE7F1 /* NavigationPanel.xib */; };
@@ -51,6 +53,8 @@
 		F67D60D4116E35D00088CFA8 /* TileSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TileSourceProtocol.h; path = DataSources/TileSourceProtocol.h; sourceTree = "<group>"; };
 		F6977775116F80650089854D /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
 		F6977779116F80920089854D /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		F6D596591199F06A007E3C56 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		F6D596931199FE4F007E3C56 /* libproj.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libproj.dylib; path = /opt/local/lib/libproj.dylib; sourceTree = "<absolute>"; };
 		F6DC7D63116C80B3005DE7F1 /* MapWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapWindowController.h; path = MapWindow/MapWindowController.h; sourceTree = "<group>"; };
 		F6DC7D64116C80B3005DE7F1 /* MapWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapWindowController.m; path = MapWindow/MapWindowController.m; sourceTree = "<group>"; };
 		F6DC7D66116C80E0005DE7F1 /* MapWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MapWindow.xib; path = MapWindow/MapWindow.xib; sourceTree = "<group>"; };
@@ -70,6 +74,8 @@
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				F6DC7D7F116C8260005DE7F1 /* QuartzCore.framework in Frameworks */,
+				F6D5965A1199F06A007E3C56 /* CoreLocation.framework in Frameworks */,
+				F6D596941199FE4F007E3C56 /* libproj.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +131,8 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				F6D596591199F06A007E3C56 /* CoreLocation.framework */,
+				F6D596931199FE4F007E3C56 /* libproj.dylib */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -322,6 +330,10 @@
 				GCC_PREFIX_HEADER = Map_Prefix.pch;
 				INFOPLIST_FILE = "Map-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
 				PRODUCT_NAME = Map;
 			};
 			name = Debug;
@@ -336,6 +348,10 @@
 				GCC_PREFIX_HEADER = Map_Prefix.pch;
 				INFOPLIST_FILE = "Map-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
 				PRODUCT_NAME = Map;
 			};
 			name = Release;
@@ -348,6 +364,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /opt/local/include/;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;

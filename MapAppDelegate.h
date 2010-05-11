@@ -21,15 +21,18 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
+#import <CoreLocation/CoreLocation.h>
 
 @class MapWindowController;
 @class NavigationPanelController;
 @class PreferenceController;
 
-@interface MapAppDelegate : NSObject {
+@interface MapAppDelegate : NSObject <CLLocationManagerDelegate> {
 	MapWindowController *mapWindowController;
 	NavigationPanelController *navigationPanelController;
 	PreferenceController *preferenceController;
+    
+    CLLocationManager *locationManager;
 }
 
 #pragma mark -
@@ -43,5 +46,15 @@
 - (IBAction)zoomOut:(id)sender;
 
 - (IBAction)toggleFullscreen:(id)sender;
+
+#pragma mark -
+#pragma mark Location Manager Delegate Methods
+
+- (void)locationManager:(CLLocationManager *)manager
+       didFailWithError:(NSError *)error;
+
+- (void)locationManager:(CLLocationManager *)manager
+    didUpdateToLocation:(CLLocation *)newLocation
+           fromLocation:(CLLocation *)oldLocation;
 
 @end
