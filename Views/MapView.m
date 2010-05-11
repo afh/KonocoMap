@@ -199,6 +199,33 @@
 	[self didChangeValueForKey:@"center"];
 }
 
+- (void)scrollWheel:(NSEvent *)theEvent {
+
+    CGFloat deltaX = [theEvent deltaX] * 2;
+	CGFloat deltaY = [theEvent deltaY] * 2;
+    
+    if (fabs(deltaX) > 0 || fabs(deltaY) > 0) {
+        [self willChangeValueForKey:@"region"];
+        [self willChangeValueForKey:@"center"];
+        
+        [CATransaction setValue:(id)kCFBooleanTrue
+                         forKey:kCATransactionDisableActions];
+        
+        CGFloat scale = powf(2, self.zoom);
+        
+        
+        
+        CGFloat marginX = self.bounds.size.width / 2 / (scale * mapLayer.tileSize.width);
+        CGFloat marginY = self.bounds.size.height / 2 / (scale * mapLayer.tileSize.height);
+        
+        mapLayer.anchorPoint = CGPointMake(MAX(MIN(mapLayer.anchorPoint.x - deltaX / (scale * mapLayer.tileSize.width), 1 - marginX), 0 + marginX),
+                                           MAX(MIN(mapLayer.anchorPoint.y + deltaY / (scale * mapLayer.tileSize.height), 1 - marginY), 0 + marginY));
+        
+        [self didChangeValueForKey:@"region"];
+        [self didChangeValueForKey:@"center"];
+    }
+}
+
 #pragma mark -
 #pragma mark Private Methods
 
