@@ -22,12 +22,26 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class MapView;
+
+@protocol MapViewDelegate
+- (void)mapView:(MapView *)mapView didTapAtPoint:(CGPoint)point;
+@end
+
 @class MapLayer;
 
 @interface MapView : NSView {
 	MapLayer *mapLayer;
     NSTrackingArea *trackingArea;
+    BOOL mouseMoved;
+    
+    id<MapViewDelegate> delegate;
 }
+
+#pragma mark -
+#pragma mark Delegate
+
+@property (nonatomic, retain) id<MapViewDelegate> delegate;
 
 #pragma mark -
 #pragma mark Zoom, Center & Region

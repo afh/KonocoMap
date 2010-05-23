@@ -31,6 +31,7 @@
 
 @implementation MapView
 
+@synthesize delegate;
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -177,7 +178,13 @@
 #pragma mark -
 #pragma mark Mouse Event Handling
 
-- (void)mouseDragged:(NSEvent *)theEvent {
+- (void)mouseDown:(NSEvent *)event {
+    mouseMoved = NO;
+}
+
+- (void)mouseDragged:(NSEvent *)event {
+    mouseMoved = YES;
+    
 	// TODO: Check which "attributes" where modified by this operation
 	[self willChangeValueForKey:@"region"];
 	[self willChangeValueForKey:@"center"];
@@ -187,8 +194,8 @@
 	
 	CGFloat scale = powf(2, self.zoom);
 	
-	CGFloat deltaX = [theEvent deltaX];
-	CGFloat deltaY = [theEvent deltaY];
+	CGFloat deltaX = [event deltaX];
+	CGFloat deltaY = [event deltaY];
 	
 	CGFloat marginX = self.bounds.size.width / 2 / (scale * mapLayer.tileSize.width);
 	CGFloat marginY = self.bounds.size.height / 2 / (scale * mapLayer.tileSize.height);
@@ -200,10 +207,22 @@
 	[self didChangeValueForKey:@"center"];
 }
 
-- (void)scrollWheel:(NSEvent *)theEvent {
+- (void)mouseUp:(NSEvent *)event {
+    if (mouseMoved == NO) {
+        NSPoint event_location = [event locationInWindow];
+        NSPoint local_point = [self convertPoint:event_location fromView:nil];
+        NSPoint layer_point = [self.layer convertPoint:local_point toLayer:mapLayer];
+        
+        if (delegate) {
+            [delegate mapView:self didTapAtPoint:CGPointMake(layer_point.x / mapLayer.tileSize.width, layer_point.y / mapLayer.tileSize.height)];
+        }
+    }
+}
 
-    CGFloat deltaX = -[theEvent deltaX] * 2;
-	CGFloat deltaY = -[theEvent deltaY] * 2;
+- (void)scrollWheel:(NSEvent *)event {
+
+    CGFloat deltaX = -[event deltaX] * 2;
+	CGFloat deltaY = -[event deltaY] * 2;
     
     if (fabs(deltaX) > 0 || fabs(deltaY) > 0) {
         [self willChangeValueForKey:@"region"];

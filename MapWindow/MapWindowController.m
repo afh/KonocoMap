@@ -45,6 +45,8 @@
 				  forKeyPath:@"region"
 					 options:NSKeyValueObservingOptionNew
 					 context:NULL];
+        
+        mapView.delegate = self;
 	}
 	return self;
 }
@@ -138,6 +140,13 @@
 			[self didChangeValueForKey:keyPath];
 		}
 	}
+}
+
+#pragma mark -
+#pragma mark MapViewDelegate
+
+- (void)mapView:(MapView *)mapView didTapAtPoint:(CGPoint)point {
+    NSLog(@"Did Tap at Point: pint.x: %f, .y:%f", point.x, point.y);
 }
 
 @end

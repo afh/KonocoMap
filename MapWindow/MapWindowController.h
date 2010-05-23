@@ -21,10 +21,9 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
+#import "MapView.h"
 
-@class MapView;
-
-@interface MapWindowController : NSWindowController {
+@interface MapWindowController : NSWindowController <MapViewDelegate> {
 	IBOutlet MapView *mapView;
 }
 
