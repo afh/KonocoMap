@@ -26,6 +26,7 @@
 
 @interface MapView : NSView {
 	MapLayer *mapLayer;
+    NSTrackingArea *trackingArea;
 }
 
 #pragma mark -

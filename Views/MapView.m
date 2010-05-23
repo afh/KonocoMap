@@ -46,6 +46,7 @@
 
 - (void)dealloc {
 	[mapLayer release];
+    [trackingArea release];
 	[super dealloc];
 }
 
@@ -235,6 +236,28 @@
 }
 
 #pragma mark -
+#pragma mark Tracking & Hiding Mouse Cursor
+
+- (void)mouseMoved:(NSEvent *)theEvent {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideCursor) object:nil];
+    [self performSelector:@selector(hideCursor) withObject:nil afterDelay:2];
+}
+
+- (void)hideCursor {
+    [NSCursor setHiddenUntilMouseMoves:YES];
+}
+
+- (void)updateTrackingAreas {
+    [self removeTrackingArea:trackingArea];
+    [trackingArea release];
+    trackingArea = [[NSTrackingArea alloc] initWithRect:self.bounds
+                                                options:(NSTrackingMouseMoved | NSTrackingActiveInKeyWindow)
+                                                  owner:self
+                                               userInfo:nil];
+    [self addTrackingArea:trackingArea];
+}
+
+#pragma mark -
 #pragma mark Private Methods
 
 - (void)setUp {
@@ -253,6 +276,13 @@
 	aTransform = CGAffineTransformIdentity;
 	aTransform = CGAffineTransformScale(aTransform, scale, scale);
 	mapLayer.affineTransform = aTransform;
+    
+    // Set Tracking Area
+    trackingArea = [[NSTrackingArea alloc] initWithRect:self.bounds
+                                                options:(NSTrackingMouseMoved | NSTrackingActiveInKeyWindow)
+                                                  owner:self
+                                               userInfo:nil];
+    [self addTrackingArea:trackingArea];
 }
 
 @end
