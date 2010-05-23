@@ -227,6 +227,14 @@
 }
 
 #pragma mark -
+#pragma mark Handling Gestures
+
+- (void)magnifyWithEvent:(NSEvent *)event {
+    CGFloat magnification = [event magnification];
+    [self setZoom:self.zoom + magnification animated:NO];
+}
+
+#pragma mark -
 #pragma mark Private Methods
 
 - (void)setUp {
