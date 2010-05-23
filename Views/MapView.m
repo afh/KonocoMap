@@ -201,8 +201,8 @@
 
 - (void)scrollWheel:(NSEvent *)theEvent {
 
-    CGFloat deltaX = [theEvent deltaX] * 2;
-	CGFloat deltaY = [theEvent deltaY] * 2;
+    CGFloat deltaX = -[theEvent deltaX] * 2;
+	CGFloat deltaY = -[theEvent deltaY] * 2;
     
     if (fabs(deltaX) > 0 || fabs(deltaY) > 0) {
         [self willChangeValueForKey:@"region"];
