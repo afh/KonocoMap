@@ -21,6 +21,7 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
+#import <CoreLocation/CoreLocation.h>
 #import "MapView.h"
 
 @interface MapWindowController : NSWindowController <MapViewDelegate> {
@@ -38,11 +39,11 @@
 #pragma mark Zoom, Center & Region
 
 @property (nonatomic, assign) CGFloat zoom;
-@property (nonatomic, assign) CGPoint center;
-@property (nonatomic, assign) CGRect region;
+@property (nonatomic, assign) CLLocationCoordinate2D center;
+@property (nonatomic, assign) CoordinateRegion region;
 
 - (void)setZoom:(CGFloat)level animated:(BOOL)animated;
-- (void)setCenter:(CGPoint)point animated:(BOOL)animated;
-- (void)setRegion:(CGRect)rect animated:(BOOL)animated;
+- (void)setCenter:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated;
+- (void)setRegion:(CoordinateRegion)rect animated:(BOOL)animated;
 
 @end

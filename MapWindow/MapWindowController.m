@@ -102,27 +102,27 @@
 	[mapView setZoom:level animated:animated];
 }
 
-- (CGPoint)center {
+- (CLLocationCoordinate2D)center {
 	return mapView.center;
 }
 
-- (void)setCenter:(CGPoint)point {
-	[mapView setCenter:point];
+- (void)setCenter:(CLLocationCoordinate2D)coordinate {
+	[mapView setCenter:coordinate];
 }
 
-- (void)setCenter:(CGPoint)point animated:(BOOL)animated {
-	[mapView setCenter:point animated:animated];
+- (void)setCenter:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated {
+	[mapView setCenter:coordinate animated:animated];
 }
 
-- (CGRect)region {
+- (CoordinateRegion)region {
 	return mapView.region;
 }
 
-- (void)setRegion:(CGRect)rect {
+- (void)setRegion:(CoordinateRegion)rect {
 	[mapView setRegion:rect];
 }
 
-- (void)setRegion:(CGRect)rect animated:(BOOL)animated {
+- (void)setRegion:(CoordinateRegion)rect animated:(BOOL)animated {
 	[mapView setRegion:rect animated:animated];
 }
 
@@ -145,8 +145,8 @@
 #pragma mark -
 #pragma mark MapViewDelegate
 
-- (void)mapView:(MapView *)mapView didTapAtPoint:(CGPoint)point {
-    NSLog(@"Did Tap at Point: pint.x: %f, .y:%f", point.x, point.y);
+- (void)mapView:(MapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
+    NSLog(@"Did Tap at Point: coordinate.latitude: %f, .longitude:%f", coordinate.latitude, coordinate.longitude);
 }
 
 @end

@@ -21,11 +21,22 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
+#import <CoreLocation/CoreLocation.h>
+
+typedef struct {
+    CLLocationDegrees latitudeDelta;
+    CLLocationDegrees longitudeDelta;
+} CoordinateSpan;
+
+typedef struct {
+    CLLocationCoordinate2D center;
+    CoordinateSpan span;
+} CoordinateRegion;
 
 @class MapView;
 
 @protocol MapViewDelegate
-- (void)mapView:(MapView *)mapView didTapAtPoint:(CGPoint)point;
+- (void)mapView:(MapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate;
 @end
 
 @class MapLayer;
@@ -36,6 +47,8 @@
     BOOL mouseMoved;
     
     id<MapViewDelegate> delegate;
+    
+    void * pj_merc, * pj_wgs84;
 }
 
 #pragma mark -
@@ -47,11 +60,11 @@
 #pragma mark Zoom, Center & Region
 
 @property (nonatomic, assign) CGFloat zoom;
-@property (nonatomic, assign) CGPoint center;
-@property (nonatomic, assign) CGRect region;
+@property (nonatomic, assign) CLLocationCoordinate2D center;
+@property (nonatomic, assign) CoordinateRegion region;
 
 - (void)setZoom:(CGFloat)level animated:(BOOL)animated;
-- (void)setCenter:(CGPoint)point animated:(BOOL)animated;
-- (void)setRegion:(CGRect)rect animated:(BOOL)animated;
+- (void)setCenter:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated;
+- (void)setRegion:(CoordinateRegion)rect animated:(BOOL)animated;
 
 @end

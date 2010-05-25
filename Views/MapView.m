@@ -21,12 +21,18 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "MapView.h"
-
 #import "MapLayer.h"
+
+#import <proj_api.h>
 
 
 @interface MapView ()
 - (void)setUp;
+- (void)setUpCoordinateConverter;
+- (CLLocationCoordinate2D)coordinateFromPoint:(CGPoint)point;
+- (CGPoint)pointFromCoordinate:(CLLocationCoordinate2D)coordinate;
+- (CoordinateRegion)regionFromRect:(CGRect)rect;
+- (CGRect)rectFromRegion:(CoordinateRegion)region;
 @end
 
 @implementation MapView
@@ -125,16 +131,19 @@
 	[self didChangeValueForKey:@"zoom"];
 }
 
-- (CGPoint)center {
-	return mapLayer.anchorPoint;
+- (CLLocationCoordinate2D)center {
+	return [self coordinateFromPoint:mapLayer.anchorPoint];
 }
 
-- (void)setCenter:(CGPoint)point {
-	[self setCenter:point animated:NO];
+- (void)setCenter:(CLLocationCoordinate2D)coordinate {
+	[self setCenter:coordinate animated:NO];
 }
 
-- (void)setCenter:(CGPoint)point animated:(BOOL)animated {
+- (void)setCenter:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated {
 	// TODO: Check which "attributes" where modified by this operation
+    
+    CGPoint point = [self pointFromCoordinate:coordinate];
+    
 	[self willChangeValueForKey:@"region"];
 	[self willChangeValueForKey:@"center"];
 	
@@ -155,23 +164,23 @@
 	[self didChangeValueForKey:@"center"];
 }
 
-- (CGRect)region {
+- (CoordinateRegion)region {
 	CGFloat scale = powf(2, self.zoom);
 	
 	CGFloat width = self.bounds.size.width / (mapLayer.tileSize.width * scale);
 	CGFloat height = self.bounds.size.height / (mapLayer.tileSize.height * scale);
-	
-	return CGRectMake(mapLayer.anchorPoint.x - width / 2,
-					  mapLayer.anchorPoint.y - height / 2,
-					  width,
-					  height);
+    
+	return [self regionFromRect:CGRectMake(mapLayer.anchorPoint.x - width / 2,
+                                           mapLayer.anchorPoint.y - height / 2,
+                                           width,
+                                           height)];
 }
 
-- (void)setRegion:(CGRect)rect {
+- (void)setRegion:(CoordinateRegion)rect {
 	[self setRegion:rect animated:NO];
 }
 
-- (void)setRegion:(CGRect)rect animated:(BOOL)animated {
+- (void)setRegion:(CoordinateRegion)rect animated:(BOOL)animated {
 	// TODO: set the region
 }
 
@@ -214,7 +223,7 @@
         NSPoint layer_point = [self.layer convertPoint:local_point toLayer:mapLayer];
         
         if (delegate) {
-            [delegate mapView:self didTapAtPoint:CGPointMake(layer_point.x / mapLayer.tileSize.width, layer_point.y / mapLayer.tileSize.height)];
+            [delegate mapView:self didTapAtCoordinate:[self coordinateFromPoint:CGPointMake(layer_point.x / mapLayer.tileSize.width, layer_point.y / mapLayer.tileSize.height)]];
         }
     }
 }
@@ -280,6 +289,8 @@
 #pragma mark Private Methods
 
 - (void)setUp {
+    [self setUpCoordinateConverter];
+    
 	// Enable CALayer backing
 	[self setWantsLayer:YES];
 	
@@ -303,5 +314,78 @@
                                                userInfo:nil];
     [self addTrackingArea:trackingArea];
 }
+   
+#pragma mark -
+#pragma mark Coordinate Conversion
+
+- (void)setUpCoordinateConverter {
+    NSLog(@"Setup coordinate converter.");
+    // set up projections
+    if (0 == (pj_merc = pj_init_plus("+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs"))) {
+        NSLog(@"Could not create marcator projector: %s", pj_strerrno(pj_errno));
+    }
+    
+    if (0 == (pj_wgs84 = pj_init_plus("+proj=latlong +ellps=WGS84"))) {
+        NSLog(@"Could not create wgs84 projector: %s", pj_strerrno(pj_errno));
+    }
+    
+    // TODO: Better error handling
+    assert(pj_merc);
+    assert(pj_wgs84);
+}
+
+- (CLLocationCoordinate2D)coordinateFromPoint:(CGPoint)point {
+    double x, y;
+    x = point.x;
+    y = point.y;
+    
+    x = x * 20037508.342789 * 2 - 20037508.342789;
+    y = y * 20037508.342789 * 2 - 20037508.342789;
+    
+    if (pj_transform(pj_merc, pj_wgs84, 1, 1, &x, &y, NULL)) {
+        NSLog(@"x:%f, y:%f", x, y);
+        NSLog(@"Could not transform point from mercator to wgs84: %s", pj_strerrno(pj_errno));
+    }
+    
+    CLLocationCoordinate2D coordinate;
+    coordinate.longitude = x * RAD_TO_DEG;
+    coordinate.latitude = y * RAD_TO_DEG;
+    return coordinate;
+}
+
+- (CGPoint)pointFromCoordinate:(CLLocationCoordinate2D)coordinate {
+    double x, y;
+    x = coordinate.longitude * DEG_TO_RAD;
+    y = coordinate.latitude * DEG_TO_RAD;
+    
+    if (pj_transform(pj_wgs84, pj_merc, 1, 1, &x, &y, NULL)) {
+        NSLog(@"x:%f, y:%f", x, y);
+        NSLog(@"Could not transform coordinate from wgs84 to mercator: %s", pj_strerrno(pj_errno));
+    }
+    
+    x = (x + 20037508.342789) / (20037508.342789 * 2.0);
+    y = (y + 20037508.342789) / (20037508.342789 * 2.0);
+    
+    return CGPointMake(x, y);
+}
+
+- (CoordinateRegion)regionFromRect:(CGRect)rect {
+    CoordinateRegion result;
+    
+    CLLocationCoordinate2D lowerLeft = [self coordinateFromPoint:rect.origin];
+    CLLocationCoordinate2D upperRight = [self coordinateFromPoint:CGPointMake(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height)];
+    
+    result.center.longitude = (upperRight.longitude + lowerLeft.longitude) / 2;
+    result.center.latitude = (upperRight.latitude + lowerLeft.latitude) / 2;
+    result.span.longitudeDelta = upperRight.longitude - lowerLeft.longitude;
+    result.span.latitudeDelta = upperRight.latitude - lowerLeft.latitude;
+    
+    return result;
+}
+
+- (CGRect)rectFromRegion:(CoordinateRegion)region {
+
+}
+
 
 @end

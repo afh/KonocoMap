@@ -29,6 +29,7 @@
 	CGRect region;
 }
 
+// TODO: Change type of region to CoordinateRegion
 @property (nonatomic, assign) CGRect region;
 
 @end
