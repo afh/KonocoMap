@@ -34,15 +34,15 @@ typedef struct {
 } CoordinateRegion;
 
 @class MapView;
+@class MapLayer;
 
 @protocol MapViewDelegate
 - (void)mapView:(MapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate;
 @end
 
-@class MapLayer;
-
 @interface MapView : NSView {
-	MapLayer *mapLayer;
+    CALayer *mapLayer;
+	MapLayer *baseLayer;
     NSTrackingArea *trackingArea;
     BOOL mouseMoved;
     
