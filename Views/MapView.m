@@ -157,10 +157,10 @@
 	
 	CGFloat marginX = self.bounds.size.width / 2 / (scale * baseLayer.tileSize.width);
 	CGFloat marginY = self.bounds.size.height / 2 / (scale * baseLayer.tileSize.height);
-	CGPoint aP = mapLayer.anchorPoint;
+    
 	mapLayer.anchorPoint = CGPointMake(MAX(MIN(point.x, 1 - marginX), 0 + marginX),
 									   MAX(MIN(point.y, 1 - marginY), 0 + marginY));
-	aP = mapLayer.anchorPoint;
+    
 	[self didChangeValueForKey:@"region"];
 	[self didChangeValueForKey:@"center"];
 }
@@ -295,6 +295,7 @@
     
     // set up map layer
     mapLayer = [[CALayer layer] retain];
+    mapLayer.bounds = CGRectMake(0, 0, 256, 256);
     mapLayer.position = CGPointMake(self.bounds.size.width / 2,
                                     self.bounds.size.height / 2);
     [self.layer addSublayer:mapLayer];
