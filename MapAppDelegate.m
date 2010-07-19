@@ -24,7 +24,6 @@
 
 // controller
 #import "MapWindowController.h"
-#import "NavigationPanelController.h"
 #import "PreferenceController.h"
 #import <proj_api.h>
 
@@ -54,23 +53,9 @@
 - (IBAction)showMapWindow:(id)sender {
 	if (!mapWindowController) {
 		mapWindowController = [MapWindowController new];
-		[mapWindowController addObserver:self
-							  forKeyPath:@"region"
-								 options:NSKeyValueObservingOptionNew
-								 context:NULL];
 	}
 	[mapWindowController showWindow:self];
 	[mapWindowController.window makeKeyAndOrderFront:nil];
-}
-
-- (IBAction)showNavigation:(id)sender {
-	if (!navigationPanelController) {
-		navigationPanelController = [NavigationPanelController new];
-		if (mapWindowController) {
-			//[navigationPanelController setRegion:mapWindowController.region];
-		}
-	}
-	[navigationPanelController showWindow:self];
 }
 
 - (IBAction)showPreference:(id)sender {
@@ -114,22 +99,6 @@
     
     [mapWindowController setCenter:newLocation.coordinate animated:YES];
     [mapWindowController setZoom:10 animated:YES];
-}
-
-#pragma mark -
-#pragma mark KVO
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-					  ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context {
-	if (object == mapWindowController) {
-		if ([keyPath isEqual:@"region"]) {
-			if (navigationPanelController) {
-				//[navigationPanelController setRegion:mapWindowController.region];
-			}
-		}
-	}
 }
 
 @end

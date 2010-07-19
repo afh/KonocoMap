@@ -24,12 +24,10 @@
 #import <CoreLocation/CoreLocation.h>
 
 @class MapWindowController;
-@class NavigationPanelController;
 @class PreferenceController;
 
 @interface MapAppDelegate : NSObject <CLLocationManagerDelegate> {
 	MapWindowController *mapWindowController;
-	NavigationPanelController *navigationPanelController;
 	PreferenceController *preferenceController;
     
     CLLocationManager *locationManager;
@@ -39,7 +37,6 @@
 #pragma mark Actions
 
 - (IBAction)showMapWindow:(id)sender;
-- (IBAction)showNavigation:(id)sender;
 - (IBAction)showPreference:(id)sender;
 
 - (IBAction)zoomIn:(id)sender;
