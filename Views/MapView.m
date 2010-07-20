@@ -302,6 +302,7 @@
 	
 	// Set up BaseLayer
 	baseLayer = [[MapLayer layer] retain];
+    baseLayer.monochrome = YES;
     baseLayer.position = CGPointMake(mapLayer.bounds.size.width / 2,
                                      mapLayer.bounds.size.height / 2);
 	[mapLayer addSublayer:baseLayer];

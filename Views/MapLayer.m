@@ -28,6 +28,7 @@
 @implementation MapLayer
 
 @synthesize tileSource;
+@synthesize monochrome;
 
 + (CFTimeInterval)fadeDuration {
     return 0.25; 
@@ -39,7 +40,7 @@
 		
 		self.bounds = CGRectMake(0,0,tileSource.tileSize.width,tileSource.tileSize.height);
         self.masksToBounds = NO;
-        self.levelsOfDetail = 1;
+        self.levelsOfDetail = tileSource.maxZoomLevel;
         self.levelsOfDetailBias = tileSource.maxZoomLevel;
 	}
 	return self;
@@ -58,7 +59,7 @@
 #pragma mark Draw Layer
 
 - (void)drawInContext:(CGContextRef)ctx {
-	
+    
 	CGRect rect = CGContextGetClipBoundingBox ( ctx );
     CGAffineTransform transform = CGContextGetCTM ( ctx	);
 	
@@ -68,18 +69,19 @@
 	
 	NSImage *tile = [tileSource tileWithZoom:zoom x:x y:y];
 	if (tile) {
-        NSData * imageData = [tile TIFFRepresentation];
-        if(imageData)
-        {
-            CGImageSourceRef imageSource = CGImageSourceCreateWithData((CFDataRef)imageData,  NULL);
-            CGImageRef imageRef = CGImageSourceCreateImageAtIndex(imageSource, 0, NULL);
-            if (imageRef != nil) {  
-                CGContextTranslateCTM(ctx, 0.0, rect.size.height);
-                CGContextDrawImage(ctx, CGContextGetClipBoundingBox ( ctx ), imageRef );
-                CFRelease(imageRef);
-            }
-            CFRelease(imageSource);
+        CIImage *image = [CIImage imageWithData:[tile TIFFRepresentation]];
+        CIContext *context = [CIContext contextWithCGContext:ctx options:nil];
+        CIImage *outputImage;
+        if (monochrome) {
+            CIFilter *filter = [CIFilter filterWithName:@"CIColorMonochrome"];
+            [filter setDefaults];
+            [filter setValue:image forKey:@"inputImage"];
+            [filter setValue:[CIColor colorWithRed:0.5 green:0.5 blue:0.5] forKey:@"inputColor"];
+            outputImage = [filter valueForKey:@"outputImage"];
+        } else {
+            outputImage = image;
         }
+        [context drawImage:outputImage inRect:rect fromRect:CGRectMake(0, 0, 256, 256)];
 	}
 }
 

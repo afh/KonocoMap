@@ -27,9 +27,11 @@
 
 @interface MapLayer : CATiledLayer {
 	NSObject <TileSourceProtocol> *tileSource;
+    BOOL monochrome;
 }
 
 @property (nonatomic, readonly) NSObject <TileSourceProtocol> *tileSource;
+@property (nonatomic, assign) BOOL monochrome;
 
 - (id)initWithTileSource:(NSObject<TileSourceProtocol>*)source;
 
