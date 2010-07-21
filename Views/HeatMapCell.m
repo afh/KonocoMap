@@ -21,7 +21,7 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "HeatMapCell.h"
-#import "HeatMapLayer.h"
+#import "HeatMapSample.h"
 
 @interface HeatMapCell ()
 - (void)fadeOut;
@@ -30,15 +30,24 @@
 
 @implementation HeatMapCell
 
+@synthesize sample;
 
-- (id)initWithValue:(double)aValue
-           duration:(CFTimeInterval)aInterval {
+- (id)initWithSample:(HeatMapSample *)aSample
+            duration:(CFTimeInterval)aInterval
+      timingFunction:(CAMediaTimingFunction *)aTimingFunction {
     if (self = [super init]) {
+        sample = [aSample retain];
         duration = aInterval;
-        value = aValue;
+        timingFunction = [aTimingFunction retain];
         [self performSelector:@selector(fadeOut)];
 	}
 	return self;
+}
+
+- (void)dealloc {
+    [sample release];
+    [timingFunction release];
+    [super dealloc];
 }
 
 - (void)fadeOut {
@@ -51,6 +60,7 @@
     self.opacity = 0;
     
     CABasicAnimation *theAnimation;
+    theAnimation.timingFunction = timingFunction;
     theAnimation=[CABasicAnimation animationWithKeyPath:@"opacity"];
     theAnimation.duration=duration;
     theAnimation.repeatCount=0;
@@ -62,48 +72,5 @@
     [CATransaction commit];
 }
 
-#pragma mark -
-#pragma mark Draw Cell
-
-- (void)drawInContext:(CGContextRef)ctx {
-    
-    CGContextSetRGBStrokeColor(ctx, 1, 0, 1, 1);
-    
-    double huge = value;
-    
-    CGGradientRef myGradient;
-    CGColorSpaceRef myColorspace;
-    size_t num_locations = 2;
-    CGFloat locations[2] = { 0.0, 1.0 };
-    
-    NSColor *color = [NSColor colorWithCalibratedHue:huge
-                                          saturation:1
-                                          brightness:0.5
-                                               alpha:0];
-    
-    CGFloat components[8] = {
-        [color redComponent], [color greenComponent], [color blueComponent], 1.0,   // Start color
-        [color redComponent], [color greenComponent], [color blueComponent], 0.0    // End color
-    };
-    
-    myColorspace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
-    myGradient = CGGradientCreateWithColorComponents(myColorspace, components, locations, num_locations);
-    
-    CGPoint myStartPoint = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
-    CGPoint myEndPoint = myStartPoint;
-    CGFloat myStartRadius = 0;
-    CGFloat myEndRadius = self.bounds.size.width / 2;
-    
-    CGContextDrawRadialGradient(ctx,
-                                myGradient,
-                                myStartPoint,
-                                myStartRadius,
-                                myEndPoint,
-                                myEndRadius,
-                                kCGGradientDrawsAfterEndLocation);
-    
-    CGGradientRelease(myGradient);
-    CGColorSpaceRelease(myColorspace);
-}
 
 @end

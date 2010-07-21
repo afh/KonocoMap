@@ -28,15 +28,27 @@
 
 @interface HeatMapLayer ()
 - (void)handleHeatMapSample:(HeatMapSample *)aSample;
+- (CoordinateRegion)regionForSample:(HeatMapSample *)sample;
+- (CFTimeInterval)durationForSample:(HeatMapSample *)sample;
+- (CAMediaTimingFunction *)timingFunctionForSample:(HeatMapSample *)sample;
+- (NSColor *)colorForSample:(HeatMapSample *)sample;
 @end
 
 
 @implementation HeatMapLayer
 
 @synthesize mapView;
+@synthesize delegate;
 
 - (id)init {
     if ((self = [super init]) != nil) {
+        
+        // set composition filter
+        CIFilter *compFilter = [CIFilter filterWithName:@"CIColorBlendMode"];
+        self.compositingFilter = compFilter;
+        
+        
+        // set observer for heat map samples
         notificationObserver = [[[NSNotificationCenter defaultCenter] addObserverForName:@"HeatMapSample"
                                                                                   object:nil
                                                                                    queue:nil
@@ -59,8 +71,7 @@
     
     assert(self.mapView);
     
-    CoordinateRegion cellRegion = [self.mapView regionFromCoordinate:sample.location.coordinate
-                                                          withRadius:5000];
+    CoordinateRegion cellRegion = [self regionForSample:sample];
     
     CGFloat currentScale = powf(2, self.mapView.zoom);
 //    NSLog(@"current scale: %f", currentScale);
@@ -83,8 +94,10 @@
 //          cellFrame.size.width,
 //          cellFrame.size.height);
     
-    
-    HeatMapCell *cell = [[HeatMapCell alloc] initWithValue:0.5 duration:10];
+    HeatMapCell *cell = [[HeatMapCell alloc] initWithSample:sample
+                                                   duration:[self durationForSample:sample]
+                                             timingFunction:[self timingFunctionForSample:sample]];
+    cell.delegate = self;
     cell.frame = cellFrame;
     
     cell.bounds = CGRectMake(0,
@@ -109,5 +122,90 @@
     [cell release];
 }
 
+#pragma mark -
+#pragma mark Custom Cell Attributes for Sample
+
+- (CoordinateRegion)regionForSample:(HeatMapSample *)sample {
+    if (self.delegate) {
+        return [self.delegate regionForSample:sample];
+    } else {
+        return [self.mapView regionFromCoordinate:sample.location.coordinate
+                                       withRadius:3000];
+    }
+}
+
+- (CFTimeInterval)durationForSample:(HeatMapSample *)sample {
+    if (self.delegate) {
+        return [self.delegate durationForSample:sample];
+    } else {
+        return 20;
+    }
+}
+
+- (CAMediaTimingFunction *)timingFunctionForSample:(HeatMapSample *)sample {
+    if (self.delegate) {
+        return [self.delegate timingFunctionForSample:sample];
+    } else {
+        return [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    }
+}
+
+- (NSColor *)colorForSample:(HeatMapSample *)sample {
+    if (self.delegate) {
+        return [self.delegate colorForSample:sample];
+    } else {
+        return [NSColor colorWithCalibratedHue:0.5
+                                    saturation:1
+                                    brightness:0.5
+                                         alpha:0];        
+    }
+}
+
+#pragma mark -
+#pragma mark Draw Smaple Cell Delegate
+
+- (void)drawLayer:(CALayer *)layer
+        inContext:(CGContextRef)ctx {
+    
+    if (![layer isKindOfClass:[HeatMapCell class]]) {
+        NSLog(@"Expecting HeatMapCell.");
+        return;
+    }
+    
+    HeatMapCell *cell = (HeatMapCell *)layer;
+    
+    CGContextSetRGBStrokeColor(ctx, 1, 0, 1, 1);
+    
+    CGGradientRef myGradient;
+    CGColorSpaceRef myColorspace;
+    size_t num_locations = 2;
+    CGFloat locations[2] = { 0.0, 1.0 };
+    
+    NSColor *color = [self colorForSample:cell.sample];
+    
+    CGFloat components[8] = {
+        [color redComponent], [color greenComponent], [color blueComponent], 1.0,   // Start color
+        [color redComponent], [color greenComponent], [color blueComponent], 0.0    // End color
+    };
+    
+    myColorspace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
+    myGradient = CGGradientCreateWithColorComponents(myColorspace, components, locations, num_locations);
+    
+    CGPoint myStartPoint = CGPointMake(cell.bounds.size.width / 2, cell.bounds.size.height / 2);
+    CGPoint myEndPoint = myStartPoint;
+    CGFloat myStartRadius = 0;
+    CGFloat myEndRadius = cell.bounds.size.width / 2;
+    
+    CGContextDrawRadialGradient(ctx,
+                                myGradient,
+                                myStartPoint,
+                                myStartRadius,
+                                myEndPoint,
+                                myEndRadius,
+                                kCGGradientDrawsAfterEndLocation);
+    
+    CGGradientRelease(myGradient);
+    CGColorSpaceRelease(myColorspace);
+}
 
 @end

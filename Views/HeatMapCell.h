@@ -24,14 +24,18 @@
 #import <QuartzCore/QuartzCore.h>
 #import <CoreLocation/CoreLocation.h>
 
-@class HeatMapLayer;
+@class HeatMapSample;
 
 @interface HeatMapCell : CALayer {
-    double value;
+    HeatMapSample *sample;
     CFTimeInterval duration;
+    CAMediaTimingFunction *timingFunction;
 }
 
-- (id)initWithValue:(double)aValue
-           duration:(CFTimeInterval)aInterval;
+- (id)initWithSample:(HeatMapSample *)aSample
+            duration:(CFTimeInterval)aInterval
+      timingFunction:(CAMediaTimingFunction *)aTimingFunction;
+
+@property (nonatomic, readonly) HeatMapSample *sample;
 
 @end
