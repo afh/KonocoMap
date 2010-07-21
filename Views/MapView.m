@@ -22,6 +22,7 @@
 
 #import "MapView.h"
 #import "MapLayer.h"
+#import "HeatMapLayer.h"
 
 #import <proj_api.h>
 
@@ -29,10 +30,6 @@
 @interface MapView ()
 - (void)setUp;
 - (void)setUpCoordinateConverter;
-- (CLLocationCoordinate2D)coordinateFromPoint:(CGPoint)point;
-- (CGPoint)pointFromCoordinate:(CLLocationCoordinate2D)coordinate;
-- (CoordinateRegion)regionFromRect:(CGRect)rect;
-- (CGRect)rectFromRegion:(CoordinateRegion)region;
 @end
 
 @implementation MapView
@@ -54,6 +51,7 @@
 - (void)dealloc {
 	[baseLayer release];
     [mapLayer release];
+    [heatMap release];
     [trackingArea release];
 	[super dealloc];
 }
@@ -308,6 +306,14 @@
 	[mapLayer addSublayer:baseLayer];
     
     
+    // set up heat map
+    heatMap = [HeatMapLayer new];
+    heatMap.mapView = self;
+    heatMap.bounds = mapLayer.bounds;
+    heatMap.position = CGPointMake(mapLayer.bounds.size.width / 2,
+                                   mapLayer.bounds.size.height / 2);
+    [mapLayer addSublayer:heatMap];
+    
 	CGFloat scale = MAX(self.bounds.size.height / baseLayer.tileSize.height,
 						self.bounds.size.width / baseLayer.tileSize.width);
 	CGAffineTransform aTransform;
@@ -322,7 +328,7 @@
                                                userInfo:nil];
     [self addTrackingArea:trackingArea];
 }
-   
+
 #pragma mark -
 #pragma mark Coordinate Conversion
 
@@ -392,8 +398,55 @@
 }
 
 - (CGRect)rectFromRegion:(CoordinateRegion)region {
-
+    CLLocationCoordinate2D lowerLeftC;
+    lowerLeftC.longitude = region.center.longitude - region.span.longitudeDelta / 2;
+    lowerLeftC.latitude = region.center.latitude - region.span.latitudeDelta / 2;
+    
+    CLLocationCoordinate2D upperRightC;
+    upperRightC.longitude = region.center.longitude + region.span.longitudeDelta / 2;
+    upperRightC.latitude = region.center.latitude + region.span.latitudeDelta / 2;
+    
+    CGPoint lowerLeft = [self pointFromCoordinate:lowerLeftC];
+    CGPoint upperRight = [self pointFromCoordinate:upperRightC];
+    
+    return CGRectMake(lowerLeft.x, lowerLeft.y, upperRight.x - lowerLeft.x, upperRight.y - lowerLeft.y);
 }
 
+CGFloat WGS84EarthRadius(CGFloat lat) {
+    
+    // http://en.wikipedia.org/wiki/Earth_radius
+    
+    double WGS84_a = 6378137.0;
+    double WGS84_b = 6356752.3;
+    
+    double An, Bn, Ad, Bd;
+    
+    An = WGS84_a * WGS84_a * cos(lat);
+    Bn = WGS84_b * WGS84_b * sin(lat);
+    Ad = WGS84_a * cos(lat);
+    Bd = WGS84_b * sin(lat);
+    
+    return sqrt( (An*An + Bn*Bn)/(Ad*Ad + Bd*Bd) );
+}
+
+- (CoordinateRegion)regionFromCoordinate:(CLLocationCoordinate2D)coordinate withRadius:(CGFloat)distance {
+    
+    //
+    // http://stackoverflow.com/questions/238260/how-to-calculate-the-bounding-box-for-a-given-lat-lng-location
+    //
+    
+    CoordinateRegion result;
+    result.center = coordinate;
+    
+    double lat = DEG_TO_RAD * coordinate.latitude;
+    
+    double radius = WGS84EarthRadius(lat);
+    double pradius = radius * cos(lat);
+    
+    result.span.longitudeDelta = RAD_TO_DEG * 2 * distance / pradius;
+    result.span.latitudeDelta = RAD_TO_DEG * 2 * distance / radius;
+    
+    return result;
+}
 
 @end

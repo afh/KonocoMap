@@ -35,6 +35,7 @@ typedef struct {
 
 @class MapView;
 @class MapLayer;
+@class HeatMapLayer;
 
 @protocol MapViewDelegate
 - (void)mapView:(MapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate;
@@ -43,6 +44,7 @@ typedef struct {
 @interface MapView : NSView {
     CALayer *mapLayer;
 	MapLayer *baseLayer;
+    HeatMapLayer *heatMap;
     NSTrackingArea *trackingArea;
     BOOL mouseMoved;
     
@@ -66,5 +68,14 @@ typedef struct {
 - (void)setZoom:(CGFloat)level animated:(BOOL)animated;
 - (void)setCenter:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated;
 - (void)setRegion:(CoordinateRegion)rect animated:(BOOL)animated;
+
+#pragma mark -
+#pragma mark Coordinate Converter
+
+- (CLLocationCoordinate2D)coordinateFromPoint:(CGPoint)point;
+- (CGPoint)pointFromCoordinate:(CLLocationCoordinate2D)coordinate;
+- (CoordinateRegion)regionFromRect:(CGRect)rect;
+- (CGRect)rectFromRegion:(CoordinateRegion)region;
+- (CoordinateRegion)regionFromCoordinate:(CLLocationCoordinate2D)coordinate withRadius:(CGFloat)radius;
 
 @end

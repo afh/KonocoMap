@@ -22,6 +22,7 @@
 
 #import "MapWindowController.h"
 #import "MapView.h"
+#import "HeatMapSample.h"
 
 @implementation MapWindowController
 
@@ -147,6 +148,16 @@
 
 - (void)mapView:(MapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
     NSLog(@"Did Tap at Point: coordinate.latitude: %f, .longitude:%f", coordinate.latitude, coordinate.longitude);
+    
+    HeatMapSample *sample = [HeatMapSample new];
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+    sample.location = location;
+    sample.data = nil;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"HeatMapSample"
+                                                        object:sample
+                                                      userInfo:nil];
+    [sample release];
+    [location release];
 }
 
 @end
