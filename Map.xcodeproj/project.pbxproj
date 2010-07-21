@@ -12,7 +12,10 @@
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		F67D60BC116E33F90088CFA8 /* MapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D60B7116E33F90088CFA8 /* MapLayer.m */; };
+		F64C9CE811F6FFC600C26E97 /* HeatMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F64C9CE311F6FFC600C26E97 /* HeatMapCell.m */; };
+		F64C9CE911F6FFC600C26E97 /* HeatMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F64C9CE511F6FFC600C26E97 /* HeatMapLayer.m */; };
+		F64C9CEA11F6FFC600C26E97 /* HeatMapSample.m in Sources */ = {isa = PBXBuildFile; fileRef = F64C9CE711F6FFC600C26E97 /* HeatMapSample.m */; };
+		F64C9CEE11F6FFDF00C26E97 /* MapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F64C9CED11F6FFDF00C26E97 /* MapLayer.m */; };
 		F67D60BD116E33F90088CFA8 /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D60B9116E33F90088CFA8 /* MapView.m */; };
 		F67D60C5116E34BA0088CFA8 /* MapTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F67D60C4116E34BA0088CFA8 /* MapTileSource.m */; };
 		F6977776116F80650089854D /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = F6977775116F80650089854D /* AUTHORS */; };
@@ -24,9 +27,6 @@
 		F6DC7D7F116C8260005DE7F1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DC7D7E116C8260005DE7F1 /* QuartzCore.framework */; };
 		F6DC7D85116C8319005DE7F1 /* Preference.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6DC7D84116C8319005DE7F1 /* Preference.xib */; };
 		F6DC7D88116C8339005DE7F1 /* PreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6DC7D87116C8339005DE7F1 /* PreferenceController.m */; };
-		F6EEF90411F5CCEF00436F17 /* HeatMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F6EEF90311F5CCEF00436F17 /* HeatMapLayer.m */; };
-		F6EEF90711F5CFEE00436F17 /* HeatMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F6EEF90611F5CFEE00436F17 /* HeatMapCell.m */; };
-		F6EEF97011F5F5A800436F17 /* HeatMapSample.m in Sources */ = {isa = PBXBuildFile; fileRef = F6EEF96F11F5F5A800436F17 /* HeatMapSample.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,8 +42,14 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* Map-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Map-Info.plist"; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Map.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F67D60B6116E33F90088CFA8 /* MapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapLayer.h; path = Views/MapLayer.h; sourceTree = "<group>"; };
-		F67D60B7116E33F90088CFA8 /* MapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapLayer.m; path = Views/MapLayer.m; sourceTree = "<group>"; };
+		F64C9CE211F6FFC600C26E97 /* HeatMapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeatMapCell.h; path = Views/HeatMapLayer/HeatMapCell.h; sourceTree = "<group>"; };
+		F64C9CE311F6FFC600C26E97 /* HeatMapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HeatMapCell.m; path = Views/HeatMapLayer/HeatMapCell.m; sourceTree = "<group>"; };
+		F64C9CE411F6FFC600C26E97 /* HeatMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeatMapLayer.h; path = Views/HeatMapLayer/HeatMapLayer.h; sourceTree = "<group>"; };
+		F64C9CE511F6FFC600C26E97 /* HeatMapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HeatMapLayer.m; path = Views/HeatMapLayer/HeatMapLayer.m; sourceTree = "<group>"; };
+		F64C9CE611F6FFC600C26E97 /* HeatMapSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeatMapSample.h; path = Views/HeatMapLayer/HeatMapSample.h; sourceTree = "<group>"; };
+		F64C9CE711F6FFC600C26E97 /* HeatMapSample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HeatMapSample.m; path = Views/HeatMapLayer/HeatMapSample.m; sourceTree = "<group>"; };
+		F64C9CEC11F6FFDF00C26E97 /* MapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapLayer.h; path = Views/BaseLayer/MapLayer.h; sourceTree = "<group>"; };
+		F64C9CED11F6FFDF00C26E97 /* MapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapLayer.m; path = Views/BaseLayer/MapLayer.m; sourceTree = "<group>"; };
 		F67D60B8116E33F90088CFA8 /* MapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapView.h; path = Views/MapView.h; sourceTree = "<group>"; };
 		F67D60B9116E33F90088CFA8 /* MapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapView.m; path = Views/MapView.m; sourceTree = "<group>"; };
 		F67D60C3116E34BA0088CFA8 /* MapTileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapTileSource.h; path = DataSources/MapTileSource.h; sourceTree = "<group>"; };
@@ -60,12 +66,6 @@
 		F6DC7D84116C8319005DE7F1 /* Preference.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Preference.xib; path = Preference/Preference.xib; sourceTree = "<group>"; };
 		F6DC7D86116C8339005DE7F1 /* PreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PreferenceController.h; path = Preference/PreferenceController.h; sourceTree = "<group>"; };
 		F6DC7D87116C8339005DE7F1 /* PreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PreferenceController.m; path = Preference/PreferenceController.m; sourceTree = "<group>"; };
-		F6EEF90211F5CCEF00436F17 /* HeatMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeatMapLayer.h; path = Views/HeatMapLayer.h; sourceTree = "<group>"; };
-		F6EEF90311F5CCEF00436F17 /* HeatMapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HeatMapLayer.m; path = Views/HeatMapLayer.m; sourceTree = "<group>"; };
-		F6EEF90511F5CFEE00436F17 /* HeatMapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeatMapCell.h; path = Views/HeatMapCell.h; sourceTree = "<group>"; };
-		F6EEF90611F5CFEE00436F17 /* HeatMapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HeatMapCell.m; path = Views/HeatMapCell.m; sourceTree = "<group>"; };
-		F6EEF96E11F5F5A800436F17 /* HeatMapSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeatMapSample.h; path = Views/HeatMapSample.h; sourceTree = "<group>"; };
-		F6EEF96F11F5F5A800436F17 /* HeatMapSample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HeatMapSample.m; path = Views/HeatMapSample.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				F6DC7D76116C8217005DE7F1 /* Views & Layer */,
+				F67D60C2116E348B0088CFA8 /* Data Sources */,
 				F6DC7D62116C8062005DE7F1 /* Map Window */,
 				F6DC7D83116C8292005DE7F1 /* Preference */,
 				080E96DDFE201D6D7F000001 /* Classes */,
@@ -166,6 +167,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F64C9CEB11F6FFCB00C26E97 /* BaseLayer */ = {
+			isa = PBXGroup;
+			children = (
+				F64C9CEC11F6FFDF00C26E97 /* MapLayer.h */,
+				F64C9CED11F6FFDF00C26E97 /* MapLayer.m */,
+			);
+			name = BaseLayer;
+			sourceTree = "<group>";
+		};
 		F67D60C2116E348B0088CFA8 /* Data Sources */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,10 +199,8 @@
 		F6DC7D76116C8217005DE7F1 /* Views & Layer */ = {
 			isa = PBXGroup;
 			children = (
+				F64C9CEB11F6FFCB00C26E97 /* BaseLayer */,
 				F6EEF90811F5D03100436F17 /* Heat Map */,
-				F67D60C2116E348B0088CFA8 /* Data Sources */,
-				F67D60B6116E33F90088CFA8 /* MapLayer.h */,
-				F67D60B7116E33F90088CFA8 /* MapLayer.m */,
 				F67D60B8116E33F90088CFA8 /* MapView.h */,
 				F67D60B9116E33F90088CFA8 /* MapView.m */,
 			);
@@ -212,12 +220,12 @@
 		F6EEF90811F5D03100436F17 /* Heat Map */ = {
 			isa = PBXGroup;
 			children = (
-				F6EEF90211F5CCEF00436F17 /* HeatMapLayer.h */,
-				F6EEF90311F5CCEF00436F17 /* HeatMapLayer.m */,
-				F6EEF90511F5CFEE00436F17 /* HeatMapCell.h */,
-				F6EEF90611F5CFEE00436F17 /* HeatMapCell.m */,
-				F6EEF96E11F5F5A800436F17 /* HeatMapSample.h */,
-				F6EEF96F11F5F5A800436F17 /* HeatMapSample.m */,
+				F64C9CE211F6FFC600C26E97 /* HeatMapCell.h */,
+				F64C9CE311F6FFC600C26E97 /* HeatMapCell.m */,
+				F64C9CE411F6FFC600C26E97 /* HeatMapLayer.h */,
+				F64C9CE511F6FFC600C26E97 /* HeatMapLayer.m */,
+				F64C9CE611F6FFC600C26E97 /* HeatMapSample.h */,
+				F64C9CE711F6FFC600C26E97 /* HeatMapSample.m */,
 			);
 			name = "Heat Map";
 			sourceTree = "<group>";
@@ -288,12 +296,12 @@
 				256AC3DA0F4B6AC300CF3369 /* MapAppDelegate.m in Sources */,
 				F6DC7D65116C80B3005DE7F1 /* MapWindowController.m in Sources */,
 				F6DC7D88116C8339005DE7F1 /* PreferenceController.m in Sources */,
-				F67D60BC116E33F90088CFA8 /* MapLayer.m in Sources */,
 				F67D60BD116E33F90088CFA8 /* MapView.m in Sources */,
 				F67D60C5116E34BA0088CFA8 /* MapTileSource.m in Sources */,
-				F6EEF90411F5CCEF00436F17 /* HeatMapLayer.m in Sources */,
-				F6EEF90711F5CFEE00436F17 /* HeatMapCell.m in Sources */,
-				F6EEF97011F5F5A800436F17 /* HeatMapSample.m in Sources */,
+				F64C9CE811F6FFC600C26E97 /* HeatMapCell.m in Sources */,
+				F64C9CE911F6FFC600C26E97 /* HeatMapLayer.m in Sources */,
+				F64C9CEA11F6FFC600C26E97 /* HeatMapSample.m in Sources */,
+				F64C9CEE11F6FFDF00C26E97 /* MapLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
