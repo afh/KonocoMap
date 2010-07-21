@@ -63,6 +63,11 @@
     return self;
 }
 
+- (void)dealloc {
+    [notificationObserver release];
+    [super dealloc];
+}
+
 #pragma mark -
 #pragma mark Handle Heat Map Samples
 
