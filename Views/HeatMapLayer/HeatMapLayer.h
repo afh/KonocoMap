@@ -40,16 +40,9 @@
 
 @end
 
-
 @interface HeatMapLayer : CALayer {
-    
-@private
-    id notificationObserver;
-    
-    // TODO: Find a better name for this property
-    NSString *notificationName;
 }
 
-@property (retain) NSString *notificationName;
+- (void)displayHeatMapSample:(HeatMapSample *)aSample;
 
 @end

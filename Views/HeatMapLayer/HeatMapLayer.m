@@ -26,7 +26,6 @@
 
 
 @interface HeatMapLayer ()
-- (void)handleHeatMapSample:(HeatMapSample *)aSample;
 - (CoordinateRegion)regionForSample:(HeatMapSample *)sample;
 - (CFTimeInterval)durationForSample:(HeatMapSample *)sample;
 - (CGFloat)valueForSample:(HeatMapSample *)sample;
@@ -37,9 +36,6 @@
 
 @implementation HeatMapLayer
 
-@synthesize delegate;
-@synthesize notificationName;
-
 - (id)init {
     if ((self = [super init]) != nil) {
         // set composition filter
@@ -49,38 +45,10 @@
     return self;
 }
 
-- (void)dealloc {
-    [notificationObserver release];
-    [super dealloc];
-}
-
-#pragma mark -
-#pragma mark Manage Sample Source
-
-- (void)setNotificationName:(NSString *)name {
-    if (![notificationName isEqual:name]) {
-        [notificationName release];
-        notificationName = [name retain];
-        
-        [notificationObserver release];
-        notificationObserver = [[[NSNotificationCenter defaultCenter]
-                                 addObserverForName:notificationName
-                                 object:nil
-                                 queue:nil
-                                 usingBlock:^(NSNotification *notification){
-                                     if ([[notification object] isKindOfClass:[HeatMapSample class]]) {
-                                         [self handleHeatMapSample:[notification object]];
-                                     } else {
-                                         NSLog(@"Received a notification with object of type other than HeatMapSample.");
-                                     }
-                                 }] retain];
-    }
-}
-
 #pragma mark -
 #pragma mark Handle Heat Map Samples
 
-- (void)handleHeatMapSample:(HeatMapSample *)sample {
+- (void)displayHeatMapSample:(HeatMapSample *)sample {
     
     CoordinateRegion cellRegion = [self regionForSample:sample];
     CGRect cellFrame = [[CoordinateConverter sharedCoordinateConverter] rectFromRegion:cellRegion];

@@ -70,12 +70,10 @@
 @property (assign) BOOL monochromeBaseLayer;
 
 #pragma mark -
-#pragma mark Heat Map Properties
+#pragma mark Heat Map Properties and Methods
 
 @property (assign) BOOL showHeatMap;
-
-// TODO: Find a better name for this property
-@property (retain) NSString *notificationName;
+- (void)displayHeatMapSample:(HeatMapSample *)sample;
 
 #pragma mark -
 #pragma mark Zoom, Center & Region

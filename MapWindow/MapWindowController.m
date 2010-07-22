@@ -48,7 +48,6 @@
 					 context:NULL];
         
         mapView.delegate = self;
-        mapView.notificationName = @"HeatMapSample";
 	}
 	return self;
 }
@@ -153,16 +152,16 @@
 #pragma mark -
 #pragma mark MapViewDelegate
 
-- (void)mapView:(MapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
+- (void)mapView:(MapView *)aMapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
     //NSLog(@"Did Tap at Point: coordinate.latitude: %f, .longitude:%f", coordinate.latitude, coordinate.longitude);
     
     HeatMapSample *sample = [HeatMapSample new];
     CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
     sample.location = location;
     sample.data = [NSDictionary dictionaryWithObject:[NSNumber numberWithDouble:(float)rand()/RAND_MAX] forKey:@"value"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"HeatMapSample"
-                                                        object:sample
-                                                      userInfo:nil];
+    
+    [aMapView displayHeatMapSample:sample];
+    
     [sample release];
     [location release];
 }

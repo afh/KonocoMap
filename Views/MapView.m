@@ -47,7 +47,6 @@
 @synthesize delegate;
 @synthesize monochromeBaseLayer;
 @synthesize showHeatMap;
-@synthesize notificationName;
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -129,12 +128,8 @@
     return !heatMap.hidden;
 }
 
-- (void)setNotificationName:(NSString *)name {
-    heatMap.notificationName = name;
-}
-
-- (NSString *)notificationName:(NSString *)name {
-    return heatMap.notificationName;
+- (void)displayHeatMapSample:(HeatMapSample *)sample {
+    [heatMap displayHeatMapSample:sample];
 }
 
 #pragma mark -
