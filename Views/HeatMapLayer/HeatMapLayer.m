@@ -37,7 +37,7 @@
 
 @implementation HeatMapLayer
 
-@synthesize heatMapDelegate;
+@synthesize delegate;
 @synthesize notificationName;
 
 - (id)init {
@@ -71,7 +71,7 @@
                                      if ([[notification object] isKindOfClass:[HeatMapSample class]]) {
                                          [self handleHeatMapSample:[notification object]];
                                      } else {
-                                         NSLog(@"Received a notification with object other than HeatMapSample.");
+                                         NSLog(@"Received a notification with object of type other than HeatMapSample.");
                                      }
                                  }] retain];
     }
@@ -115,8 +115,8 @@
 #pragma mark Custom Cell Attributes for Sample
 
 - (CoordinateRegion)regionForSample:(HeatMapSample *)sample {
-    if (self.heatMapDelegate) {
-        return [self.heatMapDelegate regionForSample:sample];
+    if ([self.delegate respondsToSelector:@selector(regionForSample:)]) {
+        return [self.delegate regionForSample:sample];
     } else {
         return [[CoordinateConverter sharedCoordinateConverter]
                              regionFromCoordinate:sample.location.coordinate
@@ -125,32 +125,32 @@
 }
 
 - (CFTimeInterval)durationForSample:(HeatMapSample *)sample {
-    if (self.heatMapDelegate) {
-        return [self.heatMapDelegate durationForSample:sample];
+    if ([self.delegate respondsToSelector:@selector(durationForSample:)]) {
+        return [self.delegate durationForSample:sample];
     } else {
-        return 20;
+        return 60;
     }
 }
 
 - (CGFloat)valueForSample:(HeatMapSample *)sample {
-    if (self.heatMapDelegate) {
-        return [self.heatMapDelegate valueForSample:sample];
+    if ([self.delegate respondsToSelector:@selector(valueForSample:)]) {
+        return [self.delegate valueForSample:sample];
     } else {
         return (float)rand()/RAND_MAX;
     }
 }
 
 - (CAMediaTimingFunction *)timingFunctionForSample:(HeatMapSample *)sample {
-    if ([self.heatMapDelegate respondsToSelector:@selector(timingFunctionForSample:)]) {
-        return [self.heatMapDelegate timingFunctionForSample:sample];
+    if ([self.delegate respondsToSelector:@selector(timingFunctionForSample:)]) {
+        return [self.delegate timingFunctionForSample:sample];
     } else {
         return [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     }
 }
 
 - (NSColor *)colorForValue:(CGFloat)value {
-    if ([self.heatMapDelegate respondsToSelector:@selector(colorForValue:)]) {
-        return [self.heatMapDelegate colorForValue:value];
+    if ([self.delegate respondsToSelector:@selector(colorForValue:)]) {
+        return [self.delegate colorForValue:value];
     } else {
         return [NSColor colorWithCalibratedHue:value
                                     saturation:1

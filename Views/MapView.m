@@ -23,17 +23,30 @@
 #import "MapView.h"
 #import "MapLayer.h"
 #import "HeatMapLayer.h"
+#import "HeatMapSample.h"
 
 #import "CoordinateConverter.h"
 
 
 @interface MapView ()
 - (void)setUp;
+
+#pragma mark -
+#pragma mark Forward HeatMapLayer Delegate Methods
+
+- (CoordinateRegion)regionForSample:(HeatMapSample *)sample;
+- (CFTimeInterval)durationForSample:(HeatMapSample *)sample;
+- (CGFloat)valueForSample:(HeatMapSample *)sample;
+- (NSColor *)colorForValue:(CGFloat)value;
+- (CAMediaTimingFunction *)timingFunctionForSample:(HeatMapSample *)sample;
+
 @end
 
 @implementation MapView
 
 @synthesize delegate;
+@synthesize monochromeBaseLayer;
+@synthesize notificationName;
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -91,6 +104,28 @@
 	[self didChangeValueForKey:@"region"];
 	[self didChangeValueForKey:@"center"];
 	[self didChangeValueForKey:@"zoom"];
+}
+
+#pragma mark -
+#pragma mark Base Layer Properties
+
+- (BOOL)monochromeBaseLayer {
+    return baseLayer.monochrome;
+}
+
+- (void)setMonochromeBaseLayer:(BOOL)val {
+    baseLayer.monochrome = val;
+}
+
+#pragma mark -
+#pragma mark Heat Map Properties
+
+- (void)setNotificationName:(NSString *)name {
+    heatMap.notificationName = name;
+}
+
+- (NSString *)notificationName:(NSString *)name {
+    return heatMap.notificationName;
 }
 
 #pragma mark -
@@ -221,7 +256,7 @@
         NSPoint local_point = [self convertPoint:event_location fromView:nil];
         NSPoint layer_point = [self.layer convertPoint:local_point toLayer:mapLayer];
         
-        if (delegate) {
+        if ([self.delegate respondsToSelector:@selector(mapView:didTapAtCoordinate:)]) {
             [delegate mapView:self didTapAtCoordinate:[[CoordinateConverter sharedCoordinateConverter] coordinateFromPoint:CGPointMake(layer_point.x / baseLayer.tileSize.width, layer_point.y / baseLayer.tileSize.height)]];
         }
     }
@@ -299,14 +334,13 @@
 	
 	// Set up BaseLayer
 	baseLayer = [[MapLayer layer] retain];
-    baseLayer.monochrome = YES;
     baseLayer.position = CGPointMake(mapLayer.bounds.size.width / 2,
                                      mapLayer.bounds.size.height / 2);
 	[mapLayer addSublayer:baseLayer];
     
     // set up heat map
     heatMap = [HeatMapLayer new];
-    heatMap.notificationName = @"HeatMapSample";
+    heatMap.delegate = self;
     heatMap.bounds = mapLayer.bounds;
     heatMap.position = CGPointMake(mapLayer.bounds.size.width / 2,
                                    mapLayer.bounds.size.height / 2);
@@ -325,6 +359,54 @@
                                                   owner:self
                                                userInfo:nil];
     [self addTrackingArea:trackingArea];
+}
+
+#pragma mark -
+#pragma mark Forward HeatMapLayer Delegate Methods
+
+- (CoordinateRegion)regionForSample:(HeatMapSample *)sample {
+    if ([self.delegate respondsToSelector:@selector(mapView:regionForSample:)]) {
+        return [self.delegate mapView:self regionForSample:sample];
+    } else {
+        return [[CoordinateConverter sharedCoordinateConverter]
+                regionFromCoordinate:sample.location.coordinate
+                withRadius:3000];
+    }
+}
+
+- (CFTimeInterval)durationForSample:(HeatMapSample *)sample {
+    if ([self.delegate respondsToSelector:@selector(mapView:durationForSample:)]) {
+        return [self.delegate mapView:self durationForSample:sample];
+    } else {
+        return 60;
+    }
+}
+
+- (CGFloat)valueForSample:(HeatMapSample *)sample {
+    if ([self.delegate respondsToSelector:@selector(mapView:valueForSample:)]) {
+        return [self.delegate mapView:self valueForSample:sample];
+    } else {
+        return (float)rand()/RAND_MAX;
+    }
+}
+
+- (NSColor *)colorForValue:(CGFloat)value {
+    if ([self.delegate respondsToSelector:@selector(mapView:colorForValue:)]) {
+        return [self.delegate mapView:self colorForValue:value];
+    } else {
+        return [NSColor colorWithCalibratedHue:value
+                                    saturation:1
+                                    brightness:0.5
+                                         alpha:0];
+    }
+}
+
+- (CAMediaTimingFunction *)timingFunctionForSample:(HeatMapSample *)sample {
+    if ([self.delegate respondsToSelector:@selector(mapView:timingFunctionForSample:)]) {
+        return [self.delegate mapView:self timingFunctionForSample:sample];
+    } else {
+        return [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    }
 }
 
 @end

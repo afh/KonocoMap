@@ -45,13 +45,11 @@
     
 @private
     id notificationObserver;
-    NSObject<HeatMapDelegateProtocol> *heatMapDelegate;
     
     // TODO: Find a better name for this property
     NSString *notificationName;
 }
 
-@property (assign) NSObject<HeatMapDelegateProtocol> *heatMapDelegate;
 @property (retain) NSString *notificationName;
 
 @end

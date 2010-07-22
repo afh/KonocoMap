@@ -24,7 +24,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "MapView.h"
 
-@interface MapWindowController : NSWindowController <MapViewDelegate> {
+@interface MapWindowController : NSWindowController <MapViewDelegateProtocol> {
 	IBOutlet MapView *mapView;
 }
 

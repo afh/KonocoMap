@@ -27,9 +27,26 @@
 @class MapView;
 @class MapLayer;
 @class HeatMapLayer;
+@class HeatMapSample;
 
-@protocol MapViewDelegate
+@protocol MapViewDelegateProtocol
+
+#pragma mark -
+#pragma mark Handling User Action
+
+@optional
 - (void)mapView:(MapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate;
+
+#pragma mark -
+#pragma mark Heat Map Behavior
+
+@optional
+- (CoordinateRegion)mapView:(MapView *)mapView regionForSample:(HeatMapSample *)sample;
+- (CFTimeInterval)mapView:(MapView *)mapView durationForSample:(HeatMapSample *)sample;
+- (CGFloat)mapView:(MapView *)mapView valueForSample:(HeatMapSample *)sample;
+- (NSColor *)mapView:(MapView *)mapView colorForValue:(CGFloat)value;
+- (CAMediaTimingFunction *)mapView:(MapView *)mapView timingFunctionForSample:(HeatMapSample *)sample;
+
 @end
 
 @interface MapView : NSView {
@@ -39,13 +56,24 @@
     NSTrackingArea *trackingArea;
     BOOL mouseMoved;
     
-    id<MapViewDelegate> delegate;
+    id delegate;
 }
 
 #pragma mark -
 #pragma mark Delegate
 
-@property (nonatomic, retain) id<MapViewDelegate> delegate;
+@property (nonatomic, retain) id delegate;
+
+#pragma mark -
+#pragma mark Base Layer Properties
+
+@property (assign) BOOL monochromeBaseLayer;
+
+#pragma mark -
+#pragma mark Heat Map Properties
+
+// TODO: Find a better name for this property
+@property (retain) NSString *notificationName;
 
 #pragma mark -
 #pragma mark Zoom, Center & Region

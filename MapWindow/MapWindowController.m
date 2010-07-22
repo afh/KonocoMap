@@ -48,6 +48,9 @@
 					 context:NULL];
         
         mapView.delegate = self;
+        mapView.notificationName = @"HeatMapSample";
+        mapView.monochromeBaseLayer = YES;
+        
 	}
 	return self;
 }
