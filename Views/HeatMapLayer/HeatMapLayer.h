@@ -38,13 +38,9 @@
 
 @interface HeatMapLayer : CALayer {
     id notificationObserver;
-    
-    MapView *mapView;
-    
     id<HeatMapDelegateProtocol> delegate;
 }
 
-@property (nonatomic, assign) MapView *mapView;
 @property (nonatomic, assign) id<HeatMapDelegateProtocol> delegate;
 
 @end

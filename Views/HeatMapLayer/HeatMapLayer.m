@@ -37,7 +37,6 @@
 
 @implementation HeatMapLayer
 
-@synthesize mapView;
 @synthesize delegate;
 
 - (id)init {
@@ -73,12 +72,11 @@
 
 - (void)handleHeatMapSample:(HeatMapSample *)sample {
     //DEBUG_LOG(@"Received HeatMapSample: %@", sample);
-    
-    assert(self.mapView);
-    
+
     CoordinateRegion cellRegion = [self regionForSample:sample];
     
-    CGFloat currentScale = powf(2, self.mapView.zoom);
+    
+    CGFloat currentScale = self.superlayer.affineTransform.a;
 //    NSLog(@"current scale: %f", currentScale);
     
 //    NSLog(@"sample region: lat: %f, long: %f, delta lat: %f, delta long: %f",

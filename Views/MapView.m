@@ -307,7 +307,6 @@
     
     // set up heat map
     heatMap = [HeatMapLayer new];
-    heatMap.mapView = self;
     heatMap.bounds = mapLayer.bounds;
     heatMap.position = CGPointMake(mapLayer.bounds.size.width / 2,
                                    mapLayer.bounds.size.height / 2);
