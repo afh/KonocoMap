@@ -36,6 +36,8 @@ typedef struct {
 } CoordinateRegion;
 
 @interface CoordinateConverter : NSObject {
+    
+@private
     void * pj_merc;
     void * pj_wgs84;
 }

@@ -80,9 +80,12 @@ static CGFloat WGS84EarthRadius(CGFloat lat);
     x = x * 20037508.342789 * 2 - 20037508.342789;
     y = y * 20037508.342789 * 2 - 20037508.342789;
     
-    if (pj_transform(pj_merc, pj_wgs84, 1, 1, &x, &y, NULL)) {
-        NSLog(@"x:%f, y:%f", x, y);
-        NSLog(@"Could not transform point from mercator to wgs84: %s", pj_strerrno(pj_errno));
+    @synchronized (self) {
+        // OPTIMIZE: Find out if this function is thread-safe.
+        if (pj_transform(pj_merc, pj_wgs84, 1, 1, &x, &y, NULL)) {
+            NSLog(@"x:%f, y:%f", x, y);
+            NSLog(@"Could not transform point from mercator to wgs84: %s", pj_strerrno(pj_errno));
+        }
     }
     
     CLLocationCoordinate2D coordinate;
@@ -96,9 +99,12 @@ static CGFloat WGS84EarthRadius(CGFloat lat);
     x = coordinate.longitude * DEG_TO_RAD;
     y = coordinate.latitude * DEG_TO_RAD;
     
-    if (pj_transform(pj_wgs84, pj_merc, 1, 1, &x, &y, NULL)) {
-        NSLog(@"x:%f, y:%f", x, y);
-        NSLog(@"Could not transform coordinate from wgs84 to mercator: %s", pj_strerrno(pj_errno));
+    @synchronized (self) {
+        // OPTIMIZE: Find out if this function is thread-safe.
+        if (pj_transform(pj_wgs84, pj_merc, 1, 1, &x, &y, NULL)) {
+            NSLog(@"x:%f, y:%f", x, y);
+            NSLog(@"Could not transform coordinate from wgs84 to mercator: %s", pj_strerrno(pj_errno));
+        }
     }
     
     x = (x + 20037508.342789) / (20037508.342789 * 2.0);
