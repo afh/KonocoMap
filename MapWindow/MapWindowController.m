@@ -158,12 +158,26 @@
     HeatMapSample *sample = [HeatMapSample new];
     CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
     sample.location = location;
-    sample.data = nil;
+    sample.data = [NSDictionary dictionaryWithObject:[NSNumber numberWithDouble:(float)rand()/RAND_MAX] forKey:@"value"];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"HeatMapSample"
                                                         object:sample
                                                       userInfo:nil];
     [sample release];
     [location release];
 }
+
+- (CoordinateRegion)mapView:(MapView *)mapView regionForSample:(HeatMapSample *)sample {
+    
+    double radius = (float)rand()/RAND_MAX * 6000 + 3000;
+    
+    return [[CoordinateConverter sharedCoordinateConverter]
+            regionFromCoordinate:sample.location.coordinate
+            withRadius:radius];
+}
+
+- (CGFloat)mapView:(MapView *)mapView valueForSample:(HeatMapSample *)sample {
+    return [[sample.data objectForKey:@"value"] doubleValue];
+}
+
 
 @end
