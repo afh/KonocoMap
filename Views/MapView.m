@@ -304,9 +304,9 @@
                                      mapLayer.bounds.size.height / 2);
 	[mapLayer addSublayer:baseLayer];
     
-    
     // set up heat map
     heatMap = [HeatMapLayer new];
+    heatMap.notificationName = @"HeatMapSample";
     heatMap.bounds = mapLayer.bounds;
     heatMap.position = CGPointMake(mapLayer.bounds.size.width / 2,
                                    mapLayer.bounds.size.height / 2);

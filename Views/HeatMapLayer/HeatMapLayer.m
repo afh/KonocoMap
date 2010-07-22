@@ -23,41 +23,28 @@
 #import "HeatMapLayer.h"
 #import "HeatMapSample.h"
 #import "HeatMapCell.h"
-#import "MapView.h"
 
 
 @interface HeatMapLayer ()
 - (void)handleHeatMapSample:(HeatMapSample *)aSample;
 - (CoordinateRegion)regionForSample:(HeatMapSample *)sample;
 - (CFTimeInterval)durationForSample:(HeatMapSample *)sample;
+- (CGFloat)valueForSample:(HeatMapSample *)sample;
+- (NSColor *)colorForValue:(CGFloat)value;
 - (CAMediaTimingFunction *)timingFunctionForSample:(HeatMapSample *)sample;
-- (NSColor *)colorForSample:(HeatMapSample *)sample;
 @end
 
 
 @implementation HeatMapLayer
 
-@synthesize delegate;
+@synthesize heatMapDelegate;
+@synthesize notificationName;
 
 - (id)init {
     if ((self = [super init]) != nil) {
-        
         // set composition filter
         CIFilter *compFilter = [CIFilter filterWithName:@"CIColorBlendMode"];
         self.compositingFilter = compFilter;
-        
-        
-        // set observer for heat map samples
-        notificationObserver = [[[NSNotificationCenter defaultCenter] addObserverForName:@"HeatMapSample"
-                                                                                  object:nil
-                                                                                   queue:nil
-                                                                              usingBlock:^(NSNotification *notification){
-                                                                                  if ([[notification object] isKindOfClass:[HeatMapSample class]]) {
-                                                                                      [self handleHeatMapSample:[notification object]];
-                                                                                  } else {
-                                                                                      NSLog(@"Received a notification with object other than HeatMapSample.");
-                                                                                  }
-                                                                              }] retain];
     }
     return self;
 }
@@ -68,34 +55,39 @@
 }
 
 #pragma mark -
+#pragma mark Manage Sample Source
+
+- (void)setNotificationName:(NSString *)name {
+    if (![notificationName isEqual:name]) {
+        [notificationName release];
+        notificationName = [name retain];
+        
+        [notificationObserver release];
+        notificationObserver = [[[NSNotificationCenter defaultCenter]
+                                 addObserverForName:notificationName
+                                 object:nil
+                                 queue:nil
+                                 usingBlock:^(NSNotification *notification){
+                                     if ([[notification object] isKindOfClass:[HeatMapSample class]]) {
+                                         [self handleHeatMapSample:[notification object]];
+                                     } else {
+                                         NSLog(@"Received a notification with object other than HeatMapSample.");
+                                     }
+                                 }] retain];
+    }
+}
+
+#pragma mark -
 #pragma mark Handle Heat Map Samples
 
 - (void)handleHeatMapSample:(HeatMapSample *)sample {
-    //DEBUG_LOG(@"Received HeatMapSample: %@", sample);
-
+    
     CoordinateRegion cellRegion = [self regionForSample:sample];
-    
-    
-    CGFloat currentScale = self.superlayer.affineTransform.a;
-//    NSLog(@"current scale: %f", currentScale);
-    
-//    NSLog(@"sample region: lat: %f, long: %f, delta lat: %f, delta long: %f",
-//          cellRegion.center.latitude,
-//          cellRegion.center.longitude,
-//          cellRegion.span.latitudeDelta,
-//          cellRegion.span.longitudeDelta);
-
     CGRect cellFrame = [[CoordinateConverter sharedCoordinateConverter] rectFromRegion:cellRegion];
-    cellFrame = CGRectMake(cellFrame.origin.x * 256,
-                           cellFrame.origin.y * 256, 
-                           cellFrame.size.width * 256, 
-                           cellFrame.size.height * 256);
-    
-//    NSLog(@"cell frame x: %f, y: %f, width: %f, height: %f",
-//          cellFrame.origin.x,
-//          cellFrame.origin.y,
-//          cellFrame.size.width,
-//          cellFrame.size.height);
+    cellFrame = CGRectMake(cellFrame.origin.x * self.bounds.size.width,
+                           cellFrame.origin.y * self.bounds.size.height, 
+                           cellFrame.size.width * self.bounds.size.width, 
+                           cellFrame.size.height * self.bounds.size.height);
     
     HeatMapCell *cell = [[HeatMapCell alloc] initWithSample:sample
                                                    duration:[self durationForSample:sample]
@@ -103,6 +95,7 @@
     cell.delegate = self;
     cell.frame = cellFrame;
     
+    CGFloat currentScale = self.superlayer.affineTransform.a;
     cell.bounds = CGRectMake(0,
                              0,
                              cell.bounds.size.width * currentScale,
@@ -111,13 +104,6 @@
     CGAffineTransform cellTransform = CGAffineTransformIdentity;
 	cellTransform = CGAffineTransformScale(cellTransform, 1 / currentScale, 1 / currentScale);
 	cell.affineTransform = cellTransform;
-    
-//    NSLog(@"cell position x: %f, y: %f", cell.position.x, cell.position.y);
-//    NSLog(@"cell bounds x: %f, y: %f, width: %f, height: %f",
-//          cell.bounds.origin.x,
-//          cell.bounds.origin.y,
-//          cell.bounds.size.width,
-//          cell.bounds.size.height);
     
     [cell setNeedsDisplay];
     
@@ -129,8 +115,8 @@
 #pragma mark Custom Cell Attributes for Sample
 
 - (CoordinateRegion)regionForSample:(HeatMapSample *)sample {
-    if (self.delegate) {
-        return [self.delegate regionForSample:sample];
+    if (self.heatMapDelegate) {
+        return [self.heatMapDelegate regionForSample:sample];
     } else {
         return [[CoordinateConverter sharedCoordinateConverter]
                              regionFromCoordinate:sample.location.coordinate
@@ -139,26 +125,34 @@
 }
 
 - (CFTimeInterval)durationForSample:(HeatMapSample *)sample {
-    if (self.delegate) {
-        return [self.delegate durationForSample:sample];
+    if (self.heatMapDelegate) {
+        return [self.heatMapDelegate durationForSample:sample];
     } else {
         return 20;
     }
 }
 
+- (CGFloat)valueForSample:(HeatMapSample *)sample {
+    if (self.heatMapDelegate) {
+        return [self.heatMapDelegate valueForSample:sample];
+    } else {
+        return (float)rand()/RAND_MAX;
+    }
+}
+
 - (CAMediaTimingFunction *)timingFunctionForSample:(HeatMapSample *)sample {
-    if (self.delegate) {
-        return [self.delegate timingFunctionForSample:sample];
+    if ([self.heatMapDelegate respondsToSelector:@selector(timingFunctionForSample:)]) {
+        return [self.heatMapDelegate timingFunctionForSample:sample];
     } else {
         return [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     }
 }
 
-- (NSColor *)colorForSample:(HeatMapSample *)sample {
-    if (self.delegate) {
-        return [self.delegate colorForSample:sample];
+- (NSColor *)colorForValue:(CGFloat)value {
+    if ([self.heatMapDelegate respondsToSelector:@selector(colorForValue:)]) {
+        return [self.heatMapDelegate colorForValue:value];
     } else {
-        return [NSColor colorWithCalibratedHue:((float)rand()/RAND_MAX)
+        return [NSColor colorWithCalibratedHue:value
                                     saturation:1
                                     brightness:0.5
                                          alpha:0];        
@@ -166,7 +160,7 @@
 }
 
 #pragma mark -
-#pragma mark Draw Smaple Cell Delegate
+#pragma mark Draw Sample Cell Delegate
 
 - (void)drawLayer:(CALayer *)layer
         inContext:(CGContextRef)ctx {
@@ -185,7 +179,7 @@
     size_t num_locations = 2;
     CGFloat locations[2] = { 0.0, 1.0 };
     
-    NSColor *color = [self colorForSample:cell.sample];
+    NSColor *color = [self colorForValue:[self valueForSample:cell.sample]];
     
     CGFloat components[8] = {
         [color redComponent], [color greenComponent], [color blueComponent], 0.8,   // Start color

@@ -27,6 +27,8 @@
 @class HeatMapSample;
 
 @interface HeatMapCell : CALayer {
+
+@private
     HeatMapSample *sample;
     CFTimeInterval duration;
     CAMediaTimingFunction *timingFunction;

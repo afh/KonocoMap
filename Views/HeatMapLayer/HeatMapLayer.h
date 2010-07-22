@@ -23,24 +23,35 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 
-#import "MapView.h"
 #import "CoordinateConverter.h"
 
 @class HeatMapSample;
 
 @protocol HeatMapDelegateProtocol
+
+@required
 - (CoordinateRegion)regionForSample:(HeatMapSample *)sample;
 - (CFTimeInterval)durationForSample:(HeatMapSample *)sample;
+- (CGFloat)valueForSample:(HeatMapSample *)sample;
+
+@optional
+- (NSColor *)colorForValue:(CGFloat)value;
 - (CAMediaTimingFunction *)timingFunctionForSample:(HeatMapSample *)sample;
-- (NSColor *)colorForSample:(HeatMapSample *)sample;
+
 @end
 
 
 @interface HeatMapLayer : CALayer {
+    
+@private
     id notificationObserver;
-    id<HeatMapDelegateProtocol> delegate;
+    NSObject<HeatMapDelegateProtocol> *heatMapDelegate;
+    
+    // TODO: Find a better name for this property
+    NSString *notificationName;
 }
 
-@property (nonatomic, assign) id<HeatMapDelegateProtocol> delegate;
+@property (assign) NSObject<HeatMapDelegateProtocol> *heatMapDelegate;
+@property (retain) NSString *notificationName;
 
 @end
