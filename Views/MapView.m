@@ -46,6 +46,7 @@
 
 @synthesize delegate;
 @synthesize monochromeBaseLayer;
+@synthesize showHeatMap;
 @synthesize notificationName;
 
 - (id)initWithFrame:(NSRect)frame {
@@ -119,6 +120,14 @@
 
 #pragma mark -
 #pragma mark Heat Map Properties
+
+- (void)setShowHeatMap:(BOOL)show {
+    heatMap.hidden = !show;
+}
+
+- (BOOL)showHeatMap {
+    return !heatMap.hidden;
+}
 
 - (void)setNotificationName:(NSString *)name {
     heatMap.notificationName = name;
@@ -344,6 +353,7 @@
     heatMap.bounds = mapLayer.bounds;
     heatMap.position = CGPointMake(mapLayer.bounds.size.width / 2,
                                    mapLayer.bounds.size.height / 2);
+    heatMap.hidden = YES;
     [mapLayer addSublayer:heatMap];
     
 	CGFloat scale = MAX(self.bounds.size.height / baseLayer.tileSize.height,

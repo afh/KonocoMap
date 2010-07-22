@@ -72,6 +72,8 @@
 #pragma mark -
 #pragma mark Heat Map Properties
 
+@property (assign) BOOL showHeatMap;
+
 // TODO: Find a better name for this property
 @property (retain) NSString *notificationName;
 

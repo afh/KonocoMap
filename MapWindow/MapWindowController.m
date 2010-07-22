@@ -49,8 +49,6 @@
         
         mapView.delegate = self;
         mapView.notificationName = @"HeatMapSample";
-        mapView.monochromeBaseLayer = YES;
-        
 	}
 	return self;
 }
@@ -89,6 +87,11 @@
 		err = CGDisplayFade (token, 0.25, kCGDisplayBlendSolidColor, kCGDisplayBlendNormal, 0, 0, 0, true);
 		err = CGReleaseDisplayFadeReservation (token);
 	}
+}
+
+- (IBAction)toggleHeatMap:(id)sender {
+    mapView.showHeatMap = !mapView.showHeatMap;
+    mapView.monochromeBaseLayer = mapView.showHeatMap;
 }
 
 #pragma mark -

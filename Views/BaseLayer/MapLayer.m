@@ -42,6 +42,8 @@
         self.masksToBounds = NO;
         self.levelsOfDetail = tileSource.maxZoomLevel;
         self.levelsOfDetailBias = tileSource.maxZoomLevel;
+        
+        monochrome = NO;
 	}
 	return self;
 }
@@ -53,6 +55,16 @@
 - (void)dealloc {
 	[tileSource release];
 	[super dealloc];
+}
+
+#pragma mark -
+#pragma mark Monochrome
+
+- (void)setMonochrome:(BOOL)value {
+    if (monochrome != value) {
+        monochrome = value;
+        [self setNeedsDisplay];
+    }
 }
 
 #pragma mark -
