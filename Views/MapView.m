@@ -24,12 +24,11 @@
 #import "MapLayer.h"
 #import "HeatMapLayer.h"
 
-#import <proj_api.h>
+#import "CoordinateConverter.h"
 
 
 @interface MapView ()
 - (void)setUp;
-- (void)setUpCoordinateConverter;
 @end
 
 @implementation MapView
@@ -131,7 +130,7 @@
 }
 
 - (CLLocationCoordinate2D)center {
-	return [self coordinateFromPoint:mapLayer.anchorPoint];
+	return [[CoordinateConverter sharedCoordinateConverter] coordinateFromPoint:mapLayer.anchorPoint];
 }
 
 - (void)setCenter:(CLLocationCoordinate2D)coordinate {
@@ -141,7 +140,7 @@
 - (void)setCenter:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated {
 	// TODO: Check which "attributes" where modified by this operation
     
-    CGPoint point = [self pointFromCoordinate:coordinate];
+    CGPoint point = [[CoordinateConverter sharedCoordinateConverter] pointFromCoordinate:coordinate];
     
 	[self willChangeValueForKey:@"region"];
 	[self willChangeValueForKey:@"center"];
@@ -169,7 +168,8 @@
 	CGFloat width = self.bounds.size.width / (baseLayer.tileSize.width * scale);
 	CGFloat height = self.bounds.size.height / (baseLayer.tileSize.height * scale);
     
-	return [self regionFromRect:CGRectMake(mapLayer.anchorPoint.x - width / 2,
+	return [[CoordinateConverter sharedCoordinateConverter]
+                 regionFromRect:CGRectMake(mapLayer.anchorPoint.x - width / 2,
                                            mapLayer.anchorPoint.y - height / 2,
                                            width,
                                            height)];
@@ -222,7 +222,7 @@
         NSPoint layer_point = [self.layer convertPoint:local_point toLayer:mapLayer];
         
         if (delegate) {
-            [delegate mapView:self didTapAtCoordinate:[self coordinateFromPoint:CGPointMake(layer_point.x / baseLayer.tileSize.width, layer_point.y / baseLayer.tileSize.height)]];
+            [delegate mapView:self didTapAtCoordinate:[[CoordinateConverter sharedCoordinateConverter] coordinateFromPoint:CGPointMake(layer_point.x / baseLayer.tileSize.width, layer_point.y / baseLayer.tileSize.height)]];
         }
     }
 }
@@ -286,7 +286,6 @@
 #pragma mark Private Methods
 
 - (void)setUp {
-    [self setUpCoordinateConverter];
     
 	// Enable CALayer backing
 	[self setWantsLayer:YES];
@@ -327,126 +326,6 @@
                                                   owner:self
                                                userInfo:nil];
     [self addTrackingArea:trackingArea];
-}
-
-#pragma mark -
-#pragma mark Coordinate Conversion
-
-- (void)setUpCoordinateConverter {
-    NSLog(@"Setup coordinate converter.");
-    // set up projections
-    if (0 == (pj_merc = pj_init_plus("+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs"))) {
-        NSLog(@"Could not create marcator projector: %s", pj_strerrno(pj_errno));
-    }
-    
-    if (0 == (pj_wgs84 = pj_init_plus("+proj=latlong +ellps=WGS84"))) {
-        NSLog(@"Could not create wgs84 projector: %s", pj_strerrno(pj_errno));
-    }
-    
-    // TODO: Better error handling
-    assert(pj_merc);
-    assert(pj_wgs84);
-}
-
-- (CLLocationCoordinate2D)coordinateFromPoint:(CGPoint)point {
-    double x, y;
-    x = point.x;
-    y = point.y;
-    
-    x = x * 20037508.342789 * 2 - 20037508.342789;
-    y = y * 20037508.342789 * 2 - 20037508.342789;
-    
-    if (pj_transform(pj_merc, pj_wgs84, 1, 1, &x, &y, NULL)) {
-        NSLog(@"x:%f, y:%f", x, y);
-        NSLog(@"Could not transform point from mercator to wgs84: %s", pj_strerrno(pj_errno));
-    }
-    
-    CLLocationCoordinate2D coordinate;
-    coordinate.longitude = x * RAD_TO_DEG;
-    coordinate.latitude = y * RAD_TO_DEG;
-    return coordinate;
-}
-
-- (CGPoint)pointFromCoordinate:(CLLocationCoordinate2D)coordinate {
-    double x, y;
-    x = coordinate.longitude * DEG_TO_RAD;
-    y = coordinate.latitude * DEG_TO_RAD;
-    
-    if (pj_transform(pj_wgs84, pj_merc, 1, 1, &x, &y, NULL)) {
-        NSLog(@"x:%f, y:%f", x, y);
-        NSLog(@"Could not transform coordinate from wgs84 to mercator: %s", pj_strerrno(pj_errno));
-    }
-    
-    x = (x + 20037508.342789) / (20037508.342789 * 2.0);
-    y = (y + 20037508.342789) / (20037508.342789 * 2.0);
-    
-    return CGPointMake(x, y);
-}
-
-- (CoordinateRegion)regionFromRect:(CGRect)rect {
-    CoordinateRegion result;
-    
-    CLLocationCoordinate2D lowerLeft = [self coordinateFromPoint:rect.origin];
-    CLLocationCoordinate2D upperRight = [self coordinateFromPoint:CGPointMake(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height)];
-    
-    result.center.longitude = (upperRight.longitude + lowerLeft.longitude) / 2;
-    result.center.latitude = (upperRight.latitude + lowerLeft.latitude) / 2;
-    result.span.longitudeDelta = upperRight.longitude - lowerLeft.longitude;
-    result.span.latitudeDelta = upperRight.latitude - lowerLeft.latitude;
-    
-    return result;
-}
-
-- (CGRect)rectFromRegion:(CoordinateRegion)region {
-    CLLocationCoordinate2D lowerLeftC;
-    lowerLeftC.longitude = region.center.longitude - region.span.longitudeDelta / 2;
-    lowerLeftC.latitude = region.center.latitude - region.span.latitudeDelta / 2;
-    
-    CLLocationCoordinate2D upperRightC;
-    upperRightC.longitude = region.center.longitude + region.span.longitudeDelta / 2;
-    upperRightC.latitude = region.center.latitude + region.span.latitudeDelta / 2;
-    
-    CGPoint lowerLeft = [self pointFromCoordinate:lowerLeftC];
-    CGPoint upperRight = [self pointFromCoordinate:upperRightC];
-    
-    return CGRectMake(lowerLeft.x, lowerLeft.y, upperRight.x - lowerLeft.x, upperRight.y - lowerLeft.y);
-}
-
-CGFloat WGS84EarthRadius(CGFloat lat) {
-    
-    // http://en.wikipedia.org/wiki/Earth_radius
-    
-    double WGS84_a = 6378137.0;
-    double WGS84_b = 6356752.3;
-    
-    double An, Bn, Ad, Bd;
-    
-    An = WGS84_a * WGS84_a * cos(lat);
-    Bn = WGS84_b * WGS84_b * sin(lat);
-    Ad = WGS84_a * cos(lat);
-    Bd = WGS84_b * sin(lat);
-    
-    return sqrt( (An*An + Bn*Bn)/(Ad*Ad + Bd*Bd) );
-}
-
-- (CoordinateRegion)regionFromCoordinate:(CLLocationCoordinate2D)coordinate withRadius:(CGFloat)distance {
-    
-    //
-    // http://stackoverflow.com/questions/238260/how-to-calculate-the-bounding-box-for-a-given-lat-lng-location
-    //
-    
-    CoordinateRegion result;
-    result.center = coordinate;
-    
-    double lat = DEG_TO_RAD * coordinate.latitude;
-    
-    double radius = WGS84EarthRadius(lat);
-    double pradius = radius * cos(lat);
-    
-    result.span.longitudeDelta = RAD_TO_DEG * 2 * distance / pradius;
-    result.span.latitudeDelta = RAD_TO_DEG * 2 * distance / radius;
-    
-    return result;
 }
 
 @end

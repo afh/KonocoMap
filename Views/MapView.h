@@ -22,16 +22,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <CoreLocation/CoreLocation.h>
-
-typedef struct {
-    CLLocationDegrees latitudeDelta;
-    CLLocationDegrees longitudeDelta;
-} CoordinateSpan;
-
-typedef struct {
-    CLLocationCoordinate2D center;
-    CoordinateSpan span;
-} CoordinateRegion;
+#import "CoordinateConverter.h"
 
 @class MapView;
 @class MapLayer;
@@ -49,8 +40,6 @@ typedef struct {
     BOOL mouseMoved;
     
     id<MapViewDelegate> delegate;
-    
-    void * pj_merc, * pj_wgs84;
 }
 
 #pragma mark -
@@ -68,14 +57,5 @@ typedef struct {
 - (void)setZoom:(CGFloat)level animated:(BOOL)animated;
 - (void)setCenter:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated;
 - (void)setRegion:(CoordinateRegion)rect animated:(BOOL)animated;
-
-#pragma mark -
-#pragma mark Coordinate Converter
-
-- (CLLocationCoordinate2D)coordinateFromPoint:(CGPoint)point;
-- (CGPoint)pointFromCoordinate:(CLLocationCoordinate2D)coordinate;
-- (CoordinateRegion)regionFromRect:(CGRect)rect;
-- (CGRect)rectFromRegion:(CoordinateRegion)region;
-- (CoordinateRegion)regionFromCoordinate:(CLLocationCoordinate2D)coordinate withRadius:(CGFloat)radius;
 
 @end

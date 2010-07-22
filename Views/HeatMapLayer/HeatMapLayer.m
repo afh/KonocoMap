@@ -56,7 +56,7 @@
                                                                                   if ([[notification object] isKindOfClass:[HeatMapSample class]]) {
                                                                                       [self handleHeatMapSample:[notification object]];
                                                                                   } else {
-                                                                                      NSLog(@"Received a notification with object other that HeatMapSample.");
+                                                                                      NSLog(@"Received a notification with object other than HeatMapSample.");
                                                                                   }
                                                                               }] retain];
     }
@@ -72,7 +72,7 @@
 #pragma mark Handle Heat Map Samples
 
 - (void)handleHeatMapSample:(HeatMapSample *)sample {
-//    NSLog(@"Received HeatMapSample: %@", sample);
+    //DEBUG_LOG(@"Received HeatMapSample: %@", sample);
     
     assert(self.mapView);
     
@@ -87,7 +87,7 @@
 //          cellRegion.span.latitudeDelta,
 //          cellRegion.span.longitudeDelta);
 
-    CGRect cellFrame = [self.mapView rectFromRegion:cellRegion];
+    CGRect cellFrame = [[CoordinateConverter sharedCoordinateConverter] rectFromRegion:cellRegion];
     cellFrame = CGRectMake(cellFrame.origin.x * 256,
                            cellFrame.origin.y * 256, 
                            cellFrame.size.width * 256, 
@@ -134,7 +134,8 @@
     if (self.delegate) {
         return [self.delegate regionForSample:sample];
     } else {
-        return [self.mapView regionFromCoordinate:sample.location.coordinate
+        return [[CoordinateConverter sharedCoordinateConverter]
+                             regionFromCoordinate:sample.location.coordinate
                                        withRadius:3000];
     }
 }
@@ -159,7 +160,7 @@
     if (self.delegate) {
         return [self.delegate colorForSample:sample];
     } else {
-        return [NSColor colorWithCalibratedHue:0.5
+        return [NSColor colorWithCalibratedHue:((float)rand()/RAND_MAX)
                                     saturation:1
                                     brightness:0.5
                                          alpha:0];        
@@ -173,7 +174,7 @@
         inContext:(CGContextRef)ctx {
     
     if (![layer isKindOfClass:[HeatMapCell class]]) {
-        NSLog(@"Expecting HeatMapCell.");
+        DEBUG_LOG(@"Expecting HeatMapCell.");
         return;
     }
     
@@ -189,7 +190,7 @@
     NSColor *color = [self colorForSample:cell.sample];
     
     CGFloat components[8] = {
-        [color redComponent], [color greenComponent], [color blueComponent], 1.0,   // Start color
+        [color redComponent], [color greenComponent], [color blueComponent], 0.8,   // Start color
         [color redComponent], [color greenComponent], [color blueComponent], 0.0    // End color
     };
     

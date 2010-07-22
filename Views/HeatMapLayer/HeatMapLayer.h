@@ -24,6 +24,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "MapView.h"
+#import "CoordinateConverter.h"
 
 @class HeatMapSample;
 
