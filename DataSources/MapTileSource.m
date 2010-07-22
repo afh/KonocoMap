@@ -38,7 +38,7 @@ NSObject<TileSourceProtocol> *sharedMapSource = nil;
 + (NSObject<TileSourceProtocol>*)sharedMapSource {
 	@synchronized(self) {
 		if (sharedMapSource == nil) {
-			[self new];
+            sharedMapSource = [[super allocWithZone:NULL] init];
 		}
 	}
 	return sharedMapSource;

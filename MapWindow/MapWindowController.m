@@ -77,15 +77,16 @@
 	err = CGAcquireDisplayFadeReservation (kCGMaxDisplayReservationInterval, &token);
 	if (err == kCGErrorSuccess)
 	{
-		err = CGDisplayFade (token, 0.25, kCGDisplayBlendNormal, kCGDisplayBlendSolidColor, 0, 0, 0, true);
-		err = CGDisplayCapture (kCGDirectMainDisplay);
+        // TODO: Check errors
+		CGDisplayFade (token, 0.25, kCGDisplayBlendNormal, kCGDisplayBlendSolidColor, 0, 0, 0, true);
+        CGDisplayCapture (kCGDirectMainDisplay);
 		if ([mapView isInFullScreenMode]) {
 			[mapView exitFullScreenModeWithOptions:NULL];
 		} else {
 			[mapView enterFullScreenMode:[mapView.window screen] withOptions:NULL];
 		}
-		err = CGDisplayFade (token, 0.25, kCGDisplayBlendSolidColor, kCGDisplayBlendNormal, 0, 0, 0, true);
-		err = CGReleaseDisplayFadeReservation (token);
+		CGDisplayFade (token, 0.25, kCGDisplayBlendSolidColor, kCGDisplayBlendNormal, 0, 0, 0, true);
+		CGReleaseDisplayFadeReservation (token);
 	}
 }
 
