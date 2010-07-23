@@ -5,3 +5,11 @@
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
 #endif
+
+#ifdef DEBUG
+#define DEBUG_LOG(...) NSLog(@"%s %@", __PRETTY_FUNCTION__, [NSString stringWithFormat:__VA_ARGS__])
+#else
+#define DEBUG_LOG(...)
+#endif
+
+#define LOG(...) NSLog(__VA_ARGS__)
