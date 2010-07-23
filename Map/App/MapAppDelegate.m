@@ -24,7 +24,6 @@
 
 // controller
 #import "MapWindowController.h"
-#import "PreferenceController.h"
 #import <proj_api.h>
 
 @implementation MapAppDelegate
@@ -56,13 +55,6 @@
 	}
 	[mapWindowController showWindow:self];
 	[mapWindowController.window makeKeyAndOrderFront:nil];
-}
-
-- (IBAction)showPreference:(id)sender {
-	if (!preferenceController) {
-		preferenceController = [PreferenceController new];
-	}
-	[preferenceController showWindow:self];
 }
 
 - (IBAction)zoomIn:(id)sender {

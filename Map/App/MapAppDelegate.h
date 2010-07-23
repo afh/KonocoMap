@@ -1,5 +1,5 @@
 //
-//  PreferenceController.h
+//  MapAppDelegate.h
 //  Map
 //
 //  Created by Tobias Kräntzer on 07.04.10.
@@ -21,10 +21,34 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
+#import <CoreLocation/CoreLocation.h>
 
+@class MapWindowController;
 
-@interface PreferenceController : NSWindowController {
-
+@interface MapAppDelegate : NSObject <CLLocationManagerDelegate> {
+	MapWindowController *mapWindowController;
+    
+    CLLocationManager *locationManager;
 }
+
+#pragma mark -
+#pragma mark Actions
+
+- (IBAction)showMapWindow:(id)sender;
+
+- (IBAction)zoomIn:(id)sender;
+- (IBAction)zoomOut:(id)sender;
+
+- (IBAction)toggleFullscreen:(id)sender;
+
+#pragma mark -
+#pragma mark Location Manager Delegate Methods
+
+- (void)locationManager:(CLLocationManager *)manager
+       didFailWithError:(NSError *)error;
+
+- (void)locationManager:(CLLocationManager *)manager
+    didUpdateToLocation:(CLLocation *)newLocation
+           fromLocation:(CLLocation *)oldLocation;
 
 @end
