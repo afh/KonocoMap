@@ -153,14 +153,12 @@
 - (void)mapView:(MapView *)aMapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
     //NSLog(@"Did Tap at Point: coordinate.latitude: %f, .longitude:%f", coordinate.latitude, coordinate.longitude);
     
-    HeatMapSample *sample = [HeatMapSample new];
     CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
-    sample.location = location;
-    sample.data = [NSDictionary dictionaryWithObject:[NSNumber numberWithDouble:(float)rand()/RAND_MAX] forKey:@"value"];
+    NSNumber *x = [NSNumber numberWithDouble:((float)rand()/RAND_MAX)];
     
-    [aMapView displayHeatMapSample:sample];
-    
-    [sample release];
+    [aMapView displayHeatMapSample:[HeatMapSample sampleWithLocation:location
+                                                                data:[NSDictionary dictionaryWithObject:x
+                                                                                                 forKey:@"value"]]];
     [location release];
 }
 

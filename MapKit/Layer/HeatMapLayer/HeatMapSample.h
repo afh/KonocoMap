@@ -29,7 +29,11 @@
     NSDictionary *data;
 }
 
-@property (nonatomic, retain) CLLocation *location;;
-@property (nonatomic, retain) NSDictionary *data;
++ (id)sampleWithLocation:(CLLocation *)location data:(NSDictionary *)data;
+
+- (id)initWithLocation:(CLLocation *)location data:(NSDictionary *)data;
+
+@property (readonly) CLLocation *location;;
+@property (readonly) NSDictionary *data;
 
 @end

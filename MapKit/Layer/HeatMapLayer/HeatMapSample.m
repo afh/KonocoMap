@@ -29,4 +29,24 @@
 @synthesize location;
 @synthesize data;
 
++ (id)sampleWithLocation:(CLLocation *)location
+                    data:(NSDictionary *)data {
+    return [[[self alloc] initWithLocation:location data:data] autorelease];
+}
+
+- (id)initWithLocation:(CLLocation *)aLocation
+                  data:(NSDictionary *)aData {
+    if ((self = [super init]) != nil) {
+        location = [aLocation retain];
+        data = [aData retain];
+    }
+    return self;
+}
+
+- (void)dealloc {
+    [location release];
+    [data release];
+    [super dealloc];
+}
+
 @end
