@@ -22,6 +22,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <CoreLocation/CoreLocation.h>
+
 #import "CoordinateConverter.h"
 
 @class MapView;

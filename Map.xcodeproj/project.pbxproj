@@ -8,45 +8,51 @@
 
 /* Begin PBXBuildFile section */
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		F667558511F996A700EEC8E1 /* CoordinateConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = F667558411F996A700EEC8E1 /* CoordinateConverter.m */; };
-		F667558A11F9971900EEC8E1 /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = F667558911F9971900EEC8E1 /* MapView.m */; };
-		F667559511F9972700EEC8E1 /* MapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F667558D11F9972700EEC8E1 /* MapLayer.m */; };
-		F667559611F9972700EEC8E1 /* HeatMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F667559011F9972700EEC8E1 /* HeatMapCell.m */; };
-		F667559711F9972700EEC8E1 /* HeatMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F667559211F9972700EEC8E1 /* HeatMapLayer.m */; };
-		F667559811F9972700EEC8E1 /* HeatMapSample.m in Sources */ = {isa = PBXBuildFile; fileRef = F667559411F9972700EEC8E1 /* HeatMapSample.m */; };
-		F667559E11F9976900EEC8E1 /* MapTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F667559C11F9976900EEC8E1 /* MapTileSource.m */; };
 		F66755A511F997A500EEC8E1 /* MapWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66755A211F997A500EEC8E1 /* MapWindow.xib */; };
 		F66755A611F997A500EEC8E1 /* MapWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F66755A411F997A500EEC8E1 /* MapWindowController.m */; };
 		F66755D811F9996900EEC8E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F66755D311F9996900EEC8E1 /* main.m */; };
 		F66755D911F9996900EEC8E1 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66755D411F9996900EEC8E1 /* MainMenu.xib */; };
 		F66755DA11F9996900EEC8E1 /* MapAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F66755D711F9996900EEC8E1 /* MapAppDelegate.m */; };
+		F667563711F99DC200EEC8E1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F667562C11F99C9700EEC8E1 /* MapKit.framework */; };
+		F667564611F99E7F00EEC8E1 /* CoordinateConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = F667564411F99E7F00EEC8E1 /* CoordinateConverter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F667564711F99E7F00EEC8E1 /* CoordinateConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = F667564511F99E7F00EEC8E1 /* CoordinateConverter.m */; };
+		F667564811F99E9D00EEC8E1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D596591199F06A007E3C56 /* CoreLocation.framework */; };
+		F667564911F99EAF00EEC8E1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DC7D7E116C8260005DE7F1 /* QuartzCore.framework */; };
+		F667565311F99F2D00EEC8E1 /* libproj.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F667565211F99F2D00EEC8E1 /* libproj.dylib */; };
+		F667569111F9A31700EEC8E1 /* MapKit.h in Headers */ = {isa = PBXBuildFile; fileRef = F667569011F9A31700EEC8E1 /* MapKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F66756D211F9ADED00EEC8E1 /* MapLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = F66756C611F9ADED00EEC8E1 /* MapLayer.h */; };
+		F66756D311F9ADED00EEC8E1 /* MapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F66756C711F9ADED00EEC8E1 /* MapLayer.m */; };
+		F66756D411F9ADED00EEC8E1 /* HeatMapCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F66756C911F9ADED00EEC8E1 /* HeatMapCell.h */; };
+		F66756D511F9ADED00EEC8E1 /* HeatMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F66756CA11F9ADED00EEC8E1 /* HeatMapCell.m */; };
+		F66756D611F9ADED00EEC8E1 /* HeatMapLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = F66756CB11F9ADED00EEC8E1 /* HeatMapLayer.h */; };
+		F66756D711F9ADED00EEC8E1 /* HeatMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F66756CC11F9ADED00EEC8E1 /* HeatMapLayer.m */; };
+		F66756D811F9ADED00EEC8E1 /* HeatMapSample.h in Headers */ = {isa = PBXBuildFile; fileRef = F66756CD11F9ADED00EEC8E1 /* HeatMapSample.h */; };
+		F66756D911F9ADED00EEC8E1 /* HeatMapSample.m in Sources */ = {isa = PBXBuildFile; fileRef = F66756CE11F9ADED00EEC8E1 /* HeatMapSample.m */; };
+		F66756DA11F9ADED00EEC8E1 /* MapView.h in Headers */ = {isa = PBXBuildFile; fileRef = F66756D011F9ADED00EEC8E1 /* MapView.h */; };
+		F66756DB11F9ADED00EEC8E1 /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = F66756D111F9ADED00EEC8E1 /* MapView.m */; };
+		F66756FC11F9B00100EEC8E1 /* MapTileSource.h in Headers */ = {isa = PBXBuildFile; fileRef = F66756F911F9B00100EEC8E1 /* MapTileSource.h */; };
+		F66756FD11F9B00100EEC8E1 /* MapTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F66756FA11F9B00100EEC8E1 /* MapTileSource.m */; };
+		F66756FE11F9B00100EEC8E1 /* TileSourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F66756FB11F9B00100EEC8E1 /* TileSourceProtocol.h */; };
+		F667575411F9B51E00EEC8E1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D596591199F06A007E3C56 /* CoreLocation.framework */; };
 		F6977776116F80650089854D /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = F6977775116F80650089854D /* AUTHORS */; };
 		F697777A116F80920089854D /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = F6977779116F80920089854D /* COPYING */; };
-		F6D5965A1199F06A007E3C56 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D596591199F06A007E3C56 /* CoreLocation.framework */; };
-		F6D596941199FE4F007E3C56 /* libproj.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D596931199FE4F007E3C56 /* libproj.dylib */; };
-		F6DC7D7F116C8260005DE7F1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DC7D7E116C8260005DE7F1 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F667563811F99DD600EEC8E1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F667562B11F99C9700EEC8E1 /* MapKit */;
+			remoteInfo = MapKit;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		8D1107320486CEB800E47090 /* Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Map.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		F667558311F996A700EEC8E1 /* CoordinateConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CoordinateConverter.h; path = Map/CoordinateConverter/CoordinateConverter.h; sourceTree = "<group>"; };
-		F667558411F996A700EEC8E1 /* CoordinateConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CoordinateConverter.m; path = Map/CoordinateConverter/CoordinateConverter.m; sourceTree = "<group>"; };
-		F667558811F9971900EEC8E1 /* MapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapView.h; sourceTree = "<group>"; };
-		F667558911F9971900EEC8E1 /* MapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapView.m; sourceTree = "<group>"; };
-		F667558C11F9972700EEC8E1 /* MapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapLayer.h; sourceTree = "<group>"; };
-		F667558D11F9972700EEC8E1 /* MapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapLayer.m; sourceTree = "<group>"; };
-		F667558F11F9972700EEC8E1 /* HeatMapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeatMapCell.h; sourceTree = "<group>"; };
-		F667559011F9972700EEC8E1 /* HeatMapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeatMapCell.m; sourceTree = "<group>"; };
-		F667559111F9972700EEC8E1 /* HeatMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeatMapLayer.h; sourceTree = "<group>"; };
-		F667559211F9972700EEC8E1 /* HeatMapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeatMapLayer.m; sourceTree = "<group>"; };
-		F667559311F9972700EEC8E1 /* HeatMapSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeatMapSample.h; sourceTree = "<group>"; };
-		F667559411F9972700EEC8E1 /* HeatMapSample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeatMapSample.m; sourceTree = "<group>"; };
-		F667559B11F9976900EEC8E1 /* MapTileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapTileSource.h; sourceTree = "<group>"; };
-		F667559C11F9976900EEC8E1 /* MapTileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapTileSource.m; sourceTree = "<group>"; };
-		F667559D11F9976900EEC8E1 /* TileSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileSourceProtocol.h; sourceTree = "<group>"; };
 		F66755A211F997A500EEC8E1 /* MapWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapWindow.xib; sourceTree = "<group>"; };
 		F66755A311F997A500EEC8E1 /* MapWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapWindowController.h; sourceTree = "<group>"; };
 		F66755A411F997A500EEC8E1 /* MapWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapWindowController.m; sourceTree = "<group>"; };
@@ -56,10 +62,29 @@
 		F66755D711F9996900EEC8E1 /* MapAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapAppDelegate.m; path = App/MapAppDelegate.m; sourceTree = "<group>"; };
 		F66755DF11F99A0800EEC8E1 /* Map_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Map_Prefix.pch; sourceTree = "<group>"; };
 		F667560A11F99B5600EEC8E1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = App/Info.plist; sourceTree = "<group>"; };
+		F667562C11F99C9700EEC8E1 /* MapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F667563311F99CE800EEC8E1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F667564411F99E7F00EEC8E1 /* CoordinateConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoordinateConverter.h; sourceTree = "<group>"; };
+		F667564511F99E7F00EEC8E1 /* CoordinateConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoordinateConverter.m; sourceTree = "<group>"; };
+		F667565211F99F2D00EEC8E1 /* libproj.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libproj.dylib; path = /opt/local/lib/libproj.dylib; sourceTree = "<absolute>"; };
+		F667569011F9A31700EEC8E1 /* MapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapKit.h; sourceTree = "<group>"; };
+		F66756C611F9ADED00EEC8E1 /* MapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapLayer.h; sourceTree = "<group>"; };
+		F66756C711F9ADED00EEC8E1 /* MapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapLayer.m; sourceTree = "<group>"; };
+		F66756C911F9ADED00EEC8E1 /* HeatMapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeatMapCell.h; sourceTree = "<group>"; };
+		F66756CA11F9ADED00EEC8E1 /* HeatMapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeatMapCell.m; sourceTree = "<group>"; };
+		F66756CB11F9ADED00EEC8E1 /* HeatMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeatMapLayer.h; sourceTree = "<group>"; };
+		F66756CC11F9ADED00EEC8E1 /* HeatMapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeatMapLayer.m; sourceTree = "<group>"; };
+		F66756CD11F9ADED00EEC8E1 /* HeatMapSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeatMapSample.h; sourceTree = "<group>"; };
+		F66756CE11F9ADED00EEC8E1 /* HeatMapSample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeatMapSample.m; sourceTree = "<group>"; };
+		F66756D011F9ADED00EEC8E1 /* MapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapView.h; sourceTree = "<group>"; };
+		F66756D111F9ADED00EEC8E1 /* MapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapView.m; sourceTree = "<group>"; };
+		F66756E211F9AEF000EEC8E1 /* MapKit_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapKit_Prefix.pch; sourceTree = "<group>"; };
+		F66756F911F9B00100EEC8E1 /* MapTileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapTileSource.h; sourceTree = "<group>"; };
+		F66756FA11F9B00100EEC8E1 /* MapTileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapTileSource.m; sourceTree = "<group>"; };
+		F66756FB11F9B00100EEC8E1 /* TileSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileSourceProtocol.h; sourceTree = "<group>"; };
 		F6977775116F80650089854D /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
 		F6977779116F80920089854D /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		F6D596591199F06A007E3C56 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		F6D596931199FE4F007E3C56 /* libproj.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libproj.dylib; path = /opt/local/lib/libproj.dylib; sourceTree = "<absolute>"; };
 		F6DC7D7E116C8260005DE7F1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -69,9 +94,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				F6DC7D7F116C8260005DE7F1 /* QuartzCore.framework in Frameworks */,
-				F6D5965A1199F06A007E3C56 /* CoreLocation.framework in Frameworks */,
-				F6D596941199FE4F007E3C56 /* libproj.dylib in Frameworks */,
+				F667563711F99DC200EEC8E1 /* MapKit.framework in Frameworks */,
+				F667575411F9B51E00EEC8E1 /* CoreLocation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F667562A11F99C9700EEC8E1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F667564811F99E9D00EEC8E1 /* CoreLocation.framework in Frameworks */,
+				F667564911F99EAF00EEC8E1 /* QuartzCore.framework in Frameworks */,
+				F667565311F99F2D00EEC8E1 /* libproj.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,7 +118,7 @@
 				F6D596591199F06A007E3C56 /* CoreLocation.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				F6DC7D7E116C8260005DE7F1 /* QuartzCore.framework */,
-				F6D596931199FE4F007E3C56 /* libproj.dylib */,
+				F667565211F99F2D00EEC8E1 /* libproj.dylib */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -102,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				8D1107320486CEB800E47090 /* Map.app */,
+				F667562C11F99C9700EEC8E1 /* MapKit.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -109,7 +144,9 @@
 		29B97314FDCFA39411CA2CEA /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				F667563211F99CD200EEC8E1 /* MapKit */,
 				F66754E211F995D100EEC8E1 /* Map */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				F6977775116F80650089854D /* AUTHORS */,
 				F6977779116F80920089854D /* COPYING */,
@@ -132,17 +169,6 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
-			path = ..;
-			sourceTree = "<group>";
-		};
-		F602BEB211F82E9400A2175D /* Coordinate Converter */ = {
-			isa = PBXGroup;
-			children = (
-				F667558311F996A700EEC8E1 /* CoordinateConverter.h */,
-				F667558411F996A700EEC8E1 /* CoordinateConverter.m */,
-			);
-			name = "Coordinate Converter";
-			path = ..;
 			sourceTree = "<group>";
 		};
 		F66754E211F995D100EEC8E1 /* Map */ = {
@@ -150,55 +176,10 @@
 			children = (
 				F66755DF11F99A0800EEC8E1 /* Map_Prefix.pch */,
 				F66755AA11F997FE00EEC8E1 /* App */,
-				F667558711F996F400EEC8E1 /* Layer */,
-				F667558611F996EE00EEC8E1 /* Views */,
-				F602BEB211F82E9400A2175D /* Coordinate Converter */,
-				F67D60C2116E348B0088CFA8 /* DataSources */,
 				F6DC7D62116C8062005DE7F1 /* MapWindow */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
-				29B97323FDCFA39411CA2CEA /* Frameworks */,
 			);
 			path = Map;
-			sourceTree = "<group>";
-		};
-		F667558611F996EE00EEC8E1 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				F667558811F9971900EEC8E1 /* MapView.h */,
-				F667558911F9971900EEC8E1 /* MapView.m */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		F667558711F996F400EEC8E1 /* Layer */ = {
-			isa = PBXGroup;
-			children = (
-				F667558B11F9972700EEC8E1 /* BaseLayer */,
-				F667558E11F9972700EEC8E1 /* HeatMapLayer */,
-			);
-			path = Layer;
-			sourceTree = "<group>";
-		};
-		F667558B11F9972700EEC8E1 /* BaseLayer */ = {
-			isa = PBXGroup;
-			children = (
-				F667558C11F9972700EEC8E1 /* MapLayer.h */,
-				F667558D11F9972700EEC8E1 /* MapLayer.m */,
-			);
-			path = BaseLayer;
-			sourceTree = "<group>";
-		};
-		F667558E11F9972700EEC8E1 /* HeatMapLayer */ = {
-			isa = PBXGroup;
-			children = (
-				F667558F11F9972700EEC8E1 /* HeatMapCell.h */,
-				F667559011F9972700EEC8E1 /* HeatMapCell.m */,
-				F667559111F9972700EEC8E1 /* HeatMapLayer.h */,
-				F667559211F9972700EEC8E1 /* HeatMapLayer.m */,
-				F667559311F9972700EEC8E1 /* HeatMapSample.h */,
-				F667559411F9972700EEC8E1 /* HeatMapSample.m */,
-			);
-			path = HeatMapLayer;
 			sourceTree = "<group>";
 		};
 		F66755AA11F997FE00EEC8E1 /* App */ = {
@@ -213,12 +194,75 @@
 			name = App;
 			sourceTree = "<group>";
 		};
-		F67D60C2116E348B0088CFA8 /* DataSources */ = {
+		F667563211F99CD200EEC8E1 /* MapKit */ = {
 			isa = PBXGroup;
 			children = (
-				F667559D11F9976900EEC8E1 /* TileSourceProtocol.h */,
-				F667559B11F9976900EEC8E1 /* MapTileSource.h */,
-				F667559C11F9976900EEC8E1 /* MapTileSource.m */,
+				F667563311F99CE800EEC8E1 /* Info.plist */,
+				F66756E211F9AEF000EEC8E1 /* MapKit_Prefix.pch */,
+				F667569011F9A31700EEC8E1 /* MapKit.h */,
+				F66756F811F9B00100EEC8E1 /* DataSources */,
+				F66756C411F9ADED00EEC8E1 /* Layer */,
+				F66756CF11F9ADED00EEC8E1 /* Views */,
+				F667564311F99E7F00EEC8E1 /* CoordinateConverter */,
+			);
+			path = MapKit;
+			sourceTree = "<group>";
+		};
+		F667564311F99E7F00EEC8E1 /* CoordinateConverter */ = {
+			isa = PBXGroup;
+			children = (
+				F667564411F99E7F00EEC8E1 /* CoordinateConverter.h */,
+				F667564511F99E7F00EEC8E1 /* CoordinateConverter.m */,
+			);
+			path = CoordinateConverter;
+			sourceTree = "<group>";
+		};
+		F66756C411F9ADED00EEC8E1 /* Layer */ = {
+			isa = PBXGroup;
+			children = (
+				F66756C511F9ADED00EEC8E1 /* BaseLayer */,
+				F66756C811F9ADED00EEC8E1 /* HeatMapLayer */,
+			);
+			path = Layer;
+			sourceTree = "<group>";
+		};
+		F66756C511F9ADED00EEC8E1 /* BaseLayer */ = {
+			isa = PBXGroup;
+			children = (
+				F66756C611F9ADED00EEC8E1 /* MapLayer.h */,
+				F66756C711F9ADED00EEC8E1 /* MapLayer.m */,
+			);
+			path = BaseLayer;
+			sourceTree = "<group>";
+		};
+		F66756C811F9ADED00EEC8E1 /* HeatMapLayer */ = {
+			isa = PBXGroup;
+			children = (
+				F66756C911F9ADED00EEC8E1 /* HeatMapCell.h */,
+				F66756CA11F9ADED00EEC8E1 /* HeatMapCell.m */,
+				F66756CB11F9ADED00EEC8E1 /* HeatMapLayer.h */,
+				F66756CC11F9ADED00EEC8E1 /* HeatMapLayer.m */,
+				F66756CD11F9ADED00EEC8E1 /* HeatMapSample.h */,
+				F66756CE11F9ADED00EEC8E1 /* HeatMapSample.m */,
+			);
+			path = HeatMapLayer;
+			sourceTree = "<group>";
+		};
+		F66756CF11F9ADED00EEC8E1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F66756D011F9ADED00EEC8E1 /* MapView.h */,
+				F66756D111F9ADED00EEC8E1 /* MapView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F66756F811F9B00100EEC8E1 /* DataSources */ = {
+			isa = PBXGroup;
+			children = (
+				F66756FB11F9B00100EEC8E1 /* TileSourceProtocol.h */,
+				F66756F911F9B00100EEC8E1 /* MapTileSource.h */,
+				F66756FA11F9B00100EEC8E1 /* MapTileSource.m */,
 			);
 			path = DataSources;
 			sourceTree = "<group>";
@@ -235,6 +279,25 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		F667562711F99C9700EEC8E1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F667564611F99E7F00EEC8E1 /* CoordinateConverter.h in Headers */,
+				F667569111F9A31700EEC8E1 /* MapKit.h in Headers */,
+				F66756D211F9ADED00EEC8E1 /* MapLayer.h in Headers */,
+				F66756D411F9ADED00EEC8E1 /* HeatMapCell.h in Headers */,
+				F66756D611F9ADED00EEC8E1 /* HeatMapLayer.h in Headers */,
+				F66756D811F9ADED00EEC8E1 /* HeatMapSample.h in Headers */,
+				F66756DA11F9ADED00EEC8E1 /* MapView.h in Headers */,
+				F66756FC11F9B00100EEC8E1 /* MapTileSource.h in Headers */,
+				F66756FE11F9B00100EEC8E1 /* TileSourceProtocol.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		8D1107260486CEB800E47090 /* Map */ = {
 			isa = PBXNativeTarget;
@@ -247,12 +310,31 @@
 			buildRules = (
 			);
 			dependencies = (
+				F667563911F99DD600EEC8E1 /* PBXTargetDependency */,
 			);
 			name = Map;
 			productInstallPath = "$(HOME)/Applications";
 			productName = Map;
 			productReference = 8D1107320486CEB800E47090 /* Map.app */;
 			productType = "com.apple.product-type.application";
+		};
+		F667562B11F99C9700EEC8E1 /* MapKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F667563011F99C9800EEC8E1 /* Build configuration list for PBXNativeTarget "MapKit" */;
+			buildPhases = (
+				F667562711F99C9700EEC8E1 /* Headers */,
+				F667562811F99C9700EEC8E1 /* Resources */,
+				F667562911F99C9700EEC8E1 /* Sources */,
+				F667562A11F99C9700EEC8E1 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MapKit;
+			productName = MapKit;
+			productReference = F667562C11F99C9700EEC8E1 /* MapKit.framework */;
+			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -270,6 +352,7 @@
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* Map */,
+				F667562B11F99C9700EEC8E1 /* MapKit */,
 			);
 		};
 /* End PBXProject section */
@@ -286,6 +369,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F667562811F99C9700EEC8E1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -293,20 +383,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F667558511F996A700EEC8E1 /* CoordinateConverter.m in Sources */,
-				F667558A11F9971900EEC8E1 /* MapView.m in Sources */,
-				F667559511F9972700EEC8E1 /* MapLayer.m in Sources */,
-				F667559611F9972700EEC8E1 /* HeatMapCell.m in Sources */,
-				F667559711F9972700EEC8E1 /* HeatMapLayer.m in Sources */,
-				F667559811F9972700EEC8E1 /* HeatMapSample.m in Sources */,
-				F667559E11F9976900EEC8E1 /* MapTileSource.m in Sources */,
 				F66755A611F997A500EEC8E1 /* MapWindowController.m in Sources */,
 				F66755D811F9996900EEC8E1 /* main.m in Sources */,
 				F66755DA11F9996900EEC8E1 /* MapAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F667562911F99C9700EEC8E1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F667564711F99E7F00EEC8E1 /* CoordinateConverter.m in Sources */,
+				F66756D311F9ADED00EEC8E1 /* MapLayer.m in Sources */,
+				F66756D511F9ADED00EEC8E1 /* HeatMapCell.m in Sources */,
+				F66756D711F9ADED00EEC8E1 /* HeatMapLayer.m in Sources */,
+				F66756D911F9ADED00EEC8E1 /* HeatMapSample.m in Sources */,
+				F66756DB11F9ADED00EEC8E1 /* MapView.m in Sources */,
+				F66756FD11F9B00100EEC8E1 /* MapTileSource.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F667563911F99DD600EEC8E1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F667562B11F99C9700EEC8E1 /* MapKit */;
+			targetProxy = F667563811F99DD600EEC8E1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C01FCF4B08A954540054247B /* Debug */ = {
@@ -337,8 +442,8 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Map_Prefix.pch;
-				INFOPLIST_FILE = "Map-Info.plist";
+				GCC_PREFIX_HEADER = Map/Map_Prefix.pch;
+				INFOPLIST_FILE = Map/App/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -352,6 +457,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -368,11 +474,74 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+		F667562E11F99C9800EEC8E1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MapKit/MapKit_Prefix.pch;
+				INFOPLIST_FILE = MapKit/Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = MapKit;
+			};
+			name = Debug;
+		};
+		F667562F11F99C9800EEC8E1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MapKit/MapKit_Prefix.pch;
+				INFOPLIST_FILE = MapKit/Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/local/lib,
+				);
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = MapKit;
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -393,6 +562,15 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F667563011F99C9800EEC8E1 /* Build configuration list for PBXNativeTarget "MapKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F667562E11F99C9800EEC8E1 /* Debug */,
+				F667562F11F99C9800EEC8E1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

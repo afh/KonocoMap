@@ -22,7 +22,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <CoreLocation/CoreLocation.h>
-#import "MapView.h"
+#import <MapKit/MapKit.h>
 
 @interface MapWindowController : NSWindowController <MapViewDelegateProtocol> {
 	IBOutlet MapView *mapView;

@@ -25,9 +25,6 @@
 #import "HeatMapLayer.h"
 #import "HeatMapSample.h"
 
-#import "CoordinateConverter.h"
-
-
 @interface MapView ()
 - (void)setUp;
 

@@ -1,0 +1,12 @@
+//
+// Prefix header for all source files of the 'MapKit' target in the 'Map' project
+//
+
+
+#ifdef DEBUG
+#define DEBUG_LOG(...) NSLog(@"%s %@", __PRETTY_FUNCTION__, [NSString stringWithFormat:__VA_ARGS__])
+#else
+#define DEBUG_LOG(...)
+#endif
+
+#define LOG(...) NSLog(__VA_ARGS__)

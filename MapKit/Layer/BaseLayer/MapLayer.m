@@ -21,7 +21,6 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "MapLayer.h"
-
 #import "MapTileSource.h"
 
 

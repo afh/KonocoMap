@@ -1,6 +1,6 @@
 //
 //  CoordinateConverter.h
-//  Map
+//  MapKit
 //
 //  Created by Tobias Kräntzer on 22.07.10.
 //  Copyright 2010 Konoco, Fraunhofer ISST. All rights reserved.

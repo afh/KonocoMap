@@ -21,10 +21,8 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "MapAppDelegate.h"
-
-// controller
 #import "MapWindowController.h"
-#import <proj_api.h>
+
 
 @implementation MapAppDelegate
 

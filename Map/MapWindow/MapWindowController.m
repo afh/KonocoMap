@@ -21,8 +21,6 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "MapWindowController.h"
-#import "MapView.h"
-#import "HeatMapSample.h"
 
 @implementation MapWindowController
 
