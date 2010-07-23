@@ -14,7 +14,7 @@
 		F66755D911F9996900EEC8E1 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F66755D411F9996900EEC8E1 /* MainMenu.xib */; };
 		F66755DA11F9996900EEC8E1 /* MapAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F66755D711F9996900EEC8E1 /* MapAppDelegate.m */; };
 		F667563711F99DC200EEC8E1 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F667562C11F99C9700EEC8E1 /* MapKit.framework */; };
-		F667564611F99E7F00EEC8E1 /* CoordinateConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = F667564411F99E7F00EEC8E1 /* CoordinateConverter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F667564611F99E7F00EEC8E1 /* CoordinateConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = F667564411F99E7F00EEC8E1 /* CoordinateConverter.h */; settings = {ATTRIBUTES = (); }; };
 		F667564711F99E7F00EEC8E1 /* CoordinateConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = F667564511F99E7F00EEC8E1 /* CoordinateConverter.m */; };
 		F667564811F99E9D00EEC8E1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D596591199F06A007E3C56 /* CoreLocation.framework */; };
 		F667564911F99EAF00EEC8E1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DC7D7E116C8260005DE7F1 /* QuartzCore.framework */; };
@@ -26,7 +26,7 @@
 		F66756D511F9ADED00EEC8E1 /* HeatMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F66756CA11F9ADED00EEC8E1 /* HeatMapCell.m */; };
 		F66756D611F9ADED00EEC8E1 /* HeatMapLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = F66756CB11F9ADED00EEC8E1 /* HeatMapLayer.h */; };
 		F66756D711F9ADED00EEC8E1 /* HeatMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F66756CC11F9ADED00EEC8E1 /* HeatMapLayer.m */; };
-		F66756D811F9ADED00EEC8E1 /* HeatMapSample.h in Headers */ = {isa = PBXBuildFile; fileRef = F66756CD11F9ADED00EEC8E1 /* HeatMapSample.h */; };
+		F66756D811F9ADED00EEC8E1 /* HeatMapSample.h in Headers */ = {isa = PBXBuildFile; fileRef = F66756CD11F9ADED00EEC8E1 /* HeatMapSample.h */; settings = {ATTRIBUTES = (); }; };
 		F66756D911F9ADED00EEC8E1 /* HeatMapSample.m in Sources */ = {isa = PBXBuildFile; fileRef = F66756CE11F9ADED00EEC8E1 /* HeatMapSample.m */; };
 		F66756DA11F9ADED00EEC8E1 /* MapView.h in Headers */ = {isa = PBXBuildFile; fileRef = F66756D011F9ADED00EEC8E1 /* MapView.h */; };
 		F66756DB11F9ADED00EEC8E1 /* MapView.m in Sources */ = {isa = PBXBuildFile; fileRef = F66756D111F9ADED00EEC8E1 /* MapView.m */; };
@@ -43,7 +43,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = F667562B11F99C9700EEC8E1 /* MapKit */;
+			remoteGlobalIDString = F667562B11F99C9700EEC8E1;
 			remoteInfo = MapKit;
 		};
 /* End PBXContainerItemProxy section */

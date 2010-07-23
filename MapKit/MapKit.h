@@ -21,6 +21,5 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#import "CoordinateConverter.h"
 #import "MapView.h"
 #import "HeatMapSample.h"
