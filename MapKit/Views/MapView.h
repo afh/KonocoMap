@@ -21,9 +21,9 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
 #import <Cocoa/Cocoa.h>
+#import <QuartzCore/QuartzCore.h>
 #import <CoreLocation/CoreLocation.h>
-
-#import "CoordinateConverter.h"
+#import <MapKit/CoordinateRegion.h>
 
 @class MapView;
 @class MapLayer;
@@ -49,6 +49,9 @@
 - (CAMediaTimingFunction *)mapView:(MapView *)mapView timingFunctionForSample:(HeatMapSample *)sample;
 
 @end
+
+#pragma mark -
+#pragma mark -
 
 @interface MapView : NSView {
     CALayer *mapLayer;

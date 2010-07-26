@@ -24,16 +24,7 @@
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CoreLocation/CoreLocation.h>
-
-typedef struct {
-    CLLocationDegrees latitudeDelta;
-    CLLocationDegrees longitudeDelta;
-} CoordinateSpan;
-
-typedef struct {
-    CLLocationCoordinate2D center;
-    CoordinateSpan span;
-} CoordinateRegion;
+#import <MapKit/CoordinateRegion.h>
 
 @interface CoordinateConverter : NSObject {
     

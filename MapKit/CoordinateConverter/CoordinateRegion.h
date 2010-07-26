@@ -1,11 +1,11 @@
 //
-//  MapKit.h
+//  CoordinateRegion.h
 //  MapKit
 //
-//  Created by Tobias Kräntzer on 23.07.10.
+//  Created by Tobias Kräntzer on 26.07.10.
 //  Copyright 2010 Konoco, Fraunhofer ISST. All rights reserved.
 //
-//  This file is part of MapKit.
+//  This file is part of Map.
 //	
 //  Map is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
@@ -21,6 +21,14 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#import <MapKit/MapView.h>
-#import <MapKit/HeatMapSample.h>
-#import <MapKit/CoordinateConverter.h>
+#import <CoreLocation/CoreLocation.h>
+
+typedef struct {
+    CLLocationDegrees latitudeDelta;
+    CLLocationDegrees longitudeDelta;
+} CoordinateSpan;
+
+typedef struct {
+    CLLocationCoordinate2D center;
+    CoordinateSpan span;
+} CoordinateRegion;

@@ -25,6 +25,8 @@
 #import "HeatMapLayer.h"
 #import "HeatMapSample.h"
 
+#import "CoordinateConverter.h"
+
 @interface MapView ()
 - (void)setUp;
 
@@ -42,8 +44,6 @@
 @implementation MapView
 
 @synthesize delegate;
-@synthesize monochromeBaseLayer;
-@synthesize showHeatMap;
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -255,7 +255,7 @@
     if (mouseMoved == NO) {
         NSPoint event_location = [event locationInWindow];
         NSPoint local_point = [self convertPoint:event_location fromView:nil];
-        NSPoint layer_point = [self.layer convertPoint:local_point toLayer:mapLayer];
+        CGPoint layer_point = [self.layer convertPoint:CGPointMake(local_point.x, local_point.y) toLayer:mapLayer];
         
         if ([self.delegate respondsToSelector:@selector(mapView:didTapAtCoordinate:)]) {
             [delegate mapView:self didTapAtCoordinate:[[CoordinateConverter sharedCoordinateConverter] coordinateFromPoint:CGPointMake(layer_point.x / baseLayer.tileSize.width, layer_point.y / baseLayer.tileSize.height)]];

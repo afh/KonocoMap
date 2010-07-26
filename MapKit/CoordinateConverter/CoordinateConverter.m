@@ -21,7 +21,7 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#import <MapKit/MapKit.h>
+#import "CoordinateConverter.h"
 #import <proj_api.h>
 
 static CoordinateConverter *sharedCoordinateConverter = nil;
