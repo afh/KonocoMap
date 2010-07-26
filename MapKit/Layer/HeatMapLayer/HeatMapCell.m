@@ -59,7 +59,7 @@
     
     self.opacity = 0;
     
-    CABasicAnimation *theAnimation;
+    CABasicAnimation *theAnimation = [CABasicAnimation new];
     theAnimation.timingFunction = timingFunction;
     theAnimation=[CABasicAnimation animationWithKeyPath:@"opacity"];
     theAnimation.duration=duration;
