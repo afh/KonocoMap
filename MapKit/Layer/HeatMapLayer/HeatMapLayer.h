@@ -44,5 +44,6 @@
 }
 
 - (void)displayHeatMapSample:(HeatMapSample *)aSample;
+- (void)updateHeatMap;
 
 @end

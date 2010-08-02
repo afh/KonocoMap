@@ -66,7 +66,7 @@
 #pragma mark -
 #pragma mark Delegate
 
-@property (nonatomic, retain) id delegate;
+@property (assign) id delegate;
 
 #pragma mark -
 #pragma mark Base Layer Properties
@@ -78,6 +78,7 @@
 
 @property (assign) BOOL showHeatMap;
 - (void)displayHeatMapSample:(HeatMapSample *)sample;
+- (void)updateHeatMap;
 
 #pragma mark -
 #pragma mark Zoom, Center & Region

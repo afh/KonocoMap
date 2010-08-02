@@ -129,6 +129,10 @@
     [heatMap displayHeatMapSample:sample];
 }
 
+- (void)updateHeatMap {
+    [heatMap updateHeatMap];
+}
+
 #pragma mark -
 #pragma mark Zoom, Center & Region
 

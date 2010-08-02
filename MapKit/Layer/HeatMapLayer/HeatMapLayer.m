@@ -50,6 +50,7 @@
 
 - (void)displayHeatMapSample:(HeatMapSample *)sample {
     
+    
     CoordinateRegion cellRegion = [self regionForSample:sample];
     CGRect cellFrame = [[CoordinateConverter sharedCoordinateConverter] rectFromRegion:cellRegion];
     cellFrame = CGRectMake(cellFrame.origin.x * self.bounds.size.width,
@@ -70,13 +71,34 @@
                              cell.bounds.size.height * currentScale);
     
     CGAffineTransform cellTransform = CGAffineTransformIdentity;
-	cellTransform = CGAffineTransformScale(cellTransform, 1 / currentScale, 1 / currentScale);
-	cell.affineTransform = cellTransform;
+    cellTransform = CGAffineTransformScale(cellTransform, 1 / currentScale, 1 / currentScale);
+    cell.affineTransform = cellTransform;
     
     [cell setNeedsDisplay];
-    
-    [self addSublayer:cell];
+    @synchronized (self) {
+        [self addSublayer:cell];
+    }
     [cell release];
+
+}
+
+- (void)updateHeatMap {
+    
+    NSArray *_sublayers = [NSArray arrayWithArray:self.sublayers];
+    NSMutableArray *samples = [NSMutableArray array];
+    
+    @synchronized (self) {
+        for (CALayer *layer in _sublayers) {
+            if ([layer isKindOfClass:[HeatMapCell class]]) {
+                [samples addObject:((HeatMapCell *)layer).sample];
+                [layer removeFromSuperlayer];
+            }
+        }
+    }
+    
+    for (HeatMapSample *sample in samples) {
+        [self displayHeatMapSample:sample];
+    }
 }
 
 #pragma mark -
