@@ -37,7 +37,6 @@
 - (CFTimeInterval)durationForSample:(HeatMapSample *)sample;
 - (CGFloat)valueForSample:(HeatMapSample *)sample;
 - (NSColor *)colorForValue:(CGFloat)value;
-- (CAMediaTimingFunction *)timingFunctionForSample:(HeatMapSample *)sample;
 
 @end
 
@@ -404,14 +403,6 @@
                                     saturation:1
                                     brightness:0.5
                                          alpha:0];
-    }
-}
-
-- (CAMediaTimingFunction *)timingFunctionForSample:(HeatMapSample *)sample {
-    if ([self.delegate respondsToSelector:@selector(mapView:timingFunctionForSample:)]) {
-        return [self.delegate mapView:self timingFunctionForSample:sample];
-    } else {
-        return [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     }
 }
 

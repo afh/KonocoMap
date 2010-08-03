@@ -36,7 +36,6 @@
 
 @optional
 - (NSColor *)colorForValue:(CGFloat)value;
-- (CAMediaTimingFunction *)timingFunctionForSample:(HeatMapSample *)sample;
 
 @end
 

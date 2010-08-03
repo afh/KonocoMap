@@ -46,7 +46,6 @@
 - (CFTimeInterval)mapView:(MapView *)mapView durationForSample:(HeatMapSample *)sample;
 - (CGFloat)mapView:(MapView *)mapView valueForSample:(HeatMapSample *)sample;
 - (NSColor *)mapView:(MapView *)mapView colorForValue:(CGFloat)value;
-- (CAMediaTimingFunction *)mapView:(MapView *)mapView timingFunctionForSample:(HeatMapSample *)sample;
 
 @end
 

@@ -58,28 +58,35 @@
                            cellFrame.size.width * self.bounds.size.width, 
                            cellFrame.size.height * self.bounds.size.height);
     
-    HeatMapCell *cell = [[HeatMapCell alloc] initWithSample:sample
-                                                   duration:[self durationForSample:sample]
-                                             timingFunction:[self timingFunctionForSample:sample]];
-    cell.delegate = self;
-    cell.frame = cellFrame;
-    
-    CGFloat currentScale = self.superlayer.affineTransform.a;
-    cell.bounds = CGRectMake(0,
-                             0,
-                             cell.bounds.size.width * currentScale,
-                             cell.bounds.size.height * currentScale);
-    
-    CGAffineTransform cellTransform = CGAffineTransformIdentity;
-    cellTransform = CGAffineTransformScale(cellTransform, 1 / currentScale, 1 / currentScale);
-    cell.affineTransform = cellTransform;
-    
-    [cell setNeedsDisplay];
-    @synchronized (self) {
-        [self addSublayer:cell];
+    NSTimeInterval duration = [self durationForSample:sample];
+    duration = duration + [sample.location.timestamp timeIntervalSinceNow];
+    if (duration > 0) {
+        HeatMapCell *cell;
+        cell = [[HeatMapCell alloc] initWithSample:sample
+                                          duration:duration
+                                    timingFunction:[self timingFunctionForSample:sample]];
+        
+        cell.delegate = self;
+        cell.frame = cellFrame;
+        
+        CGFloat currentScale = self.superlayer.affineTransform.a;
+        cell.bounds = CGRectMake(0,
+                                 0,
+                                 cell.bounds.size.width * currentScale,
+                                 cell.bounds.size.height * currentScale);
+        
+        CGAffineTransform cellTransform = CGAffineTransformIdentity;
+        cellTransform = CGAffineTransformScale(cellTransform, 1 / currentScale, 1 / currentScale);
+        cell.affineTransform = cellTransform;
+        
+        [cell setNeedsDisplay];
+        @synchronized (self) {
+            [self addSublayer:cell];
+        }
+        [cell release];
+    } else {
+        DEBUG_LOG(@"skipping old sample (%f sec)", duration);
     }
-    [cell release];
-
 }
 
 - (void)updateHeatMap {
@@ -131,11 +138,7 @@
 }
 
 - (CAMediaTimingFunction *)timingFunctionForSample:(HeatMapSample *)sample {
-    if ([self.delegate respondsToSelector:@selector(timingFunctionForSample:)]) {
-        return [self.delegate timingFunctionForSample:sample];
-    } else {
-        return [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
-    }
+    return [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
 }
 
 - (NSColor *)colorForValue:(CGFloat)value {
