@@ -59,12 +59,14 @@
                            cellFrame.size.height * self.bounds.size.height);
     
     NSTimeInterval duration = [self durationForSample:sample];
-    duration = duration + [sample.location.timestamp timeIntervalSinceNow];
-    if (duration > 0) {
+    NSTimeInterval offset =  [sample.location.timestamp timeIntervalSinceNow];
+    if (duration + offset > 0) {
         HeatMapCell *cell;
         cell = [[HeatMapCell alloc] initWithSample:sample
-                                          duration:duration
+                                          duration:duration + offset
                                     timingFunction:[self timingFunctionForSample:sample]];
+        
+        cell.opacity = (duration + offset) / duration;
         
         cell.delegate = self;
         cell.frame = cellFrame;

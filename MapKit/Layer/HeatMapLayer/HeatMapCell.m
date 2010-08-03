@@ -57,6 +57,7 @@
         [self performSelector:@selector(removeFromSuperlayer)];
     }];
     
+    CGFloat startOpacity = self.opacity;
     self.opacity = 0;
     
     CABasicAnimation *theAnimation = [CABasicAnimation new];
@@ -65,7 +66,7 @@
     theAnimation.duration=duration;
     theAnimation.repeatCount=0;
     theAnimation.autoreverses=NO;
-    theAnimation.fromValue=[NSNumber numberWithFloat:1.0];
+    theAnimation.fromValue=[NSNumber numberWithFloat:startOpacity];
     theAnimation.toValue=[NSNumber numberWithFloat:0.0];
     [self addAnimation:theAnimation forKey:@"animateOpacity"];
     
