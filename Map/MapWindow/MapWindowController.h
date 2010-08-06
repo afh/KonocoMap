@@ -26,6 +26,8 @@
 
 @interface MapWindowController : NSWindowController <MapViewDelegateProtocol> {
 	IBOutlet MapView *mapView;
+    NSRect normalFrame;
+    BOOL inFullScreenMode;
 }
 
 #pragma mark -

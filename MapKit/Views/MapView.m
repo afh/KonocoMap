@@ -65,6 +65,17 @@
 }
 
 #pragma mark -
+#pragma mark Updating Content
+
+- (void)setNeedsDisplay:(BOOL)flag {
+    if (self.layer.sublayers == nil || [self.layer.sublayers indexOfObject:mapLayer] == NSNotFound) {
+        DEBUG_LOG(@"map layer not in view layer.");
+        [self.layer addSublayer:mapLayer];
+    }
+    [super setNeedsDisplay:flag];
+}
+
+#pragma mark -
 #pragma mark Resizing
 
 - (void)setFrame:(NSRect)frameRect {

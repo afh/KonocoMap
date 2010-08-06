@@ -22,12 +22,20 @@
 
 #import "MapWindowController.h"
 
+@interface MapWindowController ()
+- (void)setStyleBorderless;
+- (void)setStyleNormal;
+- (void)setFullScreen;
+- (void)setWindowScreen;
+@end
+
+
 @implementation MapWindowController
 
 - (id)init {
 	if (self = [super initWithWindowNibName:@"MapWindow"]) {
 		[self.window setExcludedFromWindowsMenu:YES];
-		
+        
 		// register the controllerr as an obserrver for the properties
 		// 'zoom', 'center' and 'region' of the map view
 		[mapView addObserver:self
@@ -69,27 +77,46 @@
 }
 
 - (IBAction)toggleFullscreen:(id)sender {
-	CGDisplayFadeReservationToken token;
-	CGDisplayErr err;
-	err = CGAcquireDisplayFadeReservation (kCGMaxDisplayReservationInterval, &token);
-	if (err == kCGErrorSuccess)
-	{
-        // TODO: Check errors
-		CGDisplayFade (token, 0.25, kCGDisplayBlendNormal, kCGDisplayBlendSolidColor, 0, 0, 0, true);
-        CGDisplayCapture (kCGDirectMainDisplay);
-		if ([mapView isInFullScreenMode]) {
-			[mapView exitFullScreenModeWithOptions:NULL];
-		} else {
-			[mapView enterFullScreenMode:[mapView.window screen] withOptions:NULL];
-		}
-		CGDisplayFade (token, 0.25, kCGDisplayBlendSolidColor, kCGDisplayBlendNormal, 0, 0, 0, true);
-		CGReleaseDisplayFadeReservation (token);
-	}
+    if (inFullScreenMode) {
+        [self setWindowScreen];
+        [self performSelector:@selector(setStyleNormal) withObject:nil afterDelay:[self.window animationResizeTime:normalFrame]];
+        inFullScreenMode = NO;
+    } else {
+        [self setStyleBorderless];
+        [self performSelector:@selector(setFullScreen) withObject:nil afterDelay:[self.window animationResizeTime:[[NSScreen mainScreen] frame]]];
+        inFullScreenMode = YES;
+    }
 }
 
 - (IBAction)toggleHeatMap:(id)sender {
     mapView.showHeatMap = !mapView.showHeatMap;
     mapView.monochromeBaseLayer = mapView.showHeatMap;
+}
+
+#pragma mark -
+#pragma mark Fullscreen
+
+- (void)setStyleBorderless {
+    [self.window setStyleMask:NSBorderlessWindowMask];
+}
+
+- (void)setStyleNormal {
+    [self.window setStyleMask:NSTitledWindowMask];
+}
+
+- (void)setFullScreen {
+    normalFrame = [self.window frame];
+    [self.window setLevel:CGShieldingWindowLevel()];
+    [self.window setFrame:[[NSScreen mainScreen] frame]
+                  display:YES
+                  animate:YES];
+}
+
+- (void)setWindowScreen {
+    [self.window setLevel:kCGNormalWindowLevel];
+    [self.window setFrame:normalFrame
+                  display:YES
+                  animate:YES];
 }
 
 #pragma mark -
