@@ -78,6 +78,7 @@
 @property (assign) BOOL showHeatMap;
 - (void)displayHeatMapSample:(HeatMapSample *)sample;
 - (void)updateHeatMap;
+- (NSArray *)activeHeatMapSamplesForCoordinate:(CLLocationCoordinate2D)coordinate;
 
 #pragma mark -
 #pragma mark Zoom, Center & Region

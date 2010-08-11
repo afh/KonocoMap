@@ -143,6 +143,10 @@
     [heatMap updateHeatMap];
 }
 
+- (NSArray *)activeHeatMapSamplesForCoordinate:(CLLocationCoordinate2D)coordinate {
+    return [heatMap activeHeatMapSamplesForCoordinate:coordinate];
+}
+
 #pragma mark -
 #pragma mark Zoom, Center & Region
 

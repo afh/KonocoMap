@@ -110,6 +110,28 @@
     }
 }
 
+- (NSArray *)activeHeatMapSamplesForCoordinate:(CLLocationCoordinate2D)coordinate {
+    CGPoint point = [[CoordinateConverter sharedCoordinateConverter] pointFromCoordinate:coordinate];
+    point.x = point.x * self.bounds.size.width;
+    point.y = point.y * self.bounds.size.height;
+    
+    // OPTIMIZE: Find a better solution 
+    NSArray *_sublayers = [NSArray arrayWithArray:self.sublayers];
+    NSMutableArray *samples = [NSMutableArray array];
+    
+    @synchronized (self) {
+        for (CALayer *layer in _sublayers) {
+            if ([layer isKindOfClass:[HeatMapCell class]]) {
+                if (CGRectContainsPoint(layer.frame, point)) {
+                    [samples addObject:((HeatMapCell *)layer).sample];
+                }
+            }
+        }
+    }
+    
+    return samples;
+}
+
 #pragma mark -
 #pragma mark Custom Cell Attributes for Sample
 
