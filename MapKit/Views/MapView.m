@@ -69,8 +69,15 @@
 
 - (void)setNeedsDisplay:(BOOL)flag {
     if (self.layer.sublayers == nil || [self.layer.sublayers indexOfObject:mapLayer] == NSNotFound) {
-        DEBUG_LOG(@"map layer not in view layer.");
+        DEBUG_LOG(@"Map layer not in view layer.");
         [self.layer addSublayer:mapLayer];
+        
+        DEBUG_LOG(@"Rearrange view hierarchy.");
+        NSArray *subviews = [self subviews];
+        for (NSView *view in subviews) {
+            [view removeFromSuperview];
+            [self addSubview:view];
+        }
     }
     [super setNeedsDisplay:flag];
 }
