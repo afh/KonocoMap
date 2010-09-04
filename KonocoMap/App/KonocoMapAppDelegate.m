@@ -21,7 +21,7 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "KonocoMapAppDelegate.h"
-#import "MapWindowController.h"
+#import "KonocoMapWindowController.h"
 
 
 @implementation KonocoMapAppDelegate
@@ -49,7 +49,7 @@
 
 - (IBAction)showMapWindow:(id)sender {
 	if (!mapWindowController) {
-		mapWindowController = [MapWindowController new];
+		mapWindowController = [KonocoMapWindowController new];
 	}
 	[mapWindowController showWindow:self];
 	[mapWindowController.window makeKeyAndOrderFront:nil];

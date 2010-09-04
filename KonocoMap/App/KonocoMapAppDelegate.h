@@ -23,10 +23,10 @@
 #import <Cocoa/Cocoa.h>
 #import <CoreLocation/CoreLocation.h>
 
-@class MapWindowController;
+@class KonocoMapWindowController;
 
 @interface KonocoMapAppDelegate : NSObject <CLLocationManagerDelegate> {
-	MapWindowController *mapWindowController;
+	KonocoMapWindowController *mapWindowController;
     
     CLLocationManager *locationManager;
 }
