@@ -26,12 +26,12 @@
 		F6964EC7122D975000D490A6 /* TileSourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EB3122D975000D490A6 /* TileSourceProtocol.h */; };
 		F6964EC8122D975000D490A6 /* KonocoMapLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EB6122D975000D490A6 /* KonocoMapLayer.h */; };
 		F6964EC9122D975000D490A6 /* KonocoMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EB7122D975000D490A6 /* KonocoMapLayer.m */; };
-		F6964ECA122D975000D490A6 /* HeatMapCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EB9122D975000D490A6 /* HeatMapCell.h */; };
-		F6964ECB122D975000D490A6 /* HeatMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EBA122D975000D490A6 /* HeatMapCell.m */; };
-		F6964ECC122D975000D490A6 /* HeatMapLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EBB122D975000D490A6 /* HeatMapLayer.h */; };
-		F6964ECD122D975000D490A6 /* HeatMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EBC122D975000D490A6 /* HeatMapLayer.m */; };
-		F6964ECE122D975000D490A6 /* HeatMapSample.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EBD122D975000D490A6 /* HeatMapSample.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F6964ECF122D975000D490A6 /* HeatMapSample.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EBE122D975000D490A6 /* HeatMapSample.m */; };
+		F6964ECA122D975000D490A6 /* KonocoHeatMapCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EB9122D975000D490A6 /* KonocoHeatMapCell.h */; };
+		F6964ECB122D975000D490A6 /* KonocoHeatMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EBA122D975000D490A6 /* KonocoHeatMapCell.m */; };
+		F6964ECC122D975000D490A6 /* KonocoHeatMapLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EBB122D975000D490A6 /* KonocoHeatMapLayer.h */; };
+		F6964ECD122D975000D490A6 /* KonocoHeatMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EBC122D975000D490A6 /* KonocoHeatMapLayer.m */; };
+		F6964ECE122D975000D490A6 /* KonocoHeatMapSample.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EBD122D975000D490A6 /* KonocoHeatMapSample.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F6964ECF122D975000D490A6 /* KonocoHeatMapSample.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EBE122D975000D490A6 /* KonocoHeatMapSample.m */; };
 		F6964ED0122D975000D490A6 /* KonocoMapView.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EC0122D975000D490A6 /* KonocoMapView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6964ED1122D975000D490A6 /* KonocoMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EC1122D975000D490A6 /* KonocoMapView.m */; };
 		F6964F6B122D99A600D490A6 /* libproj.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F6964F6A122D99A600D490A6 /* libproj.dylib */; };
@@ -79,12 +79,12 @@
 		F6964EB3122D975000D490A6 /* TileSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileSourceProtocol.h; sourceTree = "<group>"; };
 		F6964EB6122D975000D490A6 /* KonocoMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoMapLayer.h; sourceTree = "<group>"; };
 		F6964EB7122D975000D490A6 /* KonocoMapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KonocoMapLayer.m; sourceTree = "<group>"; };
-		F6964EB9122D975000D490A6 /* HeatMapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeatMapCell.h; sourceTree = "<group>"; };
-		F6964EBA122D975000D490A6 /* HeatMapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeatMapCell.m; sourceTree = "<group>"; };
-		F6964EBB122D975000D490A6 /* HeatMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeatMapLayer.h; sourceTree = "<group>"; };
-		F6964EBC122D975000D490A6 /* HeatMapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeatMapLayer.m; sourceTree = "<group>"; };
-		F6964EBD122D975000D490A6 /* HeatMapSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeatMapSample.h; sourceTree = "<group>"; };
-		F6964EBE122D975000D490A6 /* HeatMapSample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeatMapSample.m; sourceTree = "<group>"; };
+		F6964EB9122D975000D490A6 /* KonocoHeatMapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoHeatMapCell.h; sourceTree = "<group>"; };
+		F6964EBA122D975000D490A6 /* KonocoHeatMapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KonocoHeatMapCell.m; sourceTree = "<group>"; };
+		F6964EBB122D975000D490A6 /* KonocoHeatMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoHeatMapLayer.h; sourceTree = "<group>"; };
+		F6964EBC122D975000D490A6 /* KonocoHeatMapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KonocoHeatMapLayer.m; sourceTree = "<group>"; };
+		F6964EBD122D975000D490A6 /* KonocoHeatMapSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoHeatMapSample.h; sourceTree = "<group>"; };
+		F6964EBE122D975000D490A6 /* KonocoHeatMapSample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KonocoHeatMapSample.m; sourceTree = "<group>"; };
 		F6964EC0122D975000D490A6 /* KonocoMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoMapView.h; sourceTree = "<group>"; };
 		F6964EC1122D975000D490A6 /* KonocoMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KonocoMapView.m; sourceTree = "<group>"; };
 		F6964F6A122D99A600D490A6 /* libproj.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libproj.dylib; path = usr/local/lib/libproj.dylib; sourceTree = SDKROOT; };
@@ -269,12 +269,12 @@
 		F6964EB8122D975000D490A6 /* HeatMapLayer */ = {
 			isa = PBXGroup;
 			children = (
-				F6964EB9122D975000D490A6 /* HeatMapCell.h */,
-				F6964EBA122D975000D490A6 /* HeatMapCell.m */,
-				F6964EBB122D975000D490A6 /* HeatMapLayer.h */,
-				F6964EBC122D975000D490A6 /* HeatMapLayer.m */,
-				F6964EBD122D975000D490A6 /* HeatMapSample.h */,
-				F6964EBE122D975000D490A6 /* HeatMapSample.m */,
+				F6964EB9122D975000D490A6 /* KonocoHeatMapCell.h */,
+				F6964EBA122D975000D490A6 /* KonocoHeatMapCell.m */,
+				F6964EBB122D975000D490A6 /* KonocoHeatMapLayer.h */,
+				F6964EBC122D975000D490A6 /* KonocoHeatMapLayer.m */,
+				F6964EBD122D975000D490A6 /* KonocoHeatMapSample.h */,
+				F6964EBE122D975000D490A6 /* KonocoHeatMapSample.m */,
 			);
 			path = HeatMapLayer;
 			sourceTree = "<group>";
@@ -312,9 +312,9 @@
 				F6964EC5122D975000D490A6 /* MapTileSource.h in Headers */,
 				F6964EC7122D975000D490A6 /* TileSourceProtocol.h in Headers */,
 				F6964EC8122D975000D490A6 /* KonocoMapLayer.h in Headers */,
-				F6964ECA122D975000D490A6 /* HeatMapCell.h in Headers */,
-				F6964ECC122D975000D490A6 /* HeatMapLayer.h in Headers */,
-				F6964ECE122D975000D490A6 /* HeatMapSample.h in Headers */,
+				F6964ECA122D975000D490A6 /* KonocoHeatMapCell.h in Headers */,
+				F6964ECC122D975000D490A6 /* KonocoHeatMapLayer.h in Headers */,
+				F6964ECE122D975000D490A6 /* KonocoHeatMapSample.h in Headers */,
 				F6964ED0122D975000D490A6 /* KonocoMapView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -440,9 +440,9 @@
 				F6964EC3122D975000D490A6 /* CoordinateConverter.m in Sources */,
 				F6964EC6122D975000D490A6 /* MapTileSource.m in Sources */,
 				F6964EC9122D975000D490A6 /* KonocoMapLayer.m in Sources */,
-				F6964ECB122D975000D490A6 /* HeatMapCell.m in Sources */,
-				F6964ECD122D975000D490A6 /* HeatMapLayer.m in Sources */,
-				F6964ECF122D975000D490A6 /* HeatMapSample.m in Sources */,
+				F6964ECB122D975000D490A6 /* KonocoHeatMapCell.m in Sources */,
+				F6964ECD122D975000D490A6 /* KonocoHeatMapLayer.m in Sources */,
+				F6964ECF122D975000D490A6 /* KonocoHeatMapSample.m in Sources */,
 				F6964ED1122D975000D490A6 /* KonocoMapView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

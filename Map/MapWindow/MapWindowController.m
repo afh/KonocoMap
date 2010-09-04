@@ -183,13 +183,13 @@
     CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
     NSNumber *x = [NSNumber numberWithDouble:((float)rand()/RAND_MAX)];
     
-    [aMapView displayHeatMapSample:[HeatMapSample sampleWithLocation:location
-                                                                data:[NSDictionary dictionaryWithObject:x
-                                                                                                 forKey:@"value"]]];
+    [aMapView displayHeatMapSample:[KonocoHeatMapSample sampleWithLocation:location
+                                                                      data:[NSDictionary dictionaryWithObject:x
+                                                                                                       forKey:@"value"]]];
     [location release];
 }
 
-- (CoordinateRegion)mapView:(KonocoMapView *)mapView regionForSample:(HeatMapSample *)sample {
+- (CoordinateRegion)mapView:(KonocoMapView *)mapView regionForSample:(KonocoHeatMapSample *)sample {
     
     double radius = (float)rand()/RAND_MAX * 6000 + 3000;
     
@@ -198,7 +198,7 @@
             withRadius:radius];
 }
 
-- (CGFloat)mapView:(KonocoMapView *)mapView valueForSample:(HeatMapSample *)sample {
+- (CGFloat)mapView:(KonocoMapView *)mapView valueForSample:(KonocoHeatMapSample *)sample {
     return [[sample.data objectForKey:@"value"] doubleValue];
 }
 

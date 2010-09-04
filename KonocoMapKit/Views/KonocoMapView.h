@@ -27,8 +27,8 @@
 
 @class KonocoMapView;
 @class KonocoMapLayer;
-@class HeatMapLayer;
-@class HeatMapSample;
+@class KonocoHeatMapLayer;
+@class KonocoHeatMapSample;
 
 @protocol MapViewDelegateProtocol
 
@@ -42,9 +42,9 @@
 #pragma mark Heat Map Behavior
 
 @optional
-- (CoordinateRegion)mapView:(KonocoMapView *)mapView regionForSample:(HeatMapSample *)sample;
-- (CFTimeInterval)mapView:(KonocoMapView *)mapView durationForSample:(HeatMapSample *)sample;
-- (CGFloat)mapView:(KonocoMapView *)mapView valueForSample:(HeatMapSample *)sample;
+- (CoordinateRegion)mapView:(KonocoMapView *)mapView regionForSample:(KonocoHeatMapSample *)sample;
+- (CFTimeInterval)mapView:(KonocoMapView *)mapView durationForSample:(KonocoHeatMapSample *)sample;
+- (CGFloat)mapView:(KonocoMapView *)mapView valueForSample:(KonocoHeatMapSample *)sample;
 - (NSColor *)mapView:(KonocoMapView *)mapView colorForValue:(CGFloat)value;
 
 @end
@@ -55,7 +55,7 @@
 @interface KonocoMapView : NSView {
     CALayer *mapLayer;
 	KonocoMapLayer *baseLayer;
-    HeatMapLayer *heatMap;
+    KonocoHeatMapLayer *heatMap;
     NSTrackingArea *trackingArea;
     BOOL mouseMoved;
     
@@ -76,7 +76,7 @@
 #pragma mark Heat Map Properties and Methods
 
 @property (assign) BOOL showHeatMap;
-- (void)displayHeatMapSample:(HeatMapSample *)sample;
+- (void)displayHeatMapSample:(KonocoHeatMapSample *)sample;
 - (void)updateHeatMap;
 - (NSArray *)activeHeatMapSamplesForCoordinate:(CLLocationCoordinate2D)coordinate;
 

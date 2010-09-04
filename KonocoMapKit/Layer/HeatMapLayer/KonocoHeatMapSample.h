@@ -24,7 +24,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface HeatMapSample : NSObject {
+@interface KonocoHeatMapSample : NSObject {
     CLLocation *location;
     NSDictionary *data;
 }

@@ -20,21 +20,21 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "HeatMapLayer.h"
-#import "HeatMapSample.h"
-#import "HeatMapCell.h"
+#import "KonocoHeatMapLayer.h"
+#import "KonocoHeatMapSample.h"
+#import "KonocoHeatMapCell.h"
 
 
-@interface HeatMapLayer ()
-- (CoordinateRegion)regionForSample:(HeatMapSample *)sample;
-- (CFTimeInterval)durationForSample:(HeatMapSample *)sample;
-- (CGFloat)valueForSample:(HeatMapSample *)sample;
+@interface KonocoHeatMapLayer ()
+- (CoordinateRegion)regionForSample:(KonocoHeatMapSample *)sample;
+- (CFTimeInterval)durationForSample:(KonocoHeatMapSample *)sample;
+- (CGFloat)valueForSample:(KonocoHeatMapSample *)sample;
 - (NSColor *)colorForValue:(CGFloat)value;
-- (CAMediaTimingFunction *)timingFunctionForSample:(HeatMapSample *)sample;
+- (CAMediaTimingFunction *)timingFunctionForSample:(KonocoHeatMapSample *)sample;
 @end
 
 
-@implementation HeatMapLayer
+@implementation KonocoHeatMapLayer
 
 - (id)init {
     if ((self = [super init]) != nil) {
@@ -48,7 +48,7 @@
 #pragma mark -
 #pragma mark Handle Heat Map Samples
 
-- (void)displayHeatMapSample:(HeatMapSample *)sample {
+- (void)displayHeatMapSample:(KonocoHeatMapSample *)sample {
     
     
     CoordinateRegion cellRegion = [self regionForSample:sample];
@@ -61,8 +61,8 @@
     NSTimeInterval duration = [self durationForSample:sample];
     NSTimeInterval offset =  [sample.location.timestamp timeIntervalSinceNow];
     if (duration + offset > 0) {
-        HeatMapCell *cell;
-        cell = [[HeatMapCell alloc] initWithSample:sample
+        KonocoHeatMapCell *cell;
+        cell = [[KonocoHeatMapCell alloc] initWithSample:sample
                                           duration:duration + offset
                                     timingFunction:[self timingFunctionForSample:sample]];
         
@@ -98,14 +98,14 @@
     
     @synchronized (self) {
         for (CALayer *layer in _sublayers) {
-            if ([layer isKindOfClass:[HeatMapCell class]]) {
-                [samples addObject:((HeatMapCell *)layer).sample];
+            if ([layer isKindOfClass:[KonocoHeatMapCell class]]) {
+                [samples addObject:((KonocoHeatMapCell *)layer).sample];
                 [layer removeFromSuperlayer];
             }
         }
     }
     
-    for (HeatMapSample *sample in samples) {
+    for (KonocoHeatMapSample *sample in samples) {
         [self displayHeatMapSample:sample];
     }
 }
@@ -121,9 +121,9 @@
     
     @synchronized (self) {
         for (CALayer *layer in _sublayers) {
-            if ([layer isKindOfClass:[HeatMapCell class]]) {
+            if ([layer isKindOfClass:[KonocoHeatMapCell class]]) {
                 if (CGRectContainsPoint(layer.frame, point)) {
-                    [samples addObject:((HeatMapCell *)layer).sample];
+                    [samples addObject:((KonocoHeatMapCell *)layer).sample];
                 }
             }
         }
@@ -135,7 +135,7 @@
 #pragma mark -
 #pragma mark Custom Cell Attributes for Sample
 
-- (CoordinateRegion)regionForSample:(HeatMapSample *)sample {
+- (CoordinateRegion)regionForSample:(KonocoHeatMapSample *)sample {
     if ([self.delegate respondsToSelector:@selector(regionForSample:)]) {
         return [self.delegate regionForSample:sample];
     } else {
@@ -145,7 +145,7 @@
     }
 }
 
-- (CFTimeInterval)durationForSample:(HeatMapSample *)sample {
+- (CFTimeInterval)durationForSample:(KonocoHeatMapSample *)sample {
     if ([self.delegate respondsToSelector:@selector(durationForSample:)]) {
         return [self.delegate durationForSample:sample];
     } else {
@@ -153,7 +153,7 @@
     }
 }
 
-- (CGFloat)valueForSample:(HeatMapSample *)sample {
+- (CGFloat)valueForSample:(KonocoHeatMapSample *)sample {
     if ([self.delegate respondsToSelector:@selector(valueForSample:)]) {
         return [self.delegate valueForSample:sample];
     } else {
@@ -161,7 +161,7 @@
     }
 }
 
-- (CAMediaTimingFunction *)timingFunctionForSample:(HeatMapSample *)sample {
+- (CAMediaTimingFunction *)timingFunctionForSample:(KonocoHeatMapSample *)sample {
     return [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
 }
 
@@ -182,12 +182,12 @@
 - (void)drawLayer:(CALayer *)layer
         inContext:(CGContextRef)ctx {
     
-    if (![layer isKindOfClass:[HeatMapCell class]]) {
+    if (![layer isKindOfClass:[KonocoHeatMapCell class]]) {
         DEBUG_LOG(@"Expecting HeatMapCell.");
         return;
     }
     
-    HeatMapCell *cell = (HeatMapCell *)layer;
+    KonocoHeatMapCell *cell = (KonocoHeatMapCell *)layer;
     
     CGContextSetRGBStrokeColor(ctx, 1, 0, 1, 1);
     

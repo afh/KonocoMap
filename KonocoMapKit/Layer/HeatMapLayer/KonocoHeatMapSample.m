@@ -21,10 +21,10 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#import "HeatMapSample.h"
+#import "KonocoHeatMapSample.h"
 
 
-@implementation HeatMapSample
+@implementation KonocoHeatMapSample
 
 @synthesize location;
 @synthesize data;

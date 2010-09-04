@@ -25,24 +25,24 @@
 
 #import "CoordinateConverter.h"
 
-@class HeatMapSample;
+@class KonocoHeatMapSample;
 
-@protocol HeatMapDelegateProtocol
+@protocol KonocoHeatMapDelegateProtocol
 
 @required
-- (CoordinateRegion)regionForSample:(HeatMapSample *)sample;
-- (CFTimeInterval)durationForSample:(HeatMapSample *)sample;
-- (CGFloat)valueForSample:(HeatMapSample *)sample;
+- (CoordinateRegion)regionForSample:(KonocoHeatMapSample *)sample;
+- (CFTimeInterval)durationForSample:(KonocoHeatMapSample *)sample;
+- (CGFloat)valueForSample:(KonocoHeatMapSample *)sample;
 
 @optional
 - (NSColor *)colorForValue:(CGFloat)value;
 
 @end
 
-@interface HeatMapLayer : CALayer {
+@interface KonocoHeatMapLayer : CALayer {
 }
 
-- (void)displayHeatMapSample:(HeatMapSample *)aSample;
+- (void)displayHeatMapSample:(KonocoHeatMapSample *)aSample;
 - (void)updateHeatMap;
 - (NSArray *)activeHeatMapSamplesForCoordinate:(CLLocationCoordinate2D)coordinate;
 

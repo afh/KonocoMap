@@ -24,20 +24,20 @@
 #import <QuartzCore/QuartzCore.h>
 #import <CoreLocation/CoreLocation.h>
 
-@class HeatMapSample;
+@class KonocoHeatMapSample;
 
-@interface HeatMapCell : CALayer {
+@interface KonocoHeatMapCell : CALayer {
 
 @private
-    HeatMapSample *sample;
+    KonocoHeatMapSample *sample;
     CFTimeInterval duration;
     CAMediaTimingFunction *timingFunction;
 }
 
-- (id)initWithSample:(HeatMapSample *)aSample
+- (id)initWithSample:(KonocoHeatMapSample *)aSample
             duration:(CFTimeInterval)aInterval
       timingFunction:(CAMediaTimingFunction *)aTimingFunction;
 
-@property (nonatomic, readonly) HeatMapSample *sample;
+@property (nonatomic, readonly) KonocoHeatMapSample *sample;
 
 @end

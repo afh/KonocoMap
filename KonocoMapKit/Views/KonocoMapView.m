@@ -22,8 +22,8 @@
 
 #import "KonocoMapView.h"
 #import "KonocoMapLayer.h"
-#import "HeatMapLayer.h"
-#import "HeatMapSample.h"
+#import "KonocoHeatMapLayer.h"
+#import "KonocoHeatMapSample.h"
 
 #import "CoordinateConverter.h"
 
@@ -33,9 +33,9 @@
 #pragma mark -
 #pragma mark Forward HeatMapLayer Delegate Methods
 
-- (CoordinateRegion)regionForSample:(HeatMapSample *)sample;
-- (CFTimeInterval)durationForSample:(HeatMapSample *)sample;
-- (CGFloat)valueForSample:(HeatMapSample *)sample;
+- (CoordinateRegion)regionForSample:(KonocoHeatMapSample *)sample;
+- (CFTimeInterval)durationForSample:(KonocoHeatMapSample *)sample;
+- (CGFloat)valueForSample:(KonocoHeatMapSample *)sample;
 - (NSColor *)colorForValue:(CGFloat)value;
 
 @end
@@ -135,7 +135,7 @@
     return !heatMap.hidden;
 }
 
-- (void)displayHeatMapSample:(HeatMapSample *)sample {
+- (void)displayHeatMapSample:(KonocoHeatMapSample *)sample {
     [heatMap displayHeatMapSample:sample];
 }
 
@@ -358,7 +358,7 @@
 	[mapLayer addSublayer:baseLayer];
     
     // set up heat map
-    heatMap = [HeatMapLayer new];
+    heatMap = [KonocoHeatMapLayer new];
     heatMap.delegate = self;
     heatMap.bounds = mapLayer.bounds;
     heatMap.position = CGPointMake(mapLayer.bounds.size.width / 2,
@@ -384,7 +384,7 @@
 #pragma mark -
 #pragma mark Forward HeatMapLayer Delegate Methods
 
-- (CoordinateRegion)regionForSample:(HeatMapSample *)sample {
+- (CoordinateRegion)regionForSample:(KonocoHeatMapSample *)sample {
     if ([self.delegate respondsToSelector:@selector(mapView:regionForSample:)]) {
         return [self.delegate mapView:self regionForSample:sample];
     } else {
@@ -394,7 +394,7 @@
     }
 }
 
-- (CFTimeInterval)durationForSample:(HeatMapSample *)sample {
+- (CFTimeInterval)durationForSample:(KonocoHeatMapSample *)sample {
     if ([self.delegate respondsToSelector:@selector(mapView:durationForSample:)]) {
         return [self.delegate mapView:self durationForSample:sample];
     } else {
@@ -402,7 +402,7 @@
     }
 }
 
-- (CGFloat)valueForSample:(HeatMapSample *)sample {
+- (CGFloat)valueForSample:(KonocoHeatMapSample *)sample {
     if ([self.delegate respondsToSelector:@selector(mapView:valueForSample:)]) {
         return [self.delegate mapView:self valueForSample:sample];
     } else {

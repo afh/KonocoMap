@@ -20,19 +20,19 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "HeatMapCell.h"
-#import "HeatMapSample.h"
+#import "KonocoHeatMapCell.h"
+#import "KonocoHeatMapSample.h"
 
-@interface HeatMapCell ()
+@interface KonocoHeatMapCell ()
 - (void)fadeOut;
 @end
 
 
-@implementation HeatMapCell
+@implementation KonocoHeatMapCell
 
 @synthesize sample;
 
-- (id)initWithSample:(HeatMapSample *)aSample
+- (id)initWithSample:(KonocoHeatMapSample *)aSample
             duration:(CFTimeInterval)aInterval
       timingFunction:(CAMediaTimingFunction *)aTimingFunction {
     if (self = [super init]) {
