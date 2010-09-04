@@ -21,9 +21,9 @@
 		F6964EC2122D975000D490A6 /* CoordinateConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EAD122D975000D490A6 /* CoordinateConverter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6964EC3122D975000D490A6 /* CoordinateConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EAE122D975000D490A6 /* CoordinateConverter.m */; };
 		F6964EC4122D975000D490A6 /* CoordinateRegion.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EAF122D975000D490A6 /* CoordinateRegion.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F6964EC5122D975000D490A6 /* MapTileSource.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EB1122D975000D490A6 /* MapTileSource.h */; };
-		F6964EC6122D975000D490A6 /* MapTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EB2122D975000D490A6 /* MapTileSource.m */; };
-		F6964EC7122D975000D490A6 /* TileSourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EB3122D975000D490A6 /* TileSourceProtocol.h */; };
+		F6964EC5122D975000D490A6 /* KonocoMapTileSource.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EB1122D975000D490A6 /* KonocoMapTileSource.h */; };
+		F6964EC6122D975000D490A6 /* KonocoMapTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EB2122D975000D490A6 /* KonocoMapTileSource.m */; };
+		F6964EC7122D975000D490A6 /* KonocoTileSourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EB3122D975000D490A6 /* KonocoTileSourceProtocol.h */; };
 		F6964EC8122D975000D490A6 /* KonocoMapLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EB6122D975000D490A6 /* KonocoMapLayer.h */; };
 		F6964EC9122D975000D490A6 /* KonocoMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EB7122D975000D490A6 /* KonocoMapLayer.m */; };
 		F6964ECA122D975000D490A6 /* KonocoHeatMapCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EB9122D975000D490A6 /* KonocoHeatMapCell.h */; };
@@ -74,9 +74,9 @@
 		F6964EAD122D975000D490A6 /* CoordinateConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoordinateConverter.h; sourceTree = "<group>"; };
 		F6964EAE122D975000D490A6 /* CoordinateConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoordinateConverter.m; sourceTree = "<group>"; };
 		F6964EAF122D975000D490A6 /* CoordinateRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoordinateRegion.h; sourceTree = "<group>"; };
-		F6964EB1122D975000D490A6 /* MapTileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapTileSource.h; sourceTree = "<group>"; };
-		F6964EB2122D975000D490A6 /* MapTileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapTileSource.m; sourceTree = "<group>"; };
-		F6964EB3122D975000D490A6 /* TileSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileSourceProtocol.h; sourceTree = "<group>"; };
+		F6964EB1122D975000D490A6 /* KonocoMapTileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoMapTileSource.h; sourceTree = "<group>"; };
+		F6964EB2122D975000D490A6 /* KonocoMapTileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KonocoMapTileSource.m; sourceTree = "<group>"; };
+		F6964EB3122D975000D490A6 /* KonocoTileSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoTileSourceProtocol.h; sourceTree = "<group>"; };
 		F6964EB6122D975000D490A6 /* KonocoMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoMapLayer.h; sourceTree = "<group>"; };
 		F6964EB7122D975000D490A6 /* KonocoMapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KonocoMapLayer.m; sourceTree = "<group>"; };
 		F6964EB9122D975000D490A6 /* KonocoHeatMapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoHeatMapCell.h; sourceTree = "<group>"; };
@@ -239,9 +239,9 @@
 		F6964EB0122D975000D490A6 /* DataSources */ = {
 			isa = PBXGroup;
 			children = (
-				F6964EB1122D975000D490A6 /* MapTileSource.h */,
-				F6964EB2122D975000D490A6 /* MapTileSource.m */,
-				F6964EB3122D975000D490A6 /* TileSourceProtocol.h */,
+				F6964EB1122D975000D490A6 /* KonocoMapTileSource.h */,
+				F6964EB2122D975000D490A6 /* KonocoMapTileSource.m */,
+				F6964EB3122D975000D490A6 /* KonocoTileSourceProtocol.h */,
 			);
 			name = DataSources;
 			path = KonocoMapKit/DataSources;
@@ -309,8 +309,8 @@
 				F667569111F9A31700EEC8E1 /* KonocoMapKit.h in Headers */,
 				F6964EC2122D975000D490A6 /* CoordinateConverter.h in Headers */,
 				F6964EC4122D975000D490A6 /* CoordinateRegion.h in Headers */,
-				F6964EC5122D975000D490A6 /* MapTileSource.h in Headers */,
-				F6964EC7122D975000D490A6 /* TileSourceProtocol.h in Headers */,
+				F6964EC5122D975000D490A6 /* KonocoMapTileSource.h in Headers */,
+				F6964EC7122D975000D490A6 /* KonocoTileSourceProtocol.h in Headers */,
 				F6964EC8122D975000D490A6 /* KonocoMapLayer.h in Headers */,
 				F6964ECA122D975000D490A6 /* KonocoHeatMapCell.h in Headers */,
 				F6964ECC122D975000D490A6 /* KonocoHeatMapLayer.h in Headers */,
@@ -438,7 +438,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6964EC3122D975000D490A6 /* CoordinateConverter.m in Sources */,
-				F6964EC6122D975000D490A6 /* MapTileSource.m in Sources */,
+				F6964EC6122D975000D490A6 /* KonocoMapTileSource.m in Sources */,
 				F6964EC9122D975000D490A6 /* KonocoMapLayer.m in Sources */,
 				F6964ECB122D975000D490A6 /* KonocoHeatMapCell.m in Sources */,
 				F6964ECD122D975000D490A6 /* KonocoHeatMapLayer.m in Sources */,

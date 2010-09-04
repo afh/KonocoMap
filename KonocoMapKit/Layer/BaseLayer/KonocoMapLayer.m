@@ -21,7 +21,7 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "KonocoMapLayer.h"
-#import "MapTileSource.h"
+#import "KonocoMapTileSource.h"
 
 
 @implementation KonocoMapLayer
@@ -33,7 +33,7 @@
     return 0.25; 
 }
 
-- (id)initWithTileSource:(NSObject<TileSourceProtocol>*)source {
+- (id)initWithTileSource:(NSObject<KonocoTileSourceProtocol>*)source {
 	if (self = [super init]) {
 		tileSource = [source retain];
 		
@@ -48,7 +48,7 @@
 }
 
 - (id)init {
-	return [self initWithTileSource:[MapTileSource sharedMapSource]];
+	return [self initWithTileSource:[KonocoMapTileSource sharedMapSource]];
 }
 
 - (void)dealloc {

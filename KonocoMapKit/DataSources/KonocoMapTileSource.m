@@ -20,22 +20,22 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "MapTileSource.h"
+#import "KonocoMapTileSource.h"
 
-NSObject<TileSourceProtocol> *sharedMapSource = nil;
+NSObject<KonocoTileSourceProtocol> *sharedMapSource = nil;
 
-@interface MapTileSource ()
+@interface KonocoMapTileSource ()
 @property (nonatomic, readonly) NSString *applicationSupportDirectory;
 @property (nonatomic, readonly) NSString *mapCacheDirectory;
 @end
 
 
-@implementation MapTileSource
+@implementation KonocoMapTileSource
 
 #pragma mark -
 #pragma mark Init and Stuff to act as a Singleton
 
-+ (NSObject<TileSourceProtocol>*)sharedMapSource {
++ (NSObject<KonocoTileSourceProtocol>*)sharedMapSource {
 	@synchronized(self) {
 		if (sharedMapSource == nil) {
             sharedMapSource = [[super allocWithZone:NULL] init];

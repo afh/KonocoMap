@@ -23,16 +23,16 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 
-#import "TileSourceProtocol.h"
+#import "KonocoTileSourceProtocol.h"
 
 @interface KonocoMapLayer : CATiledLayer {
-	NSObject <TileSourceProtocol> *tileSource;
+	NSObject <KonocoTileSourceProtocol> *tileSource;
     BOOL monochrome;
 }
 
-@property (nonatomic, readonly) NSObject <TileSourceProtocol> *tileSource;
+@property (nonatomic, readonly) NSObject <KonocoTileSourceProtocol> *tileSource;
 @property (nonatomic, assign) BOOL monochrome;
 
-- (id)initWithTileSource:(NSObject<TileSourceProtocol>*)source;
+- (id)initWithTileSource:(NSObject<KonocoTileSourceProtocol>*)source;
 
 @end

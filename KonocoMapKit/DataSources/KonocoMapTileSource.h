@@ -1,5 +1,5 @@
 //
-//  TileSourceProtocol.h
+//  MapTileSource.h
 //  Map
 //
 //  Created by Tobias Kräntzer on 08.04.10.
@@ -20,11 +20,16 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
-
 #import <Cocoa/Cocoa.h>
 
+#import "KonocoTileSourceProtocol.h"
 
-@protocol TileSourceProtocol
+
+@interface KonocoMapTileSource : NSObject <KonocoTileSourceProtocol> {
+
+}
+
++ (NSObject<KonocoTileSourceProtocol>*)sharedMapSource;
 
 @property (nonatomic, readonly) NSInteger maxZoomLevel;
 @property (nonatomic, readonly) CGSize tileSize;
