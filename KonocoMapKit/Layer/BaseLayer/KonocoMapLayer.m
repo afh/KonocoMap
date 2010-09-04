@@ -1,6 +1,6 @@
 //
-//  MapLayer.m
-//  Map
+//  KonocoMapLayer.m
+//  KonocoMap
 //
 //  Created by Tobias Kräntzer on 07.04.10.
 //  Copyright 2010 Konoco <http://konoco.org/> All rights reserved.

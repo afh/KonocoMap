@@ -1,9 +1,9 @@
 //
-//  HeatMapCell.m
-//  Map
+//  KonocoHeatMapCell.m
+//  KonocoMap
 //
 //  Created by Tobias Kräntzer on 20.07.10.
-//  Copyright 2010 Konoco, Fraunhofer ISST. All rights reserved.
+//  Copyright 2010 Fraunhofer ISST. All rights reserved.
 //
 //  This file is part of Map.
 //	

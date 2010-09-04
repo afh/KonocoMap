@@ -1,9 +1,9 @@
 //
-//  CoordinateRegion.h
-//  MapKit
+//  KonocoCoordinateRegion.h
+//  KonocoMapKit
 //
 //  Created by Tobias Kräntzer on 26.07.10.
-//  Copyright 2010 Konoco, Fraunhofer ISST. All rights reserved.
+//  Copyright 2010 Konoco <http://konoco.org/> All rights reserved.
 //
 //  This file is part of Map.
 //	

@@ -1,9 +1,9 @@
 //
-//  MapKit.h
-//  MapKit
+//  KonocoMapKit.h
+//  KonocoMapKit
 //
 //  Created by Tobias Kräntzer on 23.07.10.
-//  Copyright 2010 Konoco, Fraunhofer ISST. All rights reserved.
+//  Copyright 2010 Konoco <http://konoco.org/> All rights reserved.
 //
 //  This file is part of MapKit.
 //	

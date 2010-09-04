@@ -67,7 +67,6 @@
 		F667560A11F99B5600EEC8E1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = App/Info.plist; sourceTree = "<group>"; };
 		F667562C11F99C9700EEC8E1 /* KonocoMapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KonocoMapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F667563311F99CE800EEC8E1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../KonocoMapKit/Info.plist; sourceTree = "<group>"; };
-		F667565211F99F2D00EEC8E1 /* libproj.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libproj.dylib; path = /opt/local/lib/libproj.dylib; sourceTree = "<absolute>"; };
 		F667569011F9A31700EEC8E1 /* KonocoMapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoMapKit.h; sourceTree = "<group>"; };
 		F66756E211F9AEF000EEC8E1 /* KonocoMapKit_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KonocoMapKit_Prefix.pch; path = ../KonocoMapKit/KonocoMapKit_Prefix.pch; sourceTree = "<group>"; };
 		F667579F11F9BE0E00EEC8E1 /* MapKitAgent */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MapKitAgent; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,10 +127,10 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F6964F6A122D99A600D490A6 /* libproj.dylib */,
 				F6D596591199F06A007E3C56 /* CoreLocation.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				F6DC7D7E116C8260005DE7F1 /* QuartzCore.framework */,
-				F667565211F99F2D00EEC8E1 /* libproj.dylib */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -166,7 +165,6 @@
 				F6977779116F80920089854D /* COPYING */,
 				F62EC56B11FDB37200607787 /* TODO.md */,
 				F62EC56C11FDB38200607787 /* README.md */,
-				F6964F6A122D99A600D490A6 /* libproj.dylib */,
 			);
 			name = Map;
 			sourceTree = "<group>";

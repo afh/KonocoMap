@@ -1,6 +1,6 @@
 //
-//  MapTileSource.h
-//  Map
+//  KonocoMapTileSource.h
+//  KonocoMap
 //
 //  Created by Tobias Kräntzer on 08.04.10.
 //  Copyright 2010 Konoco <http://konoco.org/> All rights reserved.
