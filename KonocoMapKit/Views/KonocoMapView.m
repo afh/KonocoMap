@@ -21,7 +21,7 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "KonocoMapView.h"
-#import "MapLayer.h"
+#import "KonocoMapLayer.h"
 #import "HeatMapLayer.h"
 #import "HeatMapSample.h"
 
@@ -352,7 +352,7 @@
     [self.layer addSublayer:mapLayer];
 	
 	// Set up BaseLayer
-	baseLayer = [[MapLayer layer] retain];
+	baseLayer = [[KonocoMapLayer layer] retain];
     baseLayer.position = CGPointMake(mapLayer.bounds.size.width / 2,
                                      mapLayer.bounds.size.height / 2);
 	[mapLayer addSublayer:baseLayer];

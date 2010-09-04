@@ -25,7 +25,7 @@
 
 #import "TileSourceProtocol.h"
 
-@interface MapLayer : CATiledLayer {
+@interface KonocoMapLayer : CATiledLayer {
 	NSObject <TileSourceProtocol> *tileSource;
     BOOL monochrome;
 }

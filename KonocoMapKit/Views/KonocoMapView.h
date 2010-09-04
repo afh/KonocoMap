@@ -26,7 +26,7 @@
 #import <KonocoMapKit/CoordinateRegion.h>
 
 @class KonocoMapView;
-@class MapLayer;
+@class KonocoMapLayer;
 @class HeatMapLayer;
 @class HeatMapSample;
 
@@ -54,7 +54,7 @@
 
 @interface KonocoMapView : NSView {
     CALayer *mapLayer;
-	MapLayer *baseLayer;
+	KonocoMapLayer *baseLayer;
     HeatMapLayer *heatMap;
     NSTrackingArea *trackingArea;
     BOOL mouseMoved;

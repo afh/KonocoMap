@@ -24,8 +24,8 @@
 		F6964EC5122D975000D490A6 /* MapTileSource.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EB1122D975000D490A6 /* MapTileSource.h */; };
 		F6964EC6122D975000D490A6 /* MapTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EB2122D975000D490A6 /* MapTileSource.m */; };
 		F6964EC7122D975000D490A6 /* TileSourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EB3122D975000D490A6 /* TileSourceProtocol.h */; };
-		F6964EC8122D975000D490A6 /* MapLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EB6122D975000D490A6 /* MapLayer.h */; };
-		F6964EC9122D975000D490A6 /* MapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EB7122D975000D490A6 /* MapLayer.m */; };
+		F6964EC8122D975000D490A6 /* KonocoMapLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EB6122D975000D490A6 /* KonocoMapLayer.h */; };
+		F6964EC9122D975000D490A6 /* KonocoMapLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EB7122D975000D490A6 /* KonocoMapLayer.m */; };
 		F6964ECA122D975000D490A6 /* HeatMapCell.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EB9122D975000D490A6 /* HeatMapCell.h */; };
 		F6964ECB122D975000D490A6 /* HeatMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EBA122D975000D490A6 /* HeatMapCell.m */; };
 		F6964ECC122D975000D490A6 /* HeatMapLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EBB122D975000D490A6 /* HeatMapLayer.h */; };
@@ -77,8 +77,8 @@
 		F6964EB1122D975000D490A6 /* MapTileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapTileSource.h; sourceTree = "<group>"; };
 		F6964EB2122D975000D490A6 /* MapTileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapTileSource.m; sourceTree = "<group>"; };
 		F6964EB3122D975000D490A6 /* TileSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TileSourceProtocol.h; sourceTree = "<group>"; };
-		F6964EB6122D975000D490A6 /* MapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapLayer.h; sourceTree = "<group>"; };
-		F6964EB7122D975000D490A6 /* MapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapLayer.m; sourceTree = "<group>"; };
+		F6964EB6122D975000D490A6 /* KonocoMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoMapLayer.h; sourceTree = "<group>"; };
+		F6964EB7122D975000D490A6 /* KonocoMapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KonocoMapLayer.m; sourceTree = "<group>"; };
 		F6964EB9122D975000D490A6 /* HeatMapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeatMapCell.h; sourceTree = "<group>"; };
 		F6964EBA122D975000D490A6 /* HeatMapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeatMapCell.m; sourceTree = "<group>"; };
 		F6964EBB122D975000D490A6 /* HeatMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeatMapLayer.h; sourceTree = "<group>"; };
@@ -260,8 +260,8 @@
 		F6964EB5122D975000D490A6 /* BaseLayer */ = {
 			isa = PBXGroup;
 			children = (
-				F6964EB6122D975000D490A6 /* MapLayer.h */,
-				F6964EB7122D975000D490A6 /* MapLayer.m */,
+				F6964EB6122D975000D490A6 /* KonocoMapLayer.h */,
+				F6964EB7122D975000D490A6 /* KonocoMapLayer.m */,
 			);
 			path = BaseLayer;
 			sourceTree = "<group>";
@@ -311,7 +311,7 @@
 				F6964EC4122D975000D490A6 /* CoordinateRegion.h in Headers */,
 				F6964EC5122D975000D490A6 /* MapTileSource.h in Headers */,
 				F6964EC7122D975000D490A6 /* TileSourceProtocol.h in Headers */,
-				F6964EC8122D975000D490A6 /* MapLayer.h in Headers */,
+				F6964EC8122D975000D490A6 /* KonocoMapLayer.h in Headers */,
 				F6964ECA122D975000D490A6 /* HeatMapCell.h in Headers */,
 				F6964ECC122D975000D490A6 /* HeatMapLayer.h in Headers */,
 				F6964ECE122D975000D490A6 /* HeatMapSample.h in Headers */,
@@ -439,7 +439,7 @@
 			files = (
 				F6964EC3122D975000D490A6 /* CoordinateConverter.m in Sources */,
 				F6964EC6122D975000D490A6 /* MapTileSource.m in Sources */,
-				F6964EC9122D975000D490A6 /* MapLayer.m in Sources */,
+				F6964EC9122D975000D490A6 /* KonocoMapLayer.m in Sources */,
 				F6964ECB122D975000D490A6 /* HeatMapCell.m in Sources */,
 				F6964ECD122D975000D490A6 /* HeatMapLayer.m in Sources */,
 				F6964ECF122D975000D490A6 /* HeatMapSample.m in Sources */,

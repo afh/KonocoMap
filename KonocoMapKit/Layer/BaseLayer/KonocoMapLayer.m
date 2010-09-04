@@ -20,11 +20,11 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "MapLayer.h"
+#import "KonocoMapLayer.h"
 #import "MapTileSource.h"
 
 
-@implementation MapLayer
+@implementation KonocoMapLayer
 
 @synthesize tileSource;
 @synthesize monochrome;
