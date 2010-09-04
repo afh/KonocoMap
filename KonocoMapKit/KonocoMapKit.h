@@ -21,6 +21,6 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#import <MapKit/MapView.h>
-#import <MapKit/HeatMapSample.h>
-#import <MapKit/CoordinateConverter.h>
+#import <KonocoMapKit/KonocoMapView.h>
+#import <KonocoMapKit/HeatMapSample.h>
+#import <KonocoMapKit/CoordinateConverter.h>

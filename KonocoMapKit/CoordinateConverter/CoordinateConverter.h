@@ -24,7 +24,7 @@
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CoreLocation/CoreLocation.h>
-#import <MapKit/CoordinateRegion.h>
+#import <KonocoMapKit/CoordinateRegion.h>
 
 @interface CoordinateConverter : NSObject {
     

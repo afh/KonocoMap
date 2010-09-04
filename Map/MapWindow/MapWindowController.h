@@ -22,10 +22,10 @@
 
 #import <Cocoa/Cocoa.h>
 #import <CoreLocation/CoreLocation.h>
-#import <MapKit/MapKit.h>
+#import <KonocoMapKit/KonocoMapKit.h>
 
 @interface MapWindowController : NSWindowController <MapViewDelegateProtocol> {
-	IBOutlet MapView *mapView;
+	IBOutlet KonocoMapView *mapView;
     NSRect normalFrame;
     BOOL inFullScreenMode;
 }

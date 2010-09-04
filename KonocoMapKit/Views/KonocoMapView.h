@@ -23,9 +23,9 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CoreLocation/CoreLocation.h>
-#import <MapKit/CoordinateRegion.h>
+#import <KonocoMapKit/CoordinateRegion.h>
 
-@class MapView;
+@class KonocoMapView;
 @class MapLayer;
 @class HeatMapLayer;
 @class HeatMapSample;
@@ -36,23 +36,23 @@
 #pragma mark Handling User Action
 
 @optional
-- (void)mapView:(MapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate;
+- (void)mapView:(KonocoMapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate;
 
 #pragma mark -
 #pragma mark Heat Map Behavior
 
 @optional
-- (CoordinateRegion)mapView:(MapView *)mapView regionForSample:(HeatMapSample *)sample;
-- (CFTimeInterval)mapView:(MapView *)mapView durationForSample:(HeatMapSample *)sample;
-- (CGFloat)mapView:(MapView *)mapView valueForSample:(HeatMapSample *)sample;
-- (NSColor *)mapView:(MapView *)mapView colorForValue:(CGFloat)value;
+- (CoordinateRegion)mapView:(KonocoMapView *)mapView regionForSample:(HeatMapSample *)sample;
+- (CFTimeInterval)mapView:(KonocoMapView *)mapView durationForSample:(HeatMapSample *)sample;
+- (CGFloat)mapView:(KonocoMapView *)mapView valueForSample:(HeatMapSample *)sample;
+- (NSColor *)mapView:(KonocoMapView *)mapView colorForValue:(CGFloat)value;
 
 @end
 
 #pragma mark -
 #pragma mark -
 
-@interface MapView : NSView {
+@interface KonocoMapView : NSView {
     CALayer *mapLayer;
 	MapLayer *baseLayer;
     HeatMapLayer *heatMap;

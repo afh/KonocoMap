@@ -177,7 +177,7 @@
 #pragma mark -
 #pragma mark MapViewDelegate
 
-- (void)mapView:(MapView *)aMapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
+- (void)mapView:(KonocoMapView *)aMapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
     //NSLog(@"Did Tap at Point: coordinate.latitude: %f, .longitude:%f", coordinate.latitude, coordinate.longitude);
     
     CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
@@ -189,7 +189,7 @@
     [location release];
 }
 
-- (CoordinateRegion)mapView:(MapView *)mapView regionForSample:(HeatMapSample *)sample {
+- (CoordinateRegion)mapView:(KonocoMapView *)mapView regionForSample:(HeatMapSample *)sample {
     
     double radius = (float)rand()/RAND_MAX * 6000 + 3000;
     
@@ -198,7 +198,7 @@
             withRadius:radius];
 }
 
-- (CGFloat)mapView:(MapView *)mapView valueForSample:(HeatMapSample *)sample {
+- (CGFloat)mapView:(KonocoMapView *)mapView valueForSample:(HeatMapSample *)sample {
     return [[sample.data objectForKey:@"value"] doubleValue];
 }
 

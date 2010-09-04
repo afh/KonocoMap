@@ -20,14 +20,14 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "MapView.h"
+#import "KonocoMapView.h"
 #import "MapLayer.h"
 #import "HeatMapLayer.h"
 #import "HeatMapSample.h"
 
 #import "CoordinateConverter.h"
 
-@interface MapView ()
+@interface KonocoMapView ()
 - (void)setUp;
 
 #pragma mark -
@@ -40,7 +40,7 @@
 
 @end
 
-@implementation MapView
+@implementation KonocoMapView
 
 @synthesize delegate;
 
