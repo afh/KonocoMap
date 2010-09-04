@@ -279,8 +279,7 @@
 - (void)mouseUp:(NSEvent *)event {
     if (mouseMoved == NO) {
         NSPoint event_location = [event locationInWindow];
-        NSPoint local_point = [self convertPoint:event_location fromView:nil];
-        CGPoint layer_point = [self.layer convertPoint:CGPointMake(local_point.x, local_point.y) toLayer:mapLayer];
+        CGPoint layer_point = [self.layer convertPoint:event_location toLayer:mapLayer];
         
         if ([self.delegate respondsToSelector:@selector(mapView:didTapAtCoordinate:)]) {
             [delegate mapView:self didTapAtCoordinate:[[KonocoCoordinateConverter sharedCoordinateConverter] coordinateFromPoint:CGPointMake(layer_point.x / baseLayer.tileSize.width, layer_point.y / baseLayer.tileSize.height)]];
