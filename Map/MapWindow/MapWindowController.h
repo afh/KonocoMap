@@ -43,10 +43,10 @@
 
 @property (nonatomic, assign) CGFloat zoom;
 @property (nonatomic, assign) CLLocationCoordinate2D center;
-@property (nonatomic, assign) CoordinateRegion region;
+@property (nonatomic, assign) KonocoCoordinateRegion region;
 
 - (void)setZoom:(CGFloat)level animated:(BOOL)animated;
 - (void)setCenter:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated;
-- (void)setRegion:(CoordinateRegion)rect animated:(BOOL)animated;
+- (void)setRegion:(KonocoCoordinateRegion)rect animated:(BOOL)animated;
 
 @end

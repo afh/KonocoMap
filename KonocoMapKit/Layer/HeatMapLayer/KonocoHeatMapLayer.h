@@ -23,14 +23,14 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 
-#import "CoordinateConverter.h"
+#import "KonocoCoordinateConverter.h"
 
 @class KonocoHeatMapSample;
 
 @protocol KonocoHeatMapDelegateProtocol
 
 @required
-- (CoordinateRegion)regionForSample:(KonocoHeatMapSample *)sample;
+- (KonocoCoordinateRegion)regionForSample:(KonocoHeatMapSample *)sample;
 - (CFTimeInterval)durationForSample:(KonocoHeatMapSample *)sample;
 - (CGFloat)valueForSample:(KonocoHeatMapSample *)sample;
 

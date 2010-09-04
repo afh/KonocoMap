@@ -26,7 +26,7 @@
 
 
 @interface KonocoHeatMapLayer ()
-- (CoordinateRegion)regionForSample:(KonocoHeatMapSample *)sample;
+- (KonocoCoordinateRegion)regionForSample:(KonocoHeatMapSample *)sample;
 - (CFTimeInterval)durationForSample:(KonocoHeatMapSample *)sample;
 - (CGFloat)valueForSample:(KonocoHeatMapSample *)sample;
 - (NSColor *)colorForValue:(CGFloat)value;
@@ -51,8 +51,8 @@
 - (void)displayHeatMapSample:(KonocoHeatMapSample *)sample {
     
     
-    CoordinateRegion cellRegion = [self regionForSample:sample];
-    CGRect cellFrame = [[CoordinateConverter sharedCoordinateConverter] rectFromRegion:cellRegion];
+    KonocoCoordinateRegion cellRegion = [self regionForSample:sample];
+    CGRect cellFrame = [[KonocoCoordinateConverter sharedCoordinateConverter] rectFromRegion:cellRegion];
     cellFrame = CGRectMake(cellFrame.origin.x * self.bounds.size.width,
                            cellFrame.origin.y * self.bounds.size.height, 
                            cellFrame.size.width * self.bounds.size.width, 
@@ -111,7 +111,7 @@
 }
 
 - (NSArray *)activeHeatMapSamplesForCoordinate:(CLLocationCoordinate2D)coordinate {
-    CGPoint point = [[CoordinateConverter sharedCoordinateConverter] pointFromCoordinate:coordinate];
+    CGPoint point = [[KonocoCoordinateConverter sharedCoordinateConverter] pointFromCoordinate:coordinate];
     point.x = point.x * self.bounds.size.width;
     point.y = point.y * self.bounds.size.height;
     
@@ -135,11 +135,11 @@
 #pragma mark -
 #pragma mark Custom Cell Attributes for Sample
 
-- (CoordinateRegion)regionForSample:(KonocoHeatMapSample *)sample {
+- (KonocoCoordinateRegion)regionForSample:(KonocoHeatMapSample *)sample {
     if ([self.delegate respondsToSelector:@selector(regionForSample:)]) {
         return [self.delegate regionForSample:sample];
     } else {
-        return [[CoordinateConverter sharedCoordinateConverter]
+        return [[KonocoCoordinateConverter sharedCoordinateConverter]
                              regionFromCoordinate:sample.location.coordinate
                                        withRadius:3000];
     }

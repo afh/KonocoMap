@@ -146,15 +146,15 @@
 	[mapView setCenter:coordinate animated:animated];
 }
 
-- (CoordinateRegion)region {
+- (KonocoCoordinateRegion)region {
 	return mapView.region;
 }
 
-- (void)setRegion:(CoordinateRegion)rect {
+- (void)setRegion:(KonocoCoordinateRegion)rect {
 	[mapView setRegion:rect];
 }
 
-- (void)setRegion:(CoordinateRegion)rect animated:(BOOL)animated {
+- (void)setRegion:(KonocoCoordinateRegion)rect animated:(BOOL)animated {
 	[mapView setRegion:rect animated:animated];
 }
 
@@ -189,11 +189,11 @@
     [location release];
 }
 
-- (CoordinateRegion)mapView:(KonocoMapView *)mapView regionForSample:(KonocoHeatMapSample *)sample {
+- (KonocoCoordinateRegion)mapView:(KonocoMapView *)mapView regionForSample:(KonocoHeatMapSample *)sample {
     
     double radius = (float)rand()/RAND_MAX * 6000 + 3000;
     
-    return [[CoordinateConverter sharedCoordinateConverter]
+    return [[KonocoCoordinateConverter sharedCoordinateConverter]
             regionFromCoordinate:sample.location.coordinate
             withRadius:radius];
 }

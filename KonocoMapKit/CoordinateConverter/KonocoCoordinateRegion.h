@@ -26,9 +26,9 @@
 typedef struct {
     CLLocationDegrees latitudeDelta;
     CLLocationDegrees longitudeDelta;
-} CoordinateSpan;
+} KonocoCoordinateSpan;
 
 typedef struct {
     CLLocationCoordinate2D center;
-    CoordinateSpan span;
-} CoordinateRegion;
+    KonocoCoordinateSpan span;
+} KonocoCoordinateRegion;

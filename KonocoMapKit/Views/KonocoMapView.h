@@ -23,7 +23,7 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CoreLocation/CoreLocation.h>
-#import <KonocoMapKit/CoordinateRegion.h>
+#import <KonocoMapKit/KonocoCoordinateRegion.h>
 
 @class KonocoMapView;
 @class KonocoMapLayer;
@@ -42,7 +42,7 @@
 #pragma mark Heat Map Behavior
 
 @optional
-- (CoordinateRegion)mapView:(KonocoMapView *)mapView regionForSample:(KonocoHeatMapSample *)sample;
+- (KonocoCoordinateRegion)mapView:(KonocoMapView *)mapView regionForSample:(KonocoHeatMapSample *)sample;
 - (CFTimeInterval)mapView:(KonocoMapView *)mapView durationForSample:(KonocoHeatMapSample *)sample;
 - (CGFloat)mapView:(KonocoMapView *)mapView valueForSample:(KonocoHeatMapSample *)sample;
 - (NSColor *)mapView:(KonocoMapView *)mapView colorForValue:(CGFloat)value;
@@ -85,10 +85,10 @@
 
 @property (nonatomic, assign) CGFloat zoom;
 @property (nonatomic, assign) CLLocationCoordinate2D center;
-@property (nonatomic, assign) CoordinateRegion region;
+@property (nonatomic, assign) KonocoCoordinateRegion region;
 
 - (void)setZoom:(CGFloat)level animated:(BOOL)animated;
 - (void)setCenter:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated;
-- (void)setRegion:(CoordinateRegion)rect animated:(BOOL)animated;
+- (void)setRegion:(KonocoCoordinateRegion)rect animated:(BOOL)animated;
 
 @end

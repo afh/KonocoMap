@@ -21,19 +21,19 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#import "CoordinateConverter.h"
+#import "KonocoCoordinateConverter.h"
 #import <proj_api.h>
 
-static CoordinateConverter *sharedCoordinateConverter = nil;
+static KonocoCoordinateConverter *sharedCoordinateConverter = nil;
 
 static CGFloat WGS84EarthRadius(CGFloat lat);
 
-@implementation CoordinateConverter
+@implementation KonocoCoordinateConverter
 
 #pragma mark -
 #pragma mark Shared Converter
 
-+ (CoordinateConverter *)sharedCoordinateConverter {
++ (KonocoCoordinateConverter *)sharedCoordinateConverter {
     @synchronized (sharedCoordinateConverter) {
         if (sharedCoordinateConverter == nil) {
             sharedCoordinateConverter = [[super allocWithZone:NULL] init];
@@ -113,8 +113,8 @@ static CGFloat WGS84EarthRadius(CGFloat lat);
     return CGPointMake(x, y);
 }
 
-- (CoordinateRegion)regionFromRect:(CGRect)rect {
-    CoordinateRegion result;
+- (KonocoCoordinateRegion)regionFromRect:(CGRect)rect {
+    KonocoCoordinateRegion result;
     
     CLLocationCoordinate2D lowerLeft = [self coordinateFromPoint:rect.origin];
     CLLocationCoordinate2D upperRight = [self coordinateFromPoint:CGPointMake(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height)];
@@ -127,7 +127,7 @@ static CGFloat WGS84EarthRadius(CGFloat lat);
     return result;
 }
 
-- (CGRect)rectFromRegion:(CoordinateRegion)region {
+- (CGRect)rectFromRegion:(KonocoCoordinateRegion)region {
     CLLocationCoordinate2D lowerLeftC;
     lowerLeftC.longitude = region.center.longitude - region.span.longitudeDelta / 2;
     lowerLeftC.latitude = region.center.latitude - region.span.latitudeDelta / 2;
@@ -142,8 +142,8 @@ static CGFloat WGS84EarthRadius(CGFloat lat);
     return CGRectMake(lowerLeft.x, lowerLeft.y, upperRight.x - lowerLeft.x, upperRight.y - lowerLeft.y);
 }
 
-- (CoordinateRegion)regionFromCoordinate:(CLLocationCoordinate2D)coordinate withRadius:(CGFloat)aRadius {
-    CoordinateRegion result;
+- (KonocoCoordinateRegion)regionFromCoordinate:(CLLocationCoordinate2D)coordinate withRadius:(CGFloat)aRadius {
+    KonocoCoordinateRegion result;
     result.center = coordinate;
     
     double lat = DEG_TO_RAD * coordinate.latitude;

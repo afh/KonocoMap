@@ -25,7 +25,7 @@
 #import "KonocoHeatMapLayer.h"
 #import "KonocoHeatMapSample.h"
 
-#import "CoordinateConverter.h"
+#import "KonocoCoordinateConverter.h"
 
 @interface KonocoMapView ()
 - (void)setUp;
@@ -33,7 +33,7 @@
 #pragma mark -
 #pragma mark Forward HeatMapLayer Delegate Methods
 
-- (CoordinateRegion)regionForSample:(KonocoHeatMapSample *)sample;
+- (KonocoCoordinateRegion)regionForSample:(KonocoHeatMapSample *)sample;
 - (CFTimeInterval)durationForSample:(KonocoHeatMapSample *)sample;
 - (CGFloat)valueForSample:(KonocoHeatMapSample *)sample;
 - (NSColor *)colorForValue:(CGFloat)value;
@@ -184,7 +184,7 @@
 }
 
 - (CLLocationCoordinate2D)center {
-	return [[CoordinateConverter sharedCoordinateConverter] coordinateFromPoint:mapLayer.anchorPoint];
+	return [[KonocoCoordinateConverter sharedCoordinateConverter] coordinateFromPoint:mapLayer.anchorPoint];
 }
 
 - (void)setCenter:(CLLocationCoordinate2D)coordinate {
@@ -194,7 +194,7 @@
 - (void)setCenter:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated {
 	// TODO: Check which "attributes" where modified by this operation
     
-    CGPoint point = [[CoordinateConverter sharedCoordinateConverter] pointFromCoordinate:coordinate];
+    CGPoint point = [[KonocoCoordinateConverter sharedCoordinateConverter] pointFromCoordinate:coordinate];
     
 	[self willChangeValueForKey:@"region"];
 	[self willChangeValueForKey:@"center"];
@@ -216,24 +216,24 @@
 	[self didChangeValueForKey:@"center"];
 }
 
-- (CoordinateRegion)region {
+- (KonocoCoordinateRegion)region {
 	CGFloat scale = powf(2, self.zoom);
 	
 	CGFloat width = self.bounds.size.width / (baseLayer.tileSize.width * scale);
 	CGFloat height = self.bounds.size.height / (baseLayer.tileSize.height * scale);
     
-	return [[CoordinateConverter sharedCoordinateConverter]
+	return [[KonocoCoordinateConverter sharedCoordinateConverter]
                  regionFromRect:CGRectMake(mapLayer.anchorPoint.x - width / 2,
                                            mapLayer.anchorPoint.y - height / 2,
                                            width,
                                            height)];
 }
 
-- (void)setRegion:(CoordinateRegion)rect {
+- (void)setRegion:(KonocoCoordinateRegion)rect {
 	[self setRegion:rect animated:NO];
 }
 
-- (void)setRegion:(CoordinateRegion)rect animated:(BOOL)animated {
+- (void)setRegion:(KonocoCoordinateRegion)rect animated:(BOOL)animated {
 	// TODO: set the region
 }
 
@@ -276,7 +276,7 @@
         CGPoint layer_point = [self.layer convertPoint:CGPointMake(local_point.x, local_point.y) toLayer:mapLayer];
         
         if ([self.delegate respondsToSelector:@selector(mapView:didTapAtCoordinate:)]) {
-            [delegate mapView:self didTapAtCoordinate:[[CoordinateConverter sharedCoordinateConverter] coordinateFromPoint:CGPointMake(layer_point.x / baseLayer.tileSize.width, layer_point.y / baseLayer.tileSize.height)]];
+            [delegate mapView:self didTapAtCoordinate:[[KonocoCoordinateConverter sharedCoordinateConverter] coordinateFromPoint:CGPointMake(layer_point.x / baseLayer.tileSize.width, layer_point.y / baseLayer.tileSize.height)]];
         }
     }
 }
@@ -384,11 +384,11 @@
 #pragma mark -
 #pragma mark Forward HeatMapLayer Delegate Methods
 
-- (CoordinateRegion)regionForSample:(KonocoHeatMapSample *)sample {
+- (KonocoCoordinateRegion)regionForSample:(KonocoHeatMapSample *)sample {
     if ([self.delegate respondsToSelector:@selector(mapView:regionForSample:)]) {
         return [self.delegate mapView:self regionForSample:sample];
     } else {
-        return [[CoordinateConverter sharedCoordinateConverter]
+        return [[KonocoCoordinateConverter sharedCoordinateConverter]
                 regionFromCoordinate:sample.location.coordinate
                 withRadius:3000];
     }

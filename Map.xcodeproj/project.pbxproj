@@ -18,9 +18,9 @@
 		F667564911F99EAF00EEC8E1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DC7D7E116C8260005DE7F1 /* QuartzCore.framework */; };
 		F667569111F9A31700EEC8E1 /* KonocoMapKit.h in Headers */ = {isa = PBXBuildFile; fileRef = F667569011F9A31700EEC8E1 /* KonocoMapKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F667575411F9B51E00EEC8E1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6D596591199F06A007E3C56 /* CoreLocation.framework */; };
-		F6964EC2122D975000D490A6 /* CoordinateConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EAD122D975000D490A6 /* CoordinateConverter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F6964EC3122D975000D490A6 /* CoordinateConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EAE122D975000D490A6 /* CoordinateConverter.m */; };
-		F6964EC4122D975000D490A6 /* CoordinateRegion.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EAF122D975000D490A6 /* CoordinateRegion.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F6964EC2122D975000D490A6 /* KonocoCoordinateConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EAD122D975000D490A6 /* KonocoCoordinateConverter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F6964EC3122D975000D490A6 /* KonocoCoordinateConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EAE122D975000D490A6 /* KonocoCoordinateConverter.m */; };
+		F6964EC4122D975000D490A6 /* KonocoCoordinateRegion.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EAF122D975000D490A6 /* KonocoCoordinateRegion.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6964EC5122D975000D490A6 /* KonocoMapTileSource.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EB1122D975000D490A6 /* KonocoMapTileSource.h */; };
 		F6964EC6122D975000D490A6 /* KonocoMapTileSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EB2122D975000D490A6 /* KonocoMapTileSource.m */; };
 		F6964EC7122D975000D490A6 /* KonocoTileSourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EB3122D975000D490A6 /* KonocoTileSourceProtocol.h */; };
@@ -71,9 +71,9 @@
 		F667569011F9A31700EEC8E1 /* KonocoMapKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoMapKit.h; sourceTree = "<group>"; };
 		F66756E211F9AEF000EEC8E1 /* KonocoMapKit_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KonocoMapKit_Prefix.pch; path = ../KonocoMapKit/KonocoMapKit_Prefix.pch; sourceTree = "<group>"; };
 		F667579F11F9BE0E00EEC8E1 /* MapKitAgent */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MapKitAgent; sourceTree = BUILT_PRODUCTS_DIR; };
-		F6964EAD122D975000D490A6 /* CoordinateConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoordinateConverter.h; sourceTree = "<group>"; };
-		F6964EAE122D975000D490A6 /* CoordinateConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoordinateConverter.m; sourceTree = "<group>"; };
-		F6964EAF122D975000D490A6 /* CoordinateRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoordinateRegion.h; sourceTree = "<group>"; };
+		F6964EAD122D975000D490A6 /* KonocoCoordinateConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoCoordinateConverter.h; sourceTree = "<group>"; };
+		F6964EAE122D975000D490A6 /* KonocoCoordinateConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KonocoCoordinateConverter.m; sourceTree = "<group>"; };
+		F6964EAF122D975000D490A6 /* KonocoCoordinateRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoCoordinateRegion.h; sourceTree = "<group>"; };
 		F6964EB1122D975000D490A6 /* KonocoMapTileSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoMapTileSource.h; sourceTree = "<group>"; };
 		F6964EB2122D975000D490A6 /* KonocoMapTileSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KonocoMapTileSource.m; sourceTree = "<group>"; };
 		F6964EB3122D975000D490A6 /* KonocoTileSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoTileSourceProtocol.h; sourceTree = "<group>"; };
@@ -228,9 +228,9 @@
 		F6964EAC122D975000D490A6 /* CoordinateConverter */ = {
 			isa = PBXGroup;
 			children = (
-				F6964EAD122D975000D490A6 /* CoordinateConverter.h */,
-				F6964EAE122D975000D490A6 /* CoordinateConverter.m */,
-				F6964EAF122D975000D490A6 /* CoordinateRegion.h */,
+				F6964EAD122D975000D490A6 /* KonocoCoordinateConverter.h */,
+				F6964EAE122D975000D490A6 /* KonocoCoordinateConverter.m */,
+				F6964EAF122D975000D490A6 /* KonocoCoordinateRegion.h */,
 			);
 			name = CoordinateConverter;
 			path = KonocoMapKit/CoordinateConverter;
@@ -307,8 +307,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F667569111F9A31700EEC8E1 /* KonocoMapKit.h in Headers */,
-				F6964EC2122D975000D490A6 /* CoordinateConverter.h in Headers */,
-				F6964EC4122D975000D490A6 /* CoordinateRegion.h in Headers */,
+				F6964EC2122D975000D490A6 /* KonocoCoordinateConverter.h in Headers */,
+				F6964EC4122D975000D490A6 /* KonocoCoordinateRegion.h in Headers */,
 				F6964EC5122D975000D490A6 /* KonocoMapTileSource.h in Headers */,
 				F6964EC7122D975000D490A6 /* KonocoTileSourceProtocol.h in Headers */,
 				F6964EC8122D975000D490A6 /* KonocoMapLayer.h in Headers */,
@@ -437,7 +437,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6964EC3122D975000D490A6 /* CoordinateConverter.m in Sources */,
+				F6964EC3122D975000D490A6 /* KonocoCoordinateConverter.m in Sources */,
 				F6964EC6122D975000D490A6 /* KonocoMapTileSource.m in Sources */,
 				F6964EC9122D975000D490A6 /* KonocoMapLayer.m in Sources */,
 				F6964ECB122D975000D490A6 /* KonocoHeatMapCell.m in Sources */,

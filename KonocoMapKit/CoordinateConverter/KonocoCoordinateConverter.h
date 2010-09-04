@@ -24,9 +24,9 @@
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
 #import <CoreLocation/CoreLocation.h>
-#import <KonocoMapKit/CoordinateRegion.h>
+#import <KonocoMapKit/KonocoCoordinateRegion.h>
 
-@interface CoordinateConverter : NSObject {
+@interface KonocoCoordinateConverter : NSObject {
     
 @private
     void * pj_merc;
@@ -36,15 +36,15 @@
 #pragma mark -
 #pragma mark Shared Converter
 
-+ (CoordinateConverter *)sharedCoordinateConverter;
++ (KonocoCoordinateConverter *)sharedCoordinateConverter;
 
 #pragma mark -
 #pragma mark Coordinate Converter
 
 - (CLLocationCoordinate2D)coordinateFromPoint:(CGPoint)point;
 - (CGPoint)pointFromCoordinate:(CLLocationCoordinate2D)coordinate;
-- (CoordinateRegion)regionFromRect:(CGRect)rect;
-- (CGRect)rectFromRegion:(CoordinateRegion)region;
-- (CoordinateRegion)regionFromCoordinate:(CLLocationCoordinate2D)coordinate withRadius:(CGFloat)radius;
+- (KonocoCoordinateRegion)regionFromRect:(CGRect)rect;
+- (CGRect)rectFromRegion:(KonocoCoordinateRegion)region;
+- (KonocoCoordinateRegion)regionFromCoordinate:(CLLocationCoordinate2D)coordinate withRadius:(CGFloat)radius;
 
 @end
