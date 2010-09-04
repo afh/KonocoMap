@@ -79,11 +79,15 @@
 - (IBAction)toggleFullscreen:(id)sender {
     if (inFullScreenMode) {
         [self setWindowScreen];
-        [self performSelector:@selector(setStyleNormal) withObject:nil afterDelay:[self.window animationResizeTime:normalFrame]];
+        [self performSelector:@selector(setStyleNormal) 
+                   withObject:nil
+                   afterDelay:[self.window animationResizeTime:normalFrame]];
         inFullScreenMode = NO;
     } else {
         [self setStyleBorderless];
-        [self performSelector:@selector(setFullScreen) withObject:nil afterDelay:[self.window animationResizeTime:[[NSScreen mainScreen] frame]]];
+        [self performSelector:@selector(setFullScreen)
+                   withObject:nil
+                   afterDelay:[self.window animationResizeTime:[[NSScreen mainScreen] frame]]];
         inFullScreenMode = YES;
     }
 }
@@ -97,11 +101,12 @@
 #pragma mark Fullscreen
 
 - (void)setStyleBorderless {
+    normalStyleMask = [self.window styleMask];
     [self.window setStyleMask:NSBorderlessWindowMask];
 }
 
 - (void)setStyleNormal {
-    [self.window setStyleMask:NSTitledWindowMask];
+    [self.window setStyleMask:normalStyleMask];
 }
 
 - (void)setFullScreen {

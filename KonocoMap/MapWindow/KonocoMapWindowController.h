@@ -26,8 +26,10 @@
 
 @interface KonocoMapWindowController : NSWindowController <MapViewDelegateProtocol> {
 	IBOutlet KonocoMapView *mapView;
-    NSRect normalFrame;
+    
     BOOL inFullScreenMode;
+    NSRect normalFrame;
+    NSUInteger normalStyleMask;
 }
 
 #pragma mark -
