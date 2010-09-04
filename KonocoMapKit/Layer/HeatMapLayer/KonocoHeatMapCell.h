@@ -5,7 +5,7 @@
 //  Created by Tobias Kräntzer on 20.07.10.
 //  Copyright 2010 Fraunhofer ISST. All rights reserved.
 //
-//  This file is part of Map.
+//  This file is part of Konoco Map.
 //	
 //  Map is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU Lesser General Public License as published by
