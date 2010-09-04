@@ -434,10 +434,7 @@
 				GCC_PREFIX_HEADER = KonocoMap/KonocoMap_Prefix.pch;
 				INFOPLIST_FILE = KonocoMap/App/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					/opt/local/lib,
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = KonocoMap;
 			};
 			name = Debug;
@@ -452,10 +449,7 @@
 				GCC_PREFIX_HEADER = KonocoMap/KonocoMap_Prefix.pch;
 				INFOPLIST_FILE = KonocoMap/App/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					/opt/local/lib,
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = KonocoMap;
 			};
 			name = Release;
@@ -518,10 +512,7 @@
 				GCC_PREFIX_HEADER = KonocoMapKit/KonocoMapKit_Prefix.pch;
 				INFOPLIST_FILE = KonocoMapKit/Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					/opt/local/lib,
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -548,10 +539,7 @@
 				GCC_PREFIX_HEADER = KonocoMapKit/KonocoMapKit_Prefix.pch;
 				INFOPLIST_FILE = KonocoMapKit/Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					/opt/local/lib,
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
