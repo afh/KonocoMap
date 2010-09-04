@@ -20,11 +20,11 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "MapAppDelegate.h"
+#import "KonocoMapAppDelegate.h"
 #import "MapWindowController.h"
 
 
-@implementation MapAppDelegate
+@implementation KonocoMapAppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	// Insert code here to initialize your application

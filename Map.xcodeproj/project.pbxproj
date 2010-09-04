@@ -32,12 +32,11 @@
 		F6964F6B122D99A600D490A6 /* libproj.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F6964F6A122D99A600D490A6 /* libproj.dylib */; };
 		F6977776116F80650089854D /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = F6977775116F80650089854D /* AUTHORS */; };
 		F697777A116F80920089854D /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = F6977779116F80920089854D /* COPYING */; };
-		F6B0054612325F9C001DBD98 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F6B0053C12325F9C001DBD98 /* Info.plist */; };
 		F6B0054712325F9C001DBD98 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B0053D12325F9C001DBD98 /* main.m */; };
 		F6B0054812325F9C001DBD98 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6B0053E12325F9C001DBD98 /* MainMenu.xib */; };
-		F6B0054912325F9C001DBD98 /* MapAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B0054012325F9C001DBD98 /* MapAppDelegate.m */; };
-		F6B0054A12325F9C001DBD98 /* MapWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6B0054312325F9C001DBD98 /* MapWindow.xib */; };
-		F6B0054B12325F9C001DBD98 /* MapWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B0054512325F9C001DBD98 /* MapWindowController.m */; };
+		F6B0054912325F9C001DBD98 /* KonocoMapAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B0054012325F9C001DBD98 /* KonocoMapAppDelegate.m */; };
+		F6B0054A12325F9C001DBD98 /* KonocoMapWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6B0054312325F9C001DBD98 /* KonocoMapWindow.xib */; };
+		F6B0054B12325F9C001DBD98 /* KonocoMapWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B0054512325F9C001DBD98 /* KonocoMapWindowController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,15 +79,15 @@
 		F6964F6A122D99A600D490A6 /* libproj.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libproj.dylib; path = usr/local/lib/libproj.dylib; sourceTree = SDKROOT; };
 		F6977775116F80650089854D /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
 		F6977779116F80920089854D /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
-		F6B0053C12325F9C001DBD98 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6B0053D12325F9C001DBD98 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F6B0053E12325F9C001DBD98 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
-		F6B0053F12325F9C001DBD98 /* MapAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapAppDelegate.h; sourceTree = "<group>"; };
-		F6B0054012325F9C001DBD98 /* MapAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapAppDelegate.m; sourceTree = "<group>"; };
-		F6B0054112325F9C001DBD98 /* Map_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Map_Prefix.pch; sourceTree = "<group>"; };
-		F6B0054312325F9C001DBD98 /* MapWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MapWindow.xib; sourceTree = "<group>"; };
-		F6B0054412325F9C001DBD98 /* MapWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapWindowController.h; sourceTree = "<group>"; };
-		F6B0054512325F9C001DBD98 /* MapWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapWindowController.m; sourceTree = "<group>"; };
+		F6B0053F12325F9C001DBD98 /* KonocoMapAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoMapAppDelegate.h; sourceTree = "<group>"; };
+		F6B0054012325F9C001DBD98 /* KonocoMapAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KonocoMapAppDelegate.m; sourceTree = "<group>"; };
+		F6B0054112325F9C001DBD98 /* KonocoMap_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoMap_Prefix.pch; sourceTree = "<group>"; };
+		F6B0054312325F9C001DBD98 /* KonocoMapWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KonocoMapWindow.xib; sourceTree = "<group>"; };
+		F6B0054412325F9C001DBD98 /* KonocoMapWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoMapWindowController.h; sourceTree = "<group>"; };
+		F6B0054512325F9C001DBD98 /* KonocoMapWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KonocoMapWindowController.m; sourceTree = "<group>"; };
+		F6B005981232630E001DBD98 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6D596591199F06A007E3C56 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		F6DC7D7E116C8260005DE7F1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -251,7 +250,7 @@
 		F6B0053A12325F9C001DBD98 /* KonocoMap */ = {
 			isa = PBXGroup;
 			children = (
-				F6B0054112325F9C001DBD98 /* Map_Prefix.pch */,
+				F6B0054112325F9C001DBD98 /* KonocoMap_Prefix.pch */,
 				F6B0053B12325F9C001DBD98 /* App */,
 				F6B0054212325F9C001DBD98 /* MapWindow */,
 			);
@@ -261,11 +260,11 @@
 		F6B0053B12325F9C001DBD98 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				F6B0053C12325F9C001DBD98 /* Info.plist */,
+				F6B005981232630E001DBD98 /* Info.plist */,
 				F6B0053D12325F9C001DBD98 /* main.m */,
 				F6B0053E12325F9C001DBD98 /* MainMenu.xib */,
-				F6B0053F12325F9C001DBD98 /* MapAppDelegate.h */,
-				F6B0054012325F9C001DBD98 /* MapAppDelegate.m */,
+				F6B0053F12325F9C001DBD98 /* KonocoMapAppDelegate.h */,
+				F6B0054012325F9C001DBD98 /* KonocoMapAppDelegate.m */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -273,9 +272,9 @@
 		F6B0054212325F9C001DBD98 /* MapWindow */ = {
 			isa = PBXGroup;
 			children = (
-				F6B0054312325F9C001DBD98 /* MapWindow.xib */,
-				F6B0054412325F9C001DBD98 /* MapWindowController.h */,
-				F6B0054512325F9C001DBD98 /* MapWindowController.m */,
+				F6B0054312325F9C001DBD98 /* KonocoMapWindow.xib */,
+				F6B0054412325F9C001DBD98 /* KonocoMapWindowController.h */,
+				F6B0054512325F9C001DBD98 /* KonocoMapWindowController.m */,
 			);
 			path = MapWindow;
 			sourceTree = "<group>";
@@ -372,9 +371,8 @@
 			files = (
 				F6977776116F80650089854D /* AUTHORS in Resources */,
 				F697777A116F80920089854D /* COPYING in Resources */,
-				F6B0054612325F9C001DBD98 /* Info.plist in Resources */,
 				F6B0054812325F9C001DBD98 /* MainMenu.xib in Resources */,
-				F6B0054A12325F9C001DBD98 /* MapWindow.xib in Resources */,
+				F6B0054A12325F9C001DBD98 /* KonocoMapWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,8 +391,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6B0054712325F9C001DBD98 /* main.m in Sources */,
-				F6B0054912325F9C001DBD98 /* MapAppDelegate.m in Sources */,
-				F6B0054B12325F9C001DBD98 /* MapWindowController.m in Sources */,
+				F6B0054912325F9C001DBD98 /* KonocoMapAppDelegate.m in Sources */,
+				F6B0054B12325F9C001DBD98 /* KonocoMapWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,7 +431,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = KonocoMap/Map_Prefix.pch;
+				GCC_PREFIX_HEADER = KonocoMap/KonocoMap_Prefix.pch;
 				INFOPLIST_FILE = KonocoMap/App/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
@@ -451,7 +449,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = KonocoMap/Map_Prefix.pch;
+				GCC_PREFIX_HEADER = KonocoMap/KonocoMap_Prefix.pch;
 				INFOPLIST_FILE = KonocoMap/App/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (

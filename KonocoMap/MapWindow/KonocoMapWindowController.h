@@ -1,5 +1,5 @@
 //
-//  MapAppDelegate.h
+//  MapWindowController.h
 //  Map
 //
 //  Created by Tobias Kräntzer on 07.04.10.
@@ -22,33 +22,31 @@
 
 #import <Cocoa/Cocoa.h>
 #import <CoreLocation/CoreLocation.h>
+#import <KonocoMapKit/KonocoMapKit.h>
 
-@class MapWindowController;
-
-@interface MapAppDelegate : NSObject <CLLocationManagerDelegate> {
-	MapWindowController *mapWindowController;
-    
-    CLLocationManager *locationManager;
+@interface KonocoMapWindowController : NSWindowController <MapViewDelegateProtocol> {
+	IBOutlet KonocoMapView *mapView;
+    NSRect normalFrame;
+    BOOL inFullScreenMode;
 }
 
 #pragma mark -
 #pragma mark Actions
 
-- (IBAction)showMapWindow:(id)sender;
-
 - (IBAction)zoomIn:(id)sender;
 - (IBAction)zoomOut:(id)sender;
-
 - (IBAction)toggleFullscreen:(id)sender;
+- (IBAction)toggleHeatMap:(id)sender;
 
 #pragma mark -
-#pragma mark Location Manager Delegate Methods
+#pragma mark Zoom, Center & Region
 
-- (void)locationManager:(CLLocationManager *)manager
-       didFailWithError:(NSError *)error;
+@property (nonatomic, assign) CGFloat zoom;
+@property (nonatomic, assign) CLLocationCoordinate2D center;
+@property (nonatomic, assign) KonocoCoordinateRegion region;
 
-- (void)locationManager:(CLLocationManager *)manager
-    didUpdateToLocation:(CLLocation *)newLocation
-           fromLocation:(CLLocation *)oldLocation;
+- (void)setZoom:(CGFloat)level animated:(BOOL)animated;
+- (void)setCenter:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated;
+- (void)setRegion:(KonocoCoordinateRegion)rect animated:(BOOL)animated;
 
 @end

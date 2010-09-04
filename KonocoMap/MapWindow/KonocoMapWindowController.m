@@ -20,9 +20,9 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
-#import "MapWindowController.h"
+#import "KonocoMapWindowController.h"
 
-@interface MapWindowController ()
+@interface KonocoMapWindowController ()
 - (void)setStyleBorderless;
 - (void)setStyleNormal;
 - (void)setFullScreen;
@@ -30,10 +30,10 @@
 @end
 
 
-@implementation MapWindowController
+@implementation KonocoMapWindowController
 
 - (id)init {
-	if (self = [super initWithWindowNibName:@"MapWindow"]) {
+	if (self = [super initWithWindowNibName:@"KonocoMapWindow"]) {
 		[self.window setExcludedFromWindowsMenu:YES];
         
 		// register the controllerr as an obserrver for the properties
