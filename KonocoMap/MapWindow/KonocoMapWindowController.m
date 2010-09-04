@@ -90,11 +90,16 @@
                    afterDelay:[self.window animationResizeTime:[[NSScreen mainScreen] frame]]];
         inFullScreenMode = YES;
     }
+    
+    NSMenuItem *menuItem = (NSMenuItem *)sender;
+    [menuItem setState:(inFullScreenMode) ? NSOnState : NSOffState];
 }
 
 - (IBAction)toggleHeatMap:(id)sender {
     mapView.showHeatMap = !mapView.showHeatMap;
     mapView.monochromeBaseLayer = mapView.showHeatMap;
+    NSMenuItem *menuItem = (NSMenuItem *)sender;
+    [menuItem setState:(mapView.showHeatMap) ? NSOnState : NSOffState];
 }
 
 #pragma mark -
