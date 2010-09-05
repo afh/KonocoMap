@@ -31,6 +31,13 @@
 - (void)setUp;
 
 #pragma mark -
+#pragma mark Change Visible Region
+
+- (void)setMapCenter:(CGPoint)center withScale:(CGFloat)scale animated:(BOOL)animated completionBlock:(void (^)(void))block;
+- (CGFloat)mapScale;
+- (CGPoint)mapCenter;
+
+#pragma mark -
 #pragma mark Forward HeatMapLayer Delegate Methods
 
 - (KonocoCoordinateRegion)regionForSample:(KonocoHeatMapSample *)sample;
@@ -92,29 +99,15 @@
 	[self willChangeValueForKey:@"region"];
 	[self willChangeValueForKey:@"center"];
 	[self willChangeValueForKey:@"zoom"];
+    
+    mapLayer.position = CGPointMake(self.bounds.size.width / 2,
+                                    self.bounds.size.height / 2);
 	
-	[CATransaction setValue:(id)kCFBooleanTrue
-					 forKey:kCATransactionDisableActions];
-	
-	mapLayer.position = CGPointMake(self.bounds.size.width / 2,
-									self.bounds.size.height / 2);
-	
-	CGFloat minScale = MAX(self.bounds.size.height / baseLayer.tileSize.height,
-						   self.bounds.size.width / baseLayer.tileSize.width);
-	
-	CGAffineTransform aTransform = mapLayer.affineTransform;
-	CGFloat scale = MAX(aTransform.a, minScale);
-	
-	aTransform = CGAffineTransformIdentity;
-	aTransform = CGAffineTransformScale(aTransform, scale, scale);
-	mapLayer.affineTransform = aTransform;
-	
-	CGFloat marginX = self.bounds.size.width / 2 / (scale * baseLayer.tileSize.width);
-	CGFloat marginY = self.bounds.size.height / 2 / (scale * baseLayer.tileSize.height);
-	
-	mapLayer.anchorPoint = CGPointMake(MAX(MIN(mapLayer.anchorPoint.x, 1 - marginX), 0 + marginX),
-									   MAX(MIN(mapLayer.anchorPoint.y, 1 - marginY), 0 + marginY));
-	
+    [self setMapCenter:[self mapCenter]
+             withScale:[self mapScale]
+              animated:NO
+       completionBlock:^{}];
+    
 	[self didChangeValueForKey:@"region"];
 	[self didChangeValueForKey:@"center"];
 	[self didChangeValueForKey:@"zoom"];
@@ -154,12 +147,54 @@
     return [heatMap activeHeatMapSamplesForCoordinate:coordinate];
 }
 
+#pragma mark Center & Scale
+
+- (CGFloat)mapScale {
+    CGAffineTransform aTransform = mapLayer.affineTransform;
+	return aTransform.a;
+}
+
+- (CGPoint)mapCenter {
+    return mapLayer.anchorPoint;
+}
+
+#pragma mark -
+#pragma mark Change Visible Region
+
+- (void)setMapCenter:(CGPoint)center
+        withScale:(CGFloat)scale
+         animated:(BOOL)animated
+  completionBlock:(void (^)(void))block {
+
+    if (!animated) {
+		[CATransaction setValue:(id)kCFBooleanTrue
+						 forKey:kCATransactionDisableActions];
+	} else {
+        [CATransaction setCompletionBlock:block];
+    }
+
+    CGFloat minScale = MAX(self.bounds.size.height / baseLayer.tileSize.height,
+						   self.bounds.size.width / baseLayer.tileSize.width);
+    
+    scale = MAX(scale, minScale);
+	
+    CGAffineTransform aTransform = CGAffineTransformIdentity;
+	aTransform = CGAffineTransformScale(aTransform, scale, scale);
+	mapLayer.affineTransform = aTransform;
+    
+    
+	CGFloat marginX = self.bounds.size.width / 2 / (scale * baseLayer.tileSize.width);
+	CGFloat marginY = self.bounds.size.height / 2 / (scale * baseLayer.tileSize.height);
+    
+	mapLayer.anchorPoint = CGPointMake(MAX(MIN(center.x, 1 - marginX), 0 + marginX),
+									   MAX(MIN(center.y, 1 - marginY), 0 + marginY));
+}
+
 #pragma mark -
 #pragma mark Zoom, Center & Region
 
 - (CGFloat)zoom {
-	CGAffineTransform aTransform = mapLayer.affineTransform;
-	return log2f(aTransform.a);
+	return log2f([self mapScale]);
 }
 
 - (void)setZoom:(CGFloat)level {
@@ -171,20 +206,10 @@
 	[self willChangeValueForKey:@"region"];
 	[self willChangeValueForKey:@"zoom"];
 	
-	if (!animated) {
-		[CATransaction setValue:(id)kCFBooleanTrue
-						 forKey:kCATransactionDisableActions];
-	}
-	
-	
-	CGFloat minScale = MAX(self.bounds.size.height / baseLayer.tileSize.height,
-						   self.bounds.size.width / baseLayer.tileSize.width);
-	
-	CGFloat scale = MAX(powf(2, level), minScale);
-	
-	CGAffineTransform aTransform = CGAffineTransformIdentity;
-	aTransform = CGAffineTransformScale(aTransform, scale, scale);
-	mapLayer.affineTransform = aTransform;
+    [self setMapCenter:[self mapCenter]
+          withScale:powf(2, level)
+           animated:animated
+    completionBlock:^{}];
 	
 	[self didChangeValueForKey:@"region"];
 	[self didChangeValueForKey:@"zoom"];
@@ -205,19 +230,11 @@
     
 	[self willChangeValueForKey:@"region"];
 	[self willChangeValueForKey:@"center"];
-	
-	if (!animated) {
-		[CATransaction setValue:(id)kCFBooleanTrue
-						 forKey:kCATransactionDisableActions];
-	}
-	
-	CGFloat scale = powf(2, self.zoom);
-	
-	CGFloat marginX = self.bounds.size.width / 2 / (scale * baseLayer.tileSize.width);
-	CGFloat marginY = self.bounds.size.height / 2 / (scale * baseLayer.tileSize.height);
     
-	mapLayer.anchorPoint = CGPointMake(MAX(MIN(point.x, 1 - marginX), 0 + marginX),
-									   MAX(MIN(point.y, 1 - marginY), 0 + marginY));
+    [self setMapCenter:point
+          withScale:[self mapScale]
+           animated:animated
+    completionBlock:^{}];
     
 	[self didChangeValueForKey:@"region"];
 	[self didChangeValueForKey:@"center"];
@@ -258,20 +275,21 @@
 	[self willChangeValueForKey:@"region"];
 	[self willChangeValueForKey:@"center"];
 	
-	[CATransaction setValue:(id)kCFBooleanTrue
-                     forKey:kCATransactionDisableActions];
-	
-	CGFloat scale = powf(2, self.zoom);
+	CGFloat scale = [self mapScale];
 	
 	CGFloat deltaX = [event deltaX];
 	CGFloat deltaY = [event deltaY];
-	
-	CGFloat marginX = self.bounds.size.width / 2 / (scale * baseLayer.tileSize.width);
-	CGFloat marginY = self.bounds.size.height / 2 / (scale * baseLayer.tileSize.height);
     
-    mapLayer.anchorPoint = CGPointMake(MAX(MIN(mapLayer.anchorPoint.x - deltaX / (scale * baseLayer.tileSize.width), 1 - marginX), 0 + marginX),
-                                       MAX(MIN(mapLayer.anchorPoint.y + deltaY / (scale * baseLayer.tileSize.height), 1 - marginY), 0 + marginY));
-	
+    CGPoint currentCenter = [self mapCenter];
+    
+    CGPoint point = CGPointMake(currentCenter.x - deltaX / (scale * baseLayer.tileSize.width),
+                                currentCenter.y + deltaY / (scale * baseLayer.tileSize.height));
+
+    [self setMapCenter:point
+          withScale:scale
+           animated:NO
+    completionBlock:^{}];
+    
 	[self didChangeValueForKey:@"region"];
 	[self didChangeValueForKey:@"center"];
 }
@@ -288,24 +306,23 @@
 }
 
 - (void)scrollWheel:(NSEvent *)event {
-
-    CGFloat deltaX = -[event deltaX] * 2;
-	CGFloat deltaY = -[event deltaY] * 2;
+    
+    CGFloat deltaX = -[event deltaX];
+    CGFloat deltaY = -[event deltaY];
     
     if (fabs(deltaX) > 0 || fabs(deltaY) > 0) {
         [self willChangeValueForKey:@"region"];
         [self willChangeValueForKey:@"center"];
         
-        [CATransaction setValue:(id)kCFBooleanTrue
-                         forKey:kCATransactionDisableActions];
+        CGFloat scale = [self mapScale];
+        CGPoint currentCenter = [self mapCenter];
+        CGPoint point = CGPointMake(currentCenter.x - deltaX / (scale * baseLayer.tileSize.width),
+                                    currentCenter.y + deltaY / (scale * baseLayer.tileSize.height));
         
-        CGFloat scale = powf(2, self.zoom);
-        
-        CGFloat marginX = self.bounds.size.width / 2 / (scale * baseLayer.tileSize.width);
-        CGFloat marginY = self.bounds.size.height / 2 / (scale * baseLayer.tileSize.height);
-        
-        mapLayer.anchorPoint = CGPointMake(MAX(MIN(mapLayer.anchorPoint.x - deltaX / (scale * baseLayer.tileSize.width), 1 - marginX), 0 + marginX),
-                                           MAX(MIN(mapLayer.anchorPoint.y + deltaY / (scale * baseLayer.tileSize.height), 1 - marginY), 0 + marginY));
+        [self setMapCenter:point
+                 withScale:scale
+                  animated:NO
+           completionBlock:^{}];
         
         [self didChangeValueForKey:@"region"];
         [self didChangeValueForKey:@"center"];
@@ -372,12 +389,12 @@
     heatMap.hidden = YES;
     [mapLayer addSublayer:heatMap];
     
-	CGFloat scale = MAX(self.bounds.size.height / baseLayer.tileSize.height,
-						self.bounds.size.width / baseLayer.tileSize.width);
-	CGAffineTransform aTransform;
-	aTransform = CGAffineTransformIdentity;
-	aTransform = CGAffineTransformScale(aTransform, scale, scale);
-	mapLayer.affineTransform = aTransform;
+    
+    [self setMapCenter:CGPointMake(0.5, 0.5)
+          withScale:1
+           animated:NO
+    completionBlock:^{}];
+    
     
     // Set Tracking Area
     trackingArea = [[NSTrackingArea alloc] initWithRect:self.bounds

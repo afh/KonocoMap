@@ -33,6 +33,12 @@
 @protocol MapViewDelegateProtocol
 
 #pragma mark -
+#pragma mark Responding to Map Position Changes
+
+- (void)mapView:(KonocoMapView *)mapView regionWillChangeAnimated:(BOOL)animated;
+- (void)mapView:(KonocoMapView *)mapView regionDidChangeAnimated:(BOOL)animated;
+
+#pragma mark -
 #pragma mark Handling User Action
 
 @optional
