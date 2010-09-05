@@ -74,6 +74,11 @@
 #pragma mark -
 #pragma mark Updating Content
 
+/*
+    This is a workaround for the bug, that the sublayer tree is not recreated
+    correctly if this (or a parent) view is moved to an other super view.
+ */
+
 - (void)setNeedsDisplay:(BOOL)flag {
     if (self.layer.sublayers == nil || [self.layer.sublayers indexOfObject:mapLayer] == NSNotFound) {
         DEBUG_LOG(@"Map layer not in view layer.");
@@ -90,16 +95,58 @@
 }
 
 #pragma mark -
+#pragma mark Setup Map View
+
+- (void)setUp {
+    
+	// Enable CALayer backing
+	[self setWantsLayer:YES];
+    
+    // Set up map layer
+    mapLayer = [[CALayer layer] retain];
+    mapLayer.bounds = CGRectMake(0, 0, 256, 256);
+    mapLayer.position = CGPointMake(self.bounds.size.width / 2,
+                                    self.bounds.size.height / 2);
+    [self.layer addSublayer:mapLayer];
+	
+	// Set up BaseLayer
+	baseLayer = [[KonocoMapLayer layer] retain];
+    baseLayer.position = CGPointMake(mapLayer.bounds.size.width / 2,
+                                     mapLayer.bounds.size.height / 2);
+	[mapLayer addSublayer:baseLayer];
+    
+    // Set up heat map
+    heatMap = [KonocoHeatMapLayer new];
+    heatMap.delegate = self;
+    heatMap.bounds = mapLayer.bounds;
+    heatMap.position = CGPointMake(mapLayer.bounds.size.width / 2,
+                                   mapLayer.bounds.size.height / 2);
+    heatMap.hidden = YES;
+    [mapLayer addSublayer:heatMap];
+    
+    
+    [self setMapCenter:CGPointMake(0.5, 0.5)
+             withScale:1
+              animated:NO
+       completionBlock:^{}];
+    
+    
+    // Set Tracking Area
+    [self updateTrackingAreas];
+}
+
+#pragma mark -
 #pragma mark Resizing
+
+- (void)viewWillStartLiveResize {
+    if ([self.delegate respondsToSelector:@selector(mapView:regionWillChangeAnimated:)]) {
+        [self.delegate mapView:self regionWillChangeAnimated:YES];
+    }
+}
 
 - (void)setFrame:(NSRect)frameRect {
 	[super setFrame:frameRect];
 	
-	// TODO: Check which "attributes" where modified by this operation
-	[self willChangeValueForKey:@"region"];
-	[self willChangeValueForKey:@"center"];
-	[self willChangeValueForKey:@"zoom"];
-    
     mapLayer.position = CGPointMake(self.bounds.size.width / 2,
                                     self.bounds.size.height / 2);
 	
@@ -108,9 +155,12 @@
               animated:NO
        completionBlock:^{}];
     
-	[self didChangeValueForKey:@"region"];
-	[self didChangeValueForKey:@"center"];
-	[self didChangeValueForKey:@"zoom"];
+}
+
+- (void)viewDidEndLiveResize {
+    if ([self.delegate respondsToSelector:@selector(mapView:regionDidChangeAnimated:)]) {
+        [self.delegate mapView:self regionDidChangeAnimated:YES];
+    }
 }
 
 #pragma mark -
@@ -145,57 +195,6 @@
 
 - (NSArray *)activeHeatMapSamplesForCoordinate:(CLLocationCoordinate2D)coordinate {
     return [heatMap activeHeatMapSamplesForCoordinate:coordinate];
-}
-
-#pragma mark Center & Scale
-
-- (CGFloat)mapScale {
-    CGAffineTransform aTransform = mapLayer.affineTransform;
-	return aTransform.a;
-}
-
-- (CGPoint)mapCenter {
-    return mapLayer.anchorPoint;
-}
-
-#pragma mark -
-#pragma mark Change Visible Region
-
-- (void)setMapCenter:(CGPoint)center
-           withScale:(CGFloat)scale
-            animated:(BOOL)animated
-     completionBlock:(void (^)(void))block {
-
-    if (!animated) {
-		[CATransaction setValue:(id)kCFBooleanTrue
-						 forKey:kCATransactionDisableActions];
-	} else {
-        [CATransaction setCompletionBlock:block];
-    }
-
-    CGFloat minScale = MAX(self.bounds.size.height / baseLayer.tileSize.height,
-						   self.bounds.size.width / baseLayer.tileSize.width);
-    
-    scale = MAX(scale, minScale);
-	
-    CGAffineTransform aTransform = CGAffineTransformIdentity;
-	aTransform = CGAffineTransformScale(aTransform, scale, scale);
-	mapLayer.affineTransform = aTransform;
-    
-    
-	CGFloat marginX = self.bounds.size.width / 2 / (scale * baseLayer.tileSize.width);
-	CGFloat marginY = self.bounds.size.height / 2 / (scale * baseLayer.tileSize.height);
-    
-	mapLayer.anchorPoint = CGPointMake(MAX(MIN(center.x, 1 - marginX), 0 + marginX),
-									   MAX(MIN(center.y, 1 - marginY), 0 + marginY));
-    
-    //
-    // NOTE: Recalculate the position of the upcoming annotation views at this point.
-    //
-    
-    if (!animated) {
-        block();
-    }
 }
 
 #pragma mark -
@@ -318,6 +317,17 @@
     }
 }
 
+#pragma mark -
+#pragma mark Handling Gestures
+
+- (void)magnifyWithEvent:(NSEvent *)event {
+    CGFloat magnification = [event magnification];
+    [self setZoom:self.zoom + magnification animated:NO];
+}
+
+#pragma mark -
+#pragma mark Handling Scroll Wheel
+
 - (void)scrollWheel:(NSEvent *)event {
     
     CGFloat deltaX = -[event deltaX];
@@ -346,19 +356,22 @@
 }
 
 #pragma mark -
-#pragma mark Handling Gestures
-
-- (void)magnifyWithEvent:(NSEvent *)event {
-    CGFloat magnification = [event magnification];
-    [self setZoom:self.zoom + magnification animated:NO];
-}
-
-#pragma mark -
 #pragma mark Tracking & Hiding Mouse Cursor
 
+/*
+    The tracing area is used to hide the mouse cursor if it is not moved within
+    two seconds. Therefore a tracingarea is created, which response to mouse movent
+    or if the map view is in the key window.
+ */
+
 - (void)mouseMoved:(NSEvent *)theEvent {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideCursor) object:nil];
-    [self performSelector:@selector(hideCursor) withObject:nil afterDelay:2];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(hideCursor)
+                                               object:nil];
+    
+    [self performSelector:@selector(hideCursor)
+               withObject:nil
+               afterDelay:2];
 }
 
 - (void)hideCursor {
@@ -376,48 +389,55 @@
 }
 
 #pragma mark -
-#pragma mark Private Methods
+#pragma mark Internal Center & Scale
 
-- (void)setUp {
+- (CGFloat)mapScale {
+    CGAffineTransform aTransform = mapLayer.affineTransform;
+	return aTransform.a;
+}
+
+- (CGPoint)mapCenter {
+    return mapLayer.anchorPoint;
+}
+
+#pragma mark -
+#pragma mark Internal Method to change Visible Region
+
+- (void)setMapCenter:(CGPoint)center
+           withScale:(CGFloat)scale
+            animated:(BOOL)animated
+     completionBlock:(void (^)(void))block {
     
-	// Enable CALayer backing
-	[self setWantsLayer:YES];
+    if (!animated) {
+		[CATransaction setValue:(id)kCFBooleanTrue
+						 forKey:kCATransactionDisableActions];
+	} else {
+        [CATransaction setCompletionBlock:block];
+    }
     
-    // set up map layer
-    mapLayer = [[CALayer layer] retain];
-    mapLayer.bounds = CGRectMake(0, 0, 256, 256);
-    mapLayer.position = CGPointMake(self.bounds.size.width / 2,
-                                    self.bounds.size.height / 2);
-    [self.layer addSublayer:mapLayer];
+    CGFloat minScale = MAX(self.bounds.size.height / baseLayer.tileSize.height,
+						   self.bounds.size.width / baseLayer.tileSize.width);
+    
+    scale = MAX(scale, minScale);
 	
-	// Set up BaseLayer
-	baseLayer = [[KonocoMapLayer layer] retain];
-    baseLayer.position = CGPointMake(mapLayer.bounds.size.width / 2,
-                                     mapLayer.bounds.size.height / 2);
-	[mapLayer addSublayer:baseLayer];
-    
-    // set up heat map
-    heatMap = [KonocoHeatMapLayer new];
-    heatMap.delegate = self;
-    heatMap.bounds = mapLayer.bounds;
-    heatMap.position = CGPointMake(mapLayer.bounds.size.width / 2,
-                                   mapLayer.bounds.size.height / 2);
-    heatMap.hidden = YES;
-    [mapLayer addSublayer:heatMap];
+    CGAffineTransform aTransform = CGAffineTransformIdentity;
+	aTransform = CGAffineTransformScale(aTransform, scale, scale);
+	mapLayer.affineTransform = aTransform;
     
     
-    [self setMapCenter:CGPointMake(0.5, 0.5)
-          withScale:1
-           animated:NO
-    completionBlock:^{}];
+	CGFloat marginX = self.bounds.size.width / 2 / (scale * baseLayer.tileSize.width);
+	CGFloat marginY = self.bounds.size.height / 2 / (scale * baseLayer.tileSize.height);
     
+	mapLayer.anchorPoint = CGPointMake(MAX(MIN(center.x, 1 - marginX), 0 + marginX),
+									   MAX(MIN(center.y, 1 - marginY), 0 + marginY));
     
-    // Set Tracking Area
-    trackingArea = [[NSTrackingArea alloc] initWithRect:self.bounds
-                                                options:(NSTrackingMouseMoved | NSTrackingActiveInKeyWindow)
-                                                  owner:self
-                                               userInfo:nil];
-    [self addTrackingArea:trackingArea];
+    //
+    // NOTE: Recalculate the position of the upcoming annotation views at this point.
+    //
+    
+    if (!animated) {
+        block();
+    }
 }
 
 #pragma mark -
