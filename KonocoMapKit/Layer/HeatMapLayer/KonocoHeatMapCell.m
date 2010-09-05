@@ -60,9 +60,9 @@
     CGFloat startOpacity = self.opacity;
     self.opacity = 0;
     
-    CABasicAnimation *theAnimation = [CABasicAnimation new];
+    CABasicAnimation *theAnimation;
+    theAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
     theAnimation.timingFunction = timingFunction;
-    theAnimation=[CABasicAnimation animationWithKeyPath:@"opacity"];
     theAnimation.duration=duration;
     theAnimation.repeatCount=0;
     theAnimation.autoreverses=NO;
