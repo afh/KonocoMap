@@ -189,6 +189,10 @@
 	mapLayer.anchorPoint = CGPointMake(MAX(MIN(center.x, 1 - marginX), 0 + marginX),
 									   MAX(MIN(center.y, 1 - marginY), 0 + marginY));
     
+    //
+    // NOTE: Recalculate the position of the upcoming annotation views at this point.
+    //
+    
     if (!animated) {
         block();
     }
