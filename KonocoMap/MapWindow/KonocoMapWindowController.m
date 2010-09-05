@@ -170,13 +170,5 @@
     return [[sample.data objectForKey:@"value"] doubleValue];
 }
 
-- (void)mapView:(KonocoMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
-    
-}
-
-- (void)mapView:(KonocoMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    
-}
-
 
 @end

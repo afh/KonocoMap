@@ -35,6 +35,7 @@
 #pragma mark -
 #pragma mark Responding to Map Position Changes
 
+@optional
 - (void)mapView:(KonocoMapView *)mapView regionWillChangeAnimated:(BOOL)animated;
 - (void)mapView:(KonocoMapView *)mapView regionDidChangeAnimated:(BOOL)animated;
 
