@@ -35,33 +35,12 @@
 - (id)init {
 	if (self = [super initWithWindowNibName:@"KonocoMapWindow"]) {
 		[self.window setExcludedFromWindowsMenu:YES];
-        
-		// register the controllerr as an obserrver for the properties
-		// 'zoom', 'center' and 'region' of the map view
-		[mapView addObserver:self
-				  forKeyPath:@"zoom"
-					 options:NSKeyValueObservingOptionNew
-					 context:NULL];
-		
-		[mapView addObserver:self
-				  forKeyPath:@"center"
-					 options:NSKeyValueObservingOptionNew
-					 context:NULL];
-		
-		[mapView addObserver:self
-				  forKeyPath:@"region"
-					 options:NSKeyValueObservingOptionNew
-					 context:NULL];
-        
         mapView.delegate = self;
 	}
 	return self;
 }
 
 - (void)dealloc {
-	[mapView removeObserver:self forKeyPath:@"zoom"];
-	[mapView removeObserver:self forKeyPath:@"center"];
-	[mapView removeObserver:self forKeyPath:@"region"];
 	[super dealloc];
 }
 
@@ -90,16 +69,11 @@
                    afterDelay:[self.window animationResizeTime:[[NSScreen mainScreen] frame]]];
         inFullScreenMode = YES;
     }
-    
-    NSMenuItem *menuItem = (NSMenuItem *)sender;
-    [menuItem setState:(inFullScreenMode) ? NSOnState : NSOffState];
 }
 
 - (IBAction)toggleHeatMap:(id)sender {
     mapView.showHeatMap = !mapView.showHeatMap;
     mapView.monochromeBaseLayer = mapView.showHeatMap;
-    NSMenuItem *menuItem = (NSMenuItem *)sender;
-    [menuItem setState:(mapView.showHeatMap) ? NSOnState : NSOffState];
 }
 
 #pragma mark -
@@ -166,22 +140,6 @@
 
 - (void)setRegion:(KonocoCoordinateRegion)rect animated:(BOOL)animated {
 	[mapView setRegion:rect animated:animated];
-}
-
-#pragma mark -
-#pragma mark Observing Properties of the Map View
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-					  ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context {
-	if (object == mapView) {
-		if ([keyPath isEqual:@"zoom"] || [keyPath isEqual:@"center"] || [keyPath isEqual:@"region"]) {
-			// OPTIMIZE: Find a better solution for the observing
-			[self willChangeValueForKey:keyPath];
-			[self didChangeValueForKey:keyPath];
-		}
-	}
 }
 
 #pragma mark -
