@@ -222,7 +222,7 @@
 }
 
 - (CLLocationCoordinate2D)center {
-	return [[KonocoCoordinateConverter sharedCoordinateConverter] coordinateFromPoint:mapLayer.anchorPoint];
+	return [[KonocoCoordinateConverter sharedCoordinateConverter] coordinateFromPoint:[self mapCenter]];
 }
 
 - (void)setCenter:(CLLocationCoordinate2D)coordinate {
