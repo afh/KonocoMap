@@ -162,9 +162,9 @@
 #pragma mark Change Visible Region
 
 - (void)setMapCenter:(CGPoint)center
-        withScale:(CGFloat)scale
-         animated:(BOOL)animated
-  completionBlock:(void (^)(void))block {
+           withScale:(CGFloat)scale
+            animated:(BOOL)animated
+     completionBlock:(void (^)(void))block {
 
     if (!animated) {
 		[CATransaction setValue:(id)kCFBooleanTrue
@@ -188,6 +188,10 @@
     
 	mapLayer.anchorPoint = CGPointMake(MAX(MIN(center.x, 1 - marginX), 0 + marginX),
 									   MAX(MIN(center.y, 1 - marginY), 0 + marginY));
+    
+    if (!animated) {
+        block();
+    }
 }
 
 #pragma mark -
@@ -202,17 +206,19 @@
 }
 
 - (void)setZoom:(CGFloat)level animated:(BOOL)animated {
-	// TODO: Check which "attributes" where modified by this operation
-	[self willChangeValueForKey:@"region"];
-	[self willChangeValueForKey:@"zoom"];
 	
+    if ([self.delegate respondsToSelector:@selector(mapView:regionWillChangeAnimated:)]) {
+        [self.delegate mapView:self regionWillChangeAnimated:animated];
+    } 
+    
     [self setMapCenter:[self mapCenter]
           withScale:powf(2, level)
            animated:animated
-    completionBlock:^{}];
-	
-	[self didChangeValueForKey:@"region"];
-	[self didChangeValueForKey:@"zoom"];
+    completionBlock:^{
+        if ([self.delegate respondsToSelector:@selector(mapView:regionDidChangeAnimated:)]) {
+            [self.delegate mapView:self regionDidChangeAnimated:animated];
+        }        
+    }];
 }
 
 - (CLLocationCoordinate2D)center {
@@ -224,20 +230,20 @@
 }
 
 - (void)setCenter:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated {
-	// TODO: Check which "attributes" where modified by this operation
-    
     CGPoint point = [[KonocoCoordinateConverter sharedCoordinateConverter] pointFromCoordinate:coordinate];
     
-	[self willChangeValueForKey:@"region"];
-	[self willChangeValueForKey:@"center"];
+    if ([self.delegate respondsToSelector:@selector(mapView:regionWillChangeAnimated:)]) {
+        [self.delegate mapView:self regionWillChangeAnimated:animated];
+    } 
     
     [self setMapCenter:point
           withScale:[self mapScale]
            animated:animated
-    completionBlock:^{}];
-    
-	[self didChangeValueForKey:@"region"];
-	[self didChangeValueForKey:@"center"];
+    completionBlock:^{        
+        if ([self.delegate respondsToSelector:@selector(mapView:regionDidChangeAnimated:)]) {
+            [self.delegate mapView:self regionDidChangeAnimated:animated];
+        }        
+    }];
 }
 
 - (KonocoCoordinateRegion)region {
@@ -269,11 +275,13 @@
 }
 
 - (void)mouseDragged:(NSEvent *)event {
-    mouseMoved = YES;
     
-	// TODO: Check which "attributes" where modified by this operation
-	[self willChangeValueForKey:@"region"];
-	[self willChangeValueForKey:@"center"];
+    if (mouseMoved == NO) {
+        if ([self.delegate respondsToSelector:@selector(mapView:regionWillChangeAnimated:)]) {
+            [self.delegate mapView:self regionWillChangeAnimated:YES];
+        }
+        mouseMoved = YES;
+    }
 	
 	CGFloat scale = [self mapScale];
 	
@@ -289,9 +297,6 @@
           withScale:scale
            animated:NO
     completionBlock:^{}];
-    
-	[self didChangeValueForKey:@"region"];
-	[self didChangeValueForKey:@"center"];
 }
 
 - (void)mouseUp:(NSEvent *)event {
@@ -302,6 +307,10 @@
         if ([self.delegate respondsToSelector:@selector(mapView:didTapAtCoordinate:)]) {
             [delegate mapView:self didTapAtCoordinate:[[KonocoCoordinateConverter sharedCoordinateConverter] coordinateFromPoint:CGPointMake(layer_point.x / baseLayer.tileSize.width, layer_point.y / baseLayer.tileSize.height)]];
         }
+    } else {
+        if ([self.delegate respondsToSelector:@selector(mapView:regionDidChangeAnimated:)]) {
+            [self.delegate mapView:self regionDidChangeAnimated:YES];
+        }
     }
 }
 
@@ -311,8 +320,10 @@
     CGFloat deltaY = -[event deltaY];
     
     if (fabs(deltaX) > 0 || fabs(deltaY) > 0) {
-        [self willChangeValueForKey:@"region"];
-        [self willChangeValueForKey:@"center"];
+        
+        if ([self.delegate respondsToSelector:@selector(mapView:regionWillChangeAnimated:)]) {
+            [self.delegate mapView:self regionWillChangeAnimated:NO];
+        }
         
         CGFloat scale = [self mapScale];
         CGPoint currentCenter = [self mapCenter];
@@ -322,10 +333,11 @@
         [self setMapCenter:point
                  withScale:scale
                   animated:NO
-           completionBlock:^{}];
-        
-        [self didChangeValueForKey:@"region"];
-        [self didChangeValueForKey:@"center"];
+           completionBlock:^{
+               if ([self.delegate respondsToSelector:@selector(mapView:regionDidChangeAnimated:)]) {
+                   [self.delegate mapView:self regionDidChangeAnimated:NO];
+               }
+           }];
     }
 }
 

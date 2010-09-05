@@ -212,5 +212,13 @@
     return [[sample.data objectForKey:@"value"] doubleValue];
 }
 
+- (void)mapView:(KonocoMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
+    LOG(@"Map view region will change.");
+}
+
+- (void)mapView:(KonocoMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
+    LOG(@"Map view region did change.");
+}
+
 
 @end
