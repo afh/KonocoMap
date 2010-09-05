@@ -34,8 +34,8 @@
 #pragma mark Change Visible Region
 
 - (void)setMapCenter:(CGPoint)center withScale:(CGFloat)scale animated:(BOOL)animated completionBlock:(void (^)(void))block;
-- (CGFloat)mapScale;
-- (CGPoint)mapCenter;
+@property (assign) CGFloat mapScale;
+@property (assign) CGPoint mapCenter;
 
 #pragma mark -
 #pragma mark Forward HeatMapLayer Delegate Methods
@@ -150,8 +150,8 @@
     mapLayer.position = CGPointMake(self.bounds.size.width / 2,
                                     self.bounds.size.height / 2);
 	
-    [self setMapCenter:[self mapCenter]
-             withScale:[self mapScale]
+    [self setMapCenter:self.mapCenter
+             withScale:self.mapScale
               animated:NO
        completionBlock:^{}];
     
@@ -200,8 +200,10 @@
 #pragma mark -
 #pragma mark Zoom, Center & Region
 
+#pragma mark Zoom
+
 - (CGFloat)zoom {
-	return log2f([self mapScale]);
+	return log2f(self.mapScale);
 }
 
 - (void)setZoom:(CGFloat)level {
@@ -214,7 +216,7 @@
         [self.delegate mapView:self regionWillChangeAnimated:animated];
     } 
     
-    [self setMapCenter:[self mapCenter]
+    [self setMapCenter:self.mapCenter
           withScale:powf(2, level)
            animated:animated
     completionBlock:^{
@@ -223,6 +225,8 @@
         }        
     }];
 }
+
+#pragma mark Center
 
 - (CLLocationCoordinate2D)center {
 	return [[KonocoCoordinateConverter sharedCoordinateConverter] coordinateFromPoint:[self mapCenter]];
@@ -240,7 +244,7 @@
     } 
     
     [self setMapCenter:point
-          withScale:[self mapScale]
+          withScale:self.mapScale
            animated:animated
     completionBlock:^{        
         if ([self.delegate respondsToSelector:@selector(mapView:regionDidChangeAnimated:)]) {
@@ -248,6 +252,8 @@
         }        
     }];
 }
+
+#pragma mark Region
 
 - (KonocoCoordinateRegion)region {
 	CGFloat scale = powf(2, self.zoom);
@@ -267,7 +273,7 @@
 }
 
 - (void)setRegion:(KonocoCoordinateRegion)rect animated:(BOOL)animated {
-	// TODO: set the region
+	// TODO: Set the region
 }
 
 #pragma mark -
@@ -286,12 +292,12 @@
         mouseMoved = YES;
     }
 	
-	CGFloat scale = [self mapScale];
+	CGFloat scale = self.mapScale;
 	
 	CGFloat deltaX = [event deltaX];
 	CGFloat deltaY = [event deltaY];
     
-    CGPoint currentCenter = [self mapCenter];
+    CGPoint currentCenter = self.mapCenter;
     
     CGPoint point = CGPointMake(currentCenter.x - deltaX / (scale * baseLayer.tileSize.width),
                                 currentCenter.y + deltaY / (scale * baseLayer.tileSize.height));
@@ -321,8 +327,19 @@
 #pragma mark Handling Gestures
 
 - (void)magnifyWithEvent:(NSEvent *)event {
+    
+    // TODO: Avoid calling delegate while in gesture
+    
+    if ([self.delegate respondsToSelector:@selector(mapView:regionWillChangeAnimated:)]) {
+        [self.delegate mapView:self regionWillChangeAnimated:NO];
+    }
+    
     CGFloat magnification = [event magnification];
     [self setZoom:self.zoom + magnification animated:NO];
+    
+    if ([self.delegate respondsToSelector:@selector(mapView:regionDidChangeAnimated:)]) {
+        [self.delegate mapView:self regionDidChangeAnimated:NO];
+    }
 }
 
 #pragma mark -
@@ -335,12 +352,14 @@
     
     if (fabs(deltaX) > 0 || fabs(deltaY) > 0) {
         
+        // TODO: Avoid calling delegate while in scrolling
+        
         if ([self.delegate respondsToSelector:@selector(mapView:regionWillChangeAnimated:)]) {
             [self.delegate mapView:self regionWillChangeAnimated:NO];
         }
         
-        CGFloat scale = [self mapScale];
-        CGPoint currentCenter = [self mapCenter];
+        CGFloat scale = self.mapScale;
+        CGPoint currentCenter = self.mapCenter;
         CGPoint point = CGPointMake(currentCenter.x - deltaX / (scale * baseLayer.tileSize.width),
                                     currentCenter.y + deltaY / (scale * baseLayer.tileSize.height));
         
@@ -359,9 +378,9 @@
 #pragma mark Tracking & Hiding Mouse Cursor
 
 /*
-    The tracing area is used to hide the mouse cursor if it is not moved within
-    two seconds. Therefore a tracingarea is created, which response to mouse movent
-    or if the map view is in the key window.
+    The tracking area is used to hide the mouse cursor if it is not moved within
+    two seconds. Therefore a tracking area is created, which response to mouse
+    movement or if the map view is in the key window.
  */
 
 - (void)mouseMoved:(NSEvent *)theEvent {
@@ -396,8 +415,18 @@
 	return aTransform.a;
 }
 
+- (void)setMapScale:(CGFloat)scale {
+    CGAffineTransform aTransform = CGAffineTransformIdentity;
+	aTransform = CGAffineTransformScale(aTransform, scale, scale);
+	mapLayer.affineTransform = aTransform;
+}
+
 - (CGPoint)mapCenter {
     return mapLayer.anchorPoint;
+}
+
+- (void)setMapCenter:(CGPoint)aPoint {
+    mapLayer.anchorPoint = aPoint;
 }
 
 #pragma mark -
@@ -419,17 +448,13 @@
 						   self.bounds.size.width / baseLayer.tileSize.width);
     
     scale = MAX(scale, minScale);
-	
-    CGAffineTransform aTransform = CGAffineTransformIdentity;
-	aTransform = CGAffineTransformScale(aTransform, scale, scale);
-	mapLayer.affineTransform = aTransform;
-    
+    self.mapScale = scale;
     
 	CGFloat marginX = self.bounds.size.width / 2 / (scale * baseLayer.tileSize.width);
 	CGFloat marginY = self.bounds.size.height / 2 / (scale * baseLayer.tileSize.height);
     
-	mapLayer.anchorPoint = CGPointMake(MAX(MIN(center.x, 1 - marginX), 0 + marginX),
-									   MAX(MIN(center.y, 1 - marginY), 0 + marginY));
+	self.mapCenter = CGPointMake(MAX(MIN(center.x, 1 - marginX), 0 + marginX),
+                                 MAX(MIN(center.y, 1 - marginY), 0 + marginY));
     
     //
     // NOTE: Recalculate the position of the upcoming annotation views at this point.
