@@ -147,14 +147,21 @@
 - (void)setFrame:(NSRect)frameRect {
 	[super setFrame:frameRect];
 	
+
+    // The animation has to be disabled befor the position is set,
+    // because this function is called for each 'step' if this view
+    // changes its size.
+    [CATransaction setValue:(id)kCFBooleanTrue
+                     forKey:kCATransactionDisableActions];
+    
     mapLayer.position = CGPointMake(self.bounds.size.width / 2,
                                     self.bounds.size.height / 2);
 	
+    // Reset the scale and center of the map
     [self setMapCenter:self.mapCenter
              withScale:self.mapScale
               animated:NO
        completionBlock:^{}];
-    
 }
 
 - (void)viewDidEndLiveResize {
