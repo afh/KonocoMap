@@ -27,7 +27,8 @@
 @implementation KonocoMapLayer
 
 @synthesize tileSource;
-@synthesize monochrome;
+@synthesize filterName;
+@synthesize filterOptions;
 
 + (CFTimeInterval)fadeDuration {
     return 0.25; 
@@ -41,8 +42,6 @@
         self.masksToBounds = NO;
         self.levelsOfDetail = tileSource.maxZoomLevel;
         self.levelsOfDetailBias = tileSource.maxZoomLevel;
-        
-        monochrome = NO;
 	}
 	return self;
 }
@@ -57,13 +56,18 @@
 }
 
 #pragma mark -
-#pragma mark Monochrome
+#pragma mark Filter Name & Options
 
-- (void)setMonochrome:(BOOL)value {
-    if (monochrome != value) {
-        monochrome = value;
-        [self setNeedsDisplay];
-    }
+- (void)setFilterName:(NSString *)name {
+    [filterName release];
+    filterName = [name retain];
+    [self setNeedsDisplay];
+}
+
+- (void)setFilterOptions:(NSDictionary *)options {
+    [filterOptions release];
+    filterOptions = [options retain];
+    [self setNeedsDisplay];
 }
 
 #pragma mark -
@@ -83,12 +87,19 @@
         CIImage *image = [CIImage imageWithData:[tile TIFFRepresentation]];
         CIContext *context = [CIContext contextWithCGContext:ctx options:nil];
         CIImage *outputImage;
-        if (monochrome) {
-            CIFilter *filter = [CIFilter filterWithName:@"CIColorMonochrome"];
-            [filter setDefaults];
-            [filter setValue:image forKey:@"inputImage"];
-            [filter setValue:[CIColor colorWithRed:0.5 green:0.5 blue:0.5] forKey:@"inputColor"];
-            outputImage = [filter valueForKey:@"outputImage"];
+        if (self.filterName) {
+            CIFilter *filter = [CIFilter filterWithName:self.filterName];
+            if (filter) {
+                [filter setDefaults];
+                
+                for (id key in [self.filterOptions keyEnumerator]) {
+                    [filter setValue:[self.filterOptions valueForKey:key] forKey:key];
+                }
+                [filter setValue:image forKey:@"inputImage"];
+                outputImage = [filter valueForKey:@"outputImage"];                
+            } else {
+                outputImage = image;
+            }
         } else {
             outputImage = image;
         }
@@ -97,3 +108,10 @@
 }
 
 @end
+
+
+
+
+
+
+

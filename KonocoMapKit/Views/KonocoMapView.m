@@ -176,12 +176,21 @@
 #pragma mark -
 #pragma mark Base Layer Properties
 
-- (BOOL)monochromeBaseLayer {
-    return baseLayer.monochrome;
+
+- (void)setFilterName:(NSString *)name {
+    baseLayer.filterName = name;
 }
 
-- (void)setMonochromeBaseLayer:(BOOL)val {
-    baseLayer.monochrome = val;
+- (NSString *)filterName {
+    return baseLayer.filterName;
+}
+
+- (void)setFilterOptions:(NSDictionary *)options {
+    baseLayer.filterOptions = options;
+}
+
+- (NSDictionary *)filterOptions {
+    return baseLayer.filterOptions;
 }
 
 #pragma mark -

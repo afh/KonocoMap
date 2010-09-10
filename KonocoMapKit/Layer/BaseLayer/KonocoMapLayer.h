@@ -27,11 +27,13 @@
 
 @interface KonocoMapLayer : CATiledLayer {
 	NSObject <KonocoTileSourceProtocol> *tileSource;
-    BOOL monochrome;
+    NSString *filterName;
+    NSDictionary *filterOptions;
 }
 
 @property (nonatomic, readonly) NSObject <KonocoTileSourceProtocol> *tileSource;
-@property (nonatomic, assign) BOOL monochrome;
+@property (nonatomic, retain) NSString *filterName;
+@property (nonatomic, retain) NSDictionary *filterOptions;
 
 - (id)initWithTileSource:(NSObject<KonocoTileSourceProtocol>*)source;
 

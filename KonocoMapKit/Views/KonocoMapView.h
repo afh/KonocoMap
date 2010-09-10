@@ -79,7 +79,8 @@
 #pragma mark -
 #pragma mark Base Layer Properties
 
-@property (assign) BOOL monochromeBaseLayer;
+@property (assign) NSString *filterName;
+@property (assign) NSDictionary *filterOptions;
 
 #pragma mark -
 #pragma mark Heat Map Properties and Methods

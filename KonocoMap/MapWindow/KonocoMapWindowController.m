@@ -20,6 +20,8 @@
 //  You should have received a copy of the GNU Lesser General Public License
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "KonocoMapWindowController.h"
 
 @interface KonocoMapWindowController ()
@@ -73,7 +75,16 @@
 
 - (IBAction)toggleHeatMap:(id)sender {
     mapView.showHeatMap = !mapView.showHeatMap;
-    mapView.monochromeBaseLayer = mapView.showHeatMap;
+    
+    if (mapView.showHeatMap) {
+        mapView.filterName = @"CIColorMonochrome";
+        mapView.filterOptions = [NSDictionary dictionaryWithObject:[CIColor colorWithRed:0.5
+                                                                                   green:0.5
+                                                                                    blue:0.5]
+                                                            forKey:@"inputColor"];
+    } else {
+        mapView.filterName = nil;
+    }
 }
 
 #pragma mark -

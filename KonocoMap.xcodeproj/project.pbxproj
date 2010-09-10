@@ -37,6 +37,7 @@
 		F6B0054912325F9C001DBD98 /* KonocoMapAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B0054012325F9C001DBD98 /* KonocoMapAppDelegate.m */; };
 		F6B0054A12325F9C001DBD98 /* KonocoMapWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6B0054312325F9C001DBD98 /* KonocoMapWindow.xib */; };
 		F6B0054B12325F9C001DBD98 /* KonocoMapWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B0054512325F9C001DBD98 /* KonocoMapWindowController.m */; };
+		F6C5FCE6123ACE670004D52E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6DC7D7E116C8260005DE7F1 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6C5FCE6123ACE670004D52E /* QuartzCore.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				F667563711F99DC200EEC8E1 /* KonocoMapKit.framework in Frameworks */,
 				F667575411F9B51E00EEC8E1 /* CoreLocation.framework in Frameworks */,
