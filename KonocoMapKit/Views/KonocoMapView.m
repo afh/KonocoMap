@@ -50,6 +50,10 @@
 
 @end
 
+
+
+
+
 @implementation KonocoMapView
 
 @synthesize delegate;
@@ -142,9 +146,7 @@
 #pragma mark Resizing
 
 - (void)viewWillStartLiveResize {
-    if ([self.delegate respondsToSelector:@selector(mapView:regionWillChangeAnimated:)]) {
-        [self.delegate mapView:self regionWillChangeAnimated:YES];
-    }
+    [self regionWillChangeAnimated];
 }
 
 - (void)setFrame:(NSRect)frameRect {
@@ -168,9 +170,7 @@
 }
 
 - (void)viewDidEndLiveResize {
-    if ([self.delegate respondsToSelector:@selector(mapView:regionDidChangeAnimated:)]) {
-        [self.delegate mapView:self regionDidChangeAnimated:YES];
-    }
+    [self performSelector:@selector(regionDidChangedAnimated) withObject:nil afterDelay:0.1];
 }
 
 #pragma mark -
