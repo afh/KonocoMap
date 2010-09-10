@@ -476,7 +476,8 @@
                withObject:nil
                afterDelay:2];
     
-    if (shouldHandleMouseEvents) {
+    if ([self.delegate respondsToSelector:@selector(handleMouseEventsForMapView:)] &&
+        [self.delegate handleMouseEventsForMapView:self]) {
         if ([self.delegate respondsToSelector:@selector(mapView:mouseMovedToCoordinate:withEvent:)]) {
             NSPoint event_location = [event locationInWindow];
             [self.delegate mapView:self mouseMovedToCoordinate:[self coordinateForMouseLocation:event_location]
