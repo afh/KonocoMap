@@ -33,7 +33,7 @@
 @protocol MapViewDelegateProtocol
 
 #pragma mark -
-#pragma mark Responding to Map Position Changes
+#pragma mark Responding to Map Region Changes
 
 @optional
 - (void)mapView:(KonocoMapView *)mapView regionWillChangeAnimated:(BOOL)animated;
@@ -43,7 +43,19 @@
 #pragma mark Handling User Action
 
 @optional
-- (void)mapView:(KonocoMapView *)mapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate;
+
+
+#pragma mark -
+#pragma mark Handling Map Mouse Events
+
+- (void)mapView:(KonocoMapView *)mapView mouseClickAtCoordinate:(CLLocationCoordinate2D)coordinate;
+
+@optional
+- (BOOL)handleMouseEventsForMapView:(KonocoMapView *)mapView;
+- (void)mapView:(KonocoMapView *)mapView mouseDownAtCoordinate:(CLLocationCoordinate2D)coordinate withEvent:(NSEvent *)event;
+- (void)mapView:(KonocoMapView *)mapView mouseDraggedToCoordinate:(CLLocationCoordinate2D)coordinate withEvent:(NSEvent *)event;
+- (void)mapView:(KonocoMapView *)mapView mouseUpAtCoordinate:(CLLocationCoordinate2D)coordinate withEvent:(NSEvent *)event;
+- (void)mapView:(KonocoMapView *)mapView mouseMovedToCoordinate:(CLLocationCoordinate2D)coordinate withEvent:(NSEvent *)event;
 
 #pragma mark -
 #pragma mark Heat Map Behavior
@@ -64,10 +76,11 @@
 	KonocoMapLayer *baseLayer;
     KonocoHeatMapLayer *heatMap;
     NSTrackingArea *trackingArea;
-    BOOL mouseMoved;
     
     id delegate;
     
+    BOOL mouseMoved;
+    BOOL shouldHandleMouseEvents;
     BOOL inAnimatedRegionChange;
 }
 

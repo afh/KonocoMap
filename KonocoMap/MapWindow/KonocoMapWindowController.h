@@ -30,6 +30,8 @@
     BOOL inFullScreenMode;
     NSRect normalFrame;
     NSUInteger normalStyleMask;
+
+    BOOL inEditMode;
 }
 
 #pragma mark -

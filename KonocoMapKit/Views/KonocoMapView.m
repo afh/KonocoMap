@@ -48,6 +48,10 @@
 - (CGFloat)valueForSample:(KonocoHeatMapSample *)sample;
 - (NSColor *)colorForValue:(CGFloat)value;
 
+#pragma mark -
+
+- (CLLocationCoordinate2D)coordinateForMouseLocation:(NSPoint)event_location;
+
 @end
 
 
@@ -314,44 +318,80 @@
 #pragma mark -
 #pragma mark Mouse Event Handling
 
+- (CLLocationCoordinate2D)coordinateForMouseLocation:(NSPoint)event_location {
+    CGPoint layer_point = [self.layer convertPoint:event_location toLayer:mapLayer];
+    return [[KonocoCoordinateConverter sharedCoordinateConverter]
+                coordinateFromPoint:CGPointMake(layer_point.x / baseLayer.tileSize.width,
+                                                layer_point.y / baseLayer.tileSize.height)];
+}
+
 - (void)mouseDown:(NSEvent *)event {
     mouseMoved = NO;
+    
+    if ([self.delegate respondsToSelector:@selector(handleMouseEventsForMapView:)] &&
+        [self.delegate handleMouseEventsForMapView:self]) {
+        shouldHandleMouseEvents = YES;
+    } else {
+        shouldHandleMouseEvents = NO;
+    }
+    
+    if (shouldHandleMouseEvents &&
+        [self.delegate respondsToSelector:@selector(mapView:mouseDownAtCoordinate:withEvent:)]) {
+        NSPoint event_location = [event locationInWindow];
+        [self.delegate mapView:self mouseDownAtCoordinate:[self coordinateForMouseLocation:event_location]
+                     withEvent:event];
+    }
 }
 
 - (void)mouseDragged:(NSEvent *)event {
     
-    [self regionWillChangeAnimated];
-    
-    if (mouseMoved == NO) {
-        mouseMoved = YES;
+    // Check if the delegate wants to handle the mouse event,
+    // otherwise move the map.
+    if (shouldHandleMouseEvents) {
+        if ([self.delegate respondsToSelector:@selector(mapView:mouseDraggedToCoordinate:withEvent:)]) {
+            NSPoint event_location = [event locationInWindow];
+            [self.delegate mapView:self mouseDraggedToCoordinate:[self coordinateForMouseLocation:event_location]
+                         withEvent:event];
+        }
+    } else {
+        [self regionWillChangeAnimated];
+        
+        CGFloat scale = self.mapScale;
+        
+        CGFloat deltaX = [event deltaX];
+        CGFloat deltaY = [event deltaY];
+        
+        CGPoint currentCenter = self.mapCenter;
+        
+        CGPoint point = CGPointMake(currentCenter.x - deltaX / (scale * baseLayer.tileSize.width),
+                                    currentCenter.y + deltaY / (scale * baseLayer.tileSize.height));
+        
+        [self setMapCenter:point
+                 withScale:scale
+                  animated:NO
+           completionBlock:^{}];
     }
-	
-	CGFloat scale = self.mapScale;
-	
-	CGFloat deltaX = [event deltaX];
-	CGFloat deltaY = [event deltaY];
     
-    CGPoint currentCenter = self.mapCenter;
-    
-    CGPoint point = CGPointMake(currentCenter.x - deltaX / (scale * baseLayer.tileSize.width),
-                                currentCenter.y + deltaY / (scale * baseLayer.tileSize.height));
-
-    [self setMapCenter:point
-          withScale:scale
-           animated:NO
-    completionBlock:^{}];
+    mouseMoved = YES;
 }
 
 - (void)mouseUp:(NSEvent *)event {
-    if (mouseMoved == NO) {
-        NSPoint event_location = [event locationInWindow];
-        CGPoint layer_point = [self.layer convertPoint:event_location toLayer:mapLayer];
-        
-        if ([self.delegate respondsToSelector:@selector(mapView:didTapAtCoordinate:)]) {
-            [delegate mapView:self didTapAtCoordinate:[[KonocoCoordinateConverter sharedCoordinateConverter] coordinateFromPoint:CGPointMake(layer_point.x / baseLayer.tileSize.width, layer_point.y / baseLayer.tileSize.height)]];
+    
+    if (shouldHandleMouseEvents) {
+        if ([self.delegate respondsToSelector:@selector(mapView:mouseUpAtCoordinate:withEvent:)]) {
+            NSPoint event_location = [event locationInWindow];
+            [self.delegate mapView:self mouseUpAtCoordinate:[self coordinateForMouseLocation:event_location]
+                         withEvent:event];
         }
     } else {
-        [self performSelector:@selector(regionDidChangedAnimated) withObject:nil afterDelay:0.1];
+        if (mouseMoved == NO) {
+            if ([self.delegate respondsToSelector:@selector(mapView:mouseClickAtCoordinate:)]) {
+                NSPoint event_location = [event locationInWindow];
+                [delegate mapView:self mouseClickAtCoordinate:[self coordinateForMouseLocation:event_location]];
+            }
+        } else {
+            [self performSelector:@selector(regionDidChangedAnimated) withObject:nil afterDelay:0.1];
+        }
     }
 }
 
@@ -427,7 +467,7 @@
     movement or if the map view is in the key window.
  */
 
-- (void)mouseMoved:(NSEvent *)theEvent {
+- (void)mouseMoved:(NSEvent *)event {
     [NSObject cancelPreviousPerformRequestsWithTarget:self
                                              selector:@selector(hideCursor)
                                                object:nil];
@@ -435,6 +475,14 @@
     [self performSelector:@selector(hideCursor)
                withObject:nil
                afterDelay:2];
+    
+    if (shouldHandleMouseEvents) {
+        if ([self.delegate respondsToSelector:@selector(mapView:mouseMovedToCoordinate:withEvent:)]) {
+            NSPoint event_location = [event locationInWindow];
+            [self.delegate mapView:self mouseMovedToCoordinate:[self coordinateForMouseLocation:event_location]
+                         withEvent:event];
+        }
+    }
 }
 
 - (void)hideCursor {

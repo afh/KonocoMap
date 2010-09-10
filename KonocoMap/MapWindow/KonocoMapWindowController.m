@@ -156,7 +156,7 @@
 #pragma mark -
 #pragma mark MapViewDelegate
 
-- (void)mapView:(KonocoMapView *)aMapView didTapAtCoordinate:(CLLocationCoordinate2D)coordinate {
+- (void)mapView:(KonocoMapView *)aMapView mouseClickAtCoordinate:(CLLocationCoordinate2D)coordinate {
     //NSLog(@"Did Tap at Point: coordinate.latitude: %f, .longitude:%f", coordinate.latitude, coordinate.longitude);
     
     CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
@@ -179,6 +179,37 @@
 
 - (CGFloat)mapView:(KonocoMapView *)mapView valueForSample:(KonocoHeatMapSample *)sample {
     return [[sample.data objectForKey:@"value"] doubleValue];
+}
+
+#pragma mark -
+#pragma mark Handling Map Mouse Events
+
+- (void)flagsChanged:(NSEvent *)event {
+    if ([event modifierFlags] & NSAlternateKeyMask) {
+        inEditMode = YES;
+    } else {
+        inEditMode = NO;
+    }
+}
+
+- (BOOL)handleMouseEventsForMapView:(KonocoMapView *)mapView {
+    return inEditMode;
+}
+
+- (void)mapView:(KonocoMapView *)mapView mouseDownAtCoordinate:(CLLocationCoordinate2D)coordinate withEvent:(NSEvent *)event {
+    LOG(@"Mouse down at Coordinate lat: %f, lon: %f", coordinate.latitude, coordinate.longitude);
+}
+
+- (void)mapView:(KonocoMapView *)mapView mouseDraggedToCoordinate:(CLLocationCoordinate2D)coordinate withEvent:(NSEvent *)event {
+    LOG(@"Mouse dragged to Coordinate lat: %f, lon: %f", coordinate.latitude, coordinate.longitude);
+}
+
+- (void)mapView:(KonocoMapView *)mapView mouseUpAtCoordinate:(CLLocationCoordinate2D)coordinate withEvent:(NSEvent *)event {
+    LOG(@"Mouse up at Coordinate lat: %f, lon: %f", coordinate.latitude, coordinate.longitude);
+}
+
+- (void)mapView:(KonocoMapView *)mapView mouseMovedToCoordinate:(CLLocationCoordinate2D)coordinate withEvent:(NSEvent *)event {
+    LOG(@"Mouse moved to Coordinate lat: %f, lon: %f", coordinate.latitude, coordinate.longitude);
 }
 
 
