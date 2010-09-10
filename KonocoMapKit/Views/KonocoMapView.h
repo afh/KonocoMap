@@ -67,6 +67,8 @@
     BOOL mouseMoved;
     
     id delegate;
+    
+    BOOL inAnimatedRegionChange;
 }
 
 #pragma mark -

@@ -37,6 +37,9 @@
 @property (assign) CGFloat mapScale;
 @property (assign) CGPoint mapCenter;
 
+- (void)regionWillChangeAnimated;
+- (void)regionDidChangedAnimated;
+
 #pragma mark -
 #pragma mark Forward HeatMapLayer Delegate Methods
 
@@ -218,18 +221,26 @@
 }
 
 - (void)setZoom:(CGFloat)level animated:(BOOL)animated {
-	
-    if ([self.delegate respondsToSelector:@selector(mapView:regionWillChangeAnimated:)]) {
-        [self.delegate mapView:self regionWillChangeAnimated:animated];
-    } 
+    
+    if (animated) {
+        [self regionWillChangeAnimated];
+    } else {
+        if ([self.delegate respondsToSelector:@selector(mapView:regionWillChangeAnimated:)]) {
+            [self.delegate mapView:self regionWillChangeAnimated:YES];
+        }
+    }
     
     [self setMapCenter:self.mapCenter
           withScale:powf(2, level)
            animated:animated
     completionBlock:^{
-        if ([self.delegate respondsToSelector:@selector(mapView:regionDidChangeAnimated:)]) {
-            [self.delegate mapView:self regionDidChangeAnimated:animated];
-        }        
+        if (animated) {
+            [self performSelector:@selector(regionDidChangedAnimated) withObject:nil];
+        } else {
+            if ([self.delegate respondsToSelector:@selector(mapView:regionDidChangeAnimated:)]) {
+                [self.delegate mapView:self regionDidChangeAnimated:animated];
+            }
+        }
     }];
 }
 
@@ -246,16 +257,24 @@
 - (void)setCenter:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated {
     CGPoint point = [[KonocoCoordinateConverter sharedCoordinateConverter] pointFromCoordinate:coordinate];
     
-    if ([self.delegate respondsToSelector:@selector(mapView:regionWillChangeAnimated:)]) {
-        [self.delegate mapView:self regionWillChangeAnimated:animated];
+    if (animated) {
+        [self regionWillChangeAnimated];
+    } else {
+        if ([self.delegate respondsToSelector:@selector(mapView:regionWillChangeAnimated:)]) {
+            [self.delegate mapView:self regionWillChangeAnimated:YES];
+        }
     } 
     
     [self setMapCenter:point
           withScale:self.mapScale
            animated:animated
     completionBlock:^{        
-        if ([self.delegate respondsToSelector:@selector(mapView:regionDidChangeAnimated:)]) {
-            [self.delegate mapView:self regionDidChangeAnimated:animated];
+        if (animated) {
+            [self performSelector:@selector(regionDidChangedAnimated) withObject:nil];
+        } else {
+            if ([self.delegate respondsToSelector:@selector(mapView:regionDidChangeAnimated:)]) {
+                [self.delegate mapView:self regionDidChangeAnimated:animated];
+            }
         }        
     }];
 }
@@ -292,10 +311,9 @@
 
 - (void)mouseDragged:(NSEvent *)event {
     
+    [self regionWillChangeAnimated];
+    
     if (mouseMoved == NO) {
-        if ([self.delegate respondsToSelector:@selector(mapView:regionWillChangeAnimated:)]) {
-            [self.delegate mapView:self regionWillChangeAnimated:YES];
-        }
         mouseMoved = YES;
     }
 	
@@ -324,33 +342,49 @@
             [delegate mapView:self didTapAtCoordinate:[[KonocoCoordinateConverter sharedCoordinateConverter] coordinateFromPoint:CGPointMake(layer_point.x / baseLayer.tileSize.width, layer_point.y / baseLayer.tileSize.height)]];
         }
     } else {
-        if ([self.delegate respondsToSelector:@selector(mapView:regionDidChangeAnimated:)]) {
-            [self.delegate mapView:self regionDidChangeAnimated:YES];
+        [self performSelector:@selector(regionDidChangedAnimated) withObject:nil afterDelay:0.1];
+    }
+}
+
+#pragma mark -
+#pragma mark Handling Handling Scroll Wheel & Magnify Gesture
+
+- (void)regionWillChangeAnimated {
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(regionDidChangedAnimated)
+                                               object:nil];
+    
+    if (!inAnimatedRegionChange) {
+        inAnimatedRegionChange = YES;
+        if ([self.delegate respondsToSelector:@selector(mapView:regionWillChangeAnimated:)]) {
+            [self.delegate mapView:self regionWillChangeAnimated:YES];
         }
     }
 }
 
-#pragma mark -
-#pragma mark Handling Gestures
-
-- (void)magnifyWithEvent:(NSEvent *)event {
-    
-    // TODO: Avoid calling delegate while in gesture
-    
-    if ([self.delegate respondsToSelector:@selector(mapView:regionWillChangeAnimated:)]) {
-        [self.delegate mapView:self regionWillChangeAnimated:NO];
-    }
-    
-    CGFloat magnification = [event magnification];
-    [self setZoom:self.zoom + magnification animated:NO];
-    
-    if ([self.delegate respondsToSelector:@selector(mapView:regionDidChangeAnimated:)]) {
-        [self.delegate mapView:self regionDidChangeAnimated:NO];
+- (void)regionDidChangedAnimated {
+    if (inAnimatedRegionChange) {
+        if ([self.delegate respondsToSelector:@selector(mapView:regionDidChangeAnimated:)]) {
+            [self.delegate mapView:self regionDidChangeAnimated:YES];
+        }
+        inAnimatedRegionChange = NO;
     }
 }
 
-#pragma mark -
-#pragma mark Handling Scroll Wheel
+- (void)magnifyWithEvent:(NSEvent *)event {
+    
+    [self regionWillChangeAnimated];
+    
+    [self setMapCenter:self.mapCenter
+             withScale:powf(2, self.zoom + [event magnification])
+              animated:NO
+       completionBlock:^{
+           [self performSelector:@selector(regionDidChangedAnimated)
+                      withObject:nil
+                      afterDelay:0.5];      
+       }];
+}
 
 - (void)scrollWheel:(NSEvent *)event {
     
@@ -359,11 +393,7 @@
     
     if (fabs(deltaX) > 0 || fabs(deltaY) > 0) {
         
-        // TODO: Avoid calling delegate while in scrolling
-        
-        if ([self.delegate respondsToSelector:@selector(mapView:regionWillChangeAnimated:)]) {
-            [self.delegate mapView:self regionWillChangeAnimated:NO];
-        }
+        [self regionWillChangeAnimated];
         
         CGFloat scale = self.mapScale;
         CGPoint currentCenter = self.mapCenter;
@@ -373,11 +403,9 @@
         [self setMapCenter:point
                  withScale:scale
                   animated:NO
-           completionBlock:^{
-               if ([self.delegate respondsToSelector:@selector(mapView:regionDidChangeAnimated:)]) {
-                   [self.delegate mapView:self regionDidChangeAnimated:NO];
-               }
-           }];
+           completionBlock:^{}];
+        
+        [self performSelector:@selector(regionDidChangedAnimated) withObject:nil afterDelay:0.3];
     }
 }
 
