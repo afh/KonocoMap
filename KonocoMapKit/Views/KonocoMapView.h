@@ -30,6 +30,8 @@
 @class KonocoHeatMapLayer;
 @class KonocoHeatMapSample;
 
+#pragma mark Map View Delegate Protocol
+
 @protocol MapViewDelegateProtocol
 
 #pragma mark -
@@ -40,22 +42,26 @@
 - (void)mapView:(KonocoMapView *)mapView regionDidChangeAnimated:(BOOL)animated;
 
 #pragma mark -
-#pragma mark Handling User Action
+#pragma mark Handling General Mouse Events
 
 @optional
-
+- (void)mapView:(KonocoMapView *)mapView mouseClickAtCoordinate:(CLLocationCoordinate2D)coordinate;
+- (void)mapView:(KonocoMapView *)mapView mouseMovedToCoordinate:(CLLocationCoordinate2D)coordinate;
 
 #pragma mark -
-#pragma mark Handling Map Mouse Events
-
-- (void)mapView:(KonocoMapView *)mapView mouseClickAtCoordinate:(CLLocationCoordinate2D)coordinate;
+#pragma mark Handling Left Mouse Events
 
 @optional
-- (BOOL)handleMouseEventsForMapView:(KonocoMapView *)mapView;
+- (BOOL)respondToLeftMouseEventsForMapView:(KonocoMapView *)mapView;
 - (void)mapView:(KonocoMapView *)mapView mouseDownAtCoordinate:(CLLocationCoordinate2D)coordinate withEvent:(NSEvent *)event;
 - (void)mapView:(KonocoMapView *)mapView mouseDraggedToCoordinate:(CLLocationCoordinate2D)coordinate withEvent:(NSEvent *)event;
 - (void)mapView:(KonocoMapView *)mapView mouseUpAtCoordinate:(CLLocationCoordinate2D)coordinate withEvent:(NSEvent *)event;
-- (void)mapView:(KonocoMapView *)mapView mouseMovedToCoordinate:(CLLocationCoordinate2D)coordinate withEvent:(NSEvent *)event;
+
+#pragma mark -
+#pragma mark Context Menu for Coordinate
+
+@optional
+- (NSMenu *)mapView:(KonocoMapView *)mapView menuForCoordinate:(CLLocationCoordinate2D)coordinate; 
 
 #pragma mark -
 #pragma mark Heat Map Behavior
@@ -70,6 +76,7 @@
 
 #pragma mark -
 #pragma mark -
+#pragma mark Map View
 
 @interface KonocoMapView : NSView {
     CALayer *mapLayer;

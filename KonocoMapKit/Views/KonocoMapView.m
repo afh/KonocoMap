@@ -328,8 +328,8 @@
 - (void)mouseDown:(NSEvent *)event {
     mouseMoved = NO;
     
-    if ([self.delegate respondsToSelector:@selector(handleMouseEventsForMapView:)] &&
-        [self.delegate handleMouseEventsForMapView:self]) {
+    if ([self.delegate respondsToSelector:@selector(respondToLeftMouseEventsForMapView:)] &&
+        [self.delegate respondToLeftMouseEventsForMapView:self]) {
         shouldHandleMouseEvents = YES;
     } else {
         shouldHandleMouseEvents = NO;
@@ -459,6 +459,18 @@
 }
 
 #pragma mark -
+#pragma mark Context Menu for Coordinate
+
+- (NSMenu *)menuForEvent:(NSEvent *)event {
+    if ([self.delegate respondsToSelector:@selector(mapView:menuForCoordinate:)]) {
+        NSPoint event_location = [event locationInWindow];
+        return [self.delegate mapView:self menuForCoordinate:[self coordinateForMouseLocation:event_location]];
+    } else {
+        return [self menu];
+    }
+}
+
+#pragma mark -
 #pragma mark Tracking & Hiding Mouse Cursor
 
 /*
@@ -476,13 +488,9 @@
                withObject:nil
                afterDelay:2];
     
-    if ([self.delegate respondsToSelector:@selector(handleMouseEventsForMapView:)] &&
-        [self.delegate handleMouseEventsForMapView:self]) {
-        if ([self.delegate respondsToSelector:@selector(mapView:mouseMovedToCoordinate:withEvent:)]) {
-            NSPoint event_location = [event locationInWindow];
-            [self.delegate mapView:self mouseMovedToCoordinate:[self coordinateForMouseLocation:event_location]
-                         withEvent:event];
-        }
+    if ([self.delegate respondsToSelector:@selector(mapView:mouseMovedToCoordinate:)]) {
+        NSPoint event_location = [event locationInWindow];
+        [self.delegate mapView:self mouseMovedToCoordinate:[self coordinateForMouseLocation:event_location]];
     }
 }
 

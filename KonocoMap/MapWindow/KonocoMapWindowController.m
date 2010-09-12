@@ -192,7 +192,7 @@
     }
 }
 
-- (BOOL)handleMouseEventsForMapView:(KonocoMapView *)mapView {
+- (BOOL)respondToLeftMouseEventsForMapView:(KonocoMapView *)mapView {
     return inEditMode;
 }
 
@@ -208,9 +208,17 @@
     LOG(@"Mouse up at Coordinate lat: %f, lon: %f", coordinate.latitude, coordinate.longitude);
 }
 
-- (void)mapView:(KonocoMapView *)mapView mouseMovedToCoordinate:(CLLocationCoordinate2D)coordinate withEvent:(NSEvent *)event {
+- (void)mapView:(KonocoMapView *)mapView mouseMovedToCoordinate:(CLLocationCoordinate2D)coordinate {
     LOG(@"Mouse moved to Coordinate lat: %f, lon: %f", coordinate.latitude, coordinate.longitude);
 }
 
+#pragma mark -
+#pragma mark Context Menu for Coordinate
+
+- (NSMenu *)mapView:(KonocoMapView *)mapView menuForCoordinate:(CLLocationCoordinate2D)coordinate {
+    NSMenu *theMenu = [[[NSMenu alloc] initWithTitle:@""] autorelease];
+    [theMenu insertItemWithTitle:[NSString stringWithFormat:@"Longitude: %f Latitude: %f", coordinate.longitude, coordinate.latitude] action:nil keyEquivalent:@"" atIndex:0];
+    return theMenu;
+}
 
 @end
