@@ -45,13 +45,29 @@
 #pragma mark Handling General Mouse Events
 
 @optional
+/*
+    This delegate method is called after the map view receives a
+    mouse up event and the mouse did not move on the map.
+ */
 - (void)mapView:(KonocoMapView *)mapView mouseClickAtCoordinate:(CLLocationCoordinate2D)coordinate;
+
+/*
+    This delegate method is called each time, the move moves over
+    the map view without being pressed.
+ */
 - (void)mapView:(KonocoMapView *)mapView mouseMovedToCoordinate:(CLLocationCoordinate2D)coordinate;
 
 #pragma mark -
 #pragma mark Handling Left Mouse Events
 
 @optional
+/*
+    If this delegate method returns YES, the map view does not
+    interpret the mouse events and calls the corresponding delegate methods.
+ 
+    This delegate method is only called once at the beginning of a sequence of
+    mouse down/moved/up events.
+ */
 - (BOOL)respondToLeftMouseEventsForMapView:(KonocoMapView *)mapView;
 - (void)mapView:(KonocoMapView *)mapView mouseDownAtCoordinate:(CLLocationCoordinate2D)coordinate withEvent:(NSEvent *)event;
 - (void)mapView:(KonocoMapView *)mapView mouseDraggedToCoordinate:(CLLocationCoordinate2D)coordinate withEvent:(NSEvent *)event;
@@ -61,6 +77,13 @@
 #pragma mark Context Menu for Coordinate
 
 @optional
+/*
+    This delegate method is called by the map view if the right mouse button is
+    pressed. It should return the corresponding menu for the given coordinate or
+    nil, if no menu should be shown for thsi coordinate.
+ 
+    If this method is not implemented by the delegate, the normal menu is shown.
+ */
 - (NSMenu *)mapView:(KonocoMapView *)mapView menuForCoordinate:(CLLocationCoordinate2D)coordinate; 
 
 #pragma mark -
