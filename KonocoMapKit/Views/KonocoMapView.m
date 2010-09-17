@@ -61,6 +61,7 @@
 @implementation KonocoMapView
 
 @synthesize delegate;
+@synthesize delegateMouseMoveEvents;
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -488,7 +489,8 @@
                withObject:nil
                afterDelay:2];
     
-    if ([self.delegate respondsToSelector:@selector(mapView:mouseMovedToCoordinate:)]) {
+    if (self.delegateMouseMoveEvents &&
+        [self.delegate respondsToSelector:@selector(mapView:mouseMovedToCoordinate:)]) {
         NSPoint event_location = [event locationInWindow];
         [self.delegate mapView:self mouseMovedToCoordinate:[self coordinateForMouseLocation:event_location]];
     }

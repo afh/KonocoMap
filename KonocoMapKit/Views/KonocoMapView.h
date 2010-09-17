@@ -79,6 +79,8 @@
 #pragma mark Map View
 
 @interface KonocoMapView : NSView {
+    
+@private
     CALayer *mapLayer;
 	KonocoMapLayer *baseLayer;
     KonocoHeatMapLayer *heatMap;
@@ -86,6 +88,7 @@
     
     id delegate;
     
+    BOOL delegateMouseMoveEvents;
     BOOL mouseMoved;
     BOOL shouldHandleMouseEvents;
     BOOL inAnimatedRegionChange;
@@ -101,6 +104,16 @@
 
 @property (assign) NSString *filterName;
 @property (assign) NSDictionary *filterOptions;
+
+#pragma mark -
+#pragma mark Mouse Events
+
+/*
+    If this property is set to YES, the map view calles the
+    delegate method mapView:mouseMovedToCoordinate: each time
+    the mouse is moved.
+ */
+@property (assign) BOOL delegateMouseMoveEvents;
 
 #pragma mark -
 #pragma mark Heat Map Properties and Methods
