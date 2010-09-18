@@ -26,6 +26,7 @@
 #import "KonocoHeatMapSample.h"
 
 #import "KonocoCoordinateConverter.h"
+#import <KonocoMapKit/KonocoMapAnnotationView.h>
 
 @interface KonocoMapView ()
 - (void)setUp;
@@ -64,6 +65,8 @@
 }
 
 - (void)dealloc {
+	[_annotations release];
+	[_annotationViews release];
 	[baseLayer release];
     [mapLayer release];
     [heatMap release];
@@ -123,6 +126,9 @@
                                    mapLayer.bounds.size.height / 2);
     heatMap.hidden = YES;
     [mapLayer addSublayer:heatMap];
+
+	_annotations = [[NSMutableArray alloc] init];
+	_annotationViews = [[NSMutableArray alloc] init];
     
     
     [self setMapCenter:CGPointMake(0.5, 0.5)
@@ -202,6 +208,22 @@
 
 - (NSArray *)activeHeatMapSamplesForCoordinate:(CLLocationCoordinate2D)coordinate {
     return [heatMap activeHeatMapSamplesForCoordinate:coordinate];
+}
+
+#pragma mark -
+#pragma mark Annotation Handling
+
+- (void)addAnnotation:(id<KonocoMapAnnotation>)annotation
+{
+	if (![_annotations containsObject:annotation]) {
+		[_annotations addObject:annotation];
+		if ([delegate respondsToSelector:@selector(mapView:viewForAnnotation:)]) {
+			NSView<KonocoMapAnnotationView> *annotationView = [delegate mapView:self viewForAnnotation:annotation];
+			[_annotationViews addObject:annotationView];
+			// TODO: sort by annotation longitude and insert annotationView accordingly -- afh
+			[self addSubview:annotationView];
+		}
+	}
 }
 
 #pragma mark -
@@ -463,9 +485,19 @@
 	self.mapCenter = CGPointMake(MAX(MIN(center.x, 1 - marginX), 0 + marginX),
                                  MAX(MIN(center.y, 1 - marginY), 0 + marginY));
     
-    //
-    // NOTE: Recalculate the position of the upcoming annotation views at this point.
-    //
+	KonocoCoordinateConverter *coordinateConverter = [KonocoCoordinateConverter sharedCoordinateConverter];
+	for (NSView<KonocoMapAnnotationView> *annotationView in _annotationViews) {
+		id<KonocoMapAnnotation> annotation = annotationView.annotation;
+		CGPoint origin = [coordinateConverter pointFromCoordinate:annotation.coordinate];
+		origin.x *= baseLayer.tileSize.width;
+		origin.y *= baseLayer.tileSize.height;
+		CGPoint layer_point = [self.layer convertPoint:origin fromLayer:mapLayer];
+		CGPoint local_point = [self convertPoint:layer_point fromView:nil];
+		CGFloat inset = -MAX(annotationView.frame.size.width, annotationView.frame.size.height);
+		if (NSPointInRect(local_point, CGRectInset(self.frame, inset, inset))) {
+			[annotationView setFrameOrigin:local_point];
+		}
+	}
     
     if (!animated) {
         block();
@@ -510,6 +542,13 @@
                                     brightness:0.5
                                          alpha:0];
     }
+}
+
+- (CLLocationCoordinate2D)coordinateForPoint:(CGPoint)aPoint
+{
+	CGPoint map_point = [self.layer convertPoint:aPoint toLayer:mapLayer];
+	CGPoint base_point = CGPointMake(map_point.x / baseLayer.tileSize.width, map_point.y / baseLayer.tileSize.height);
+	return [[KonocoCoordinateConverter sharedCoordinateConverter] coordinateFromPoint:base_point];
 }
 
 @end

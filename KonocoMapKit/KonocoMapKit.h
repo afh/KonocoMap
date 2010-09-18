@@ -24,3 +24,6 @@
 #import <KonocoMapKit/KonocoMapView.h>
 #import <KonocoMapKit/KonocoHeatMapSample.h>
 #import <KonocoMapKit/KonocoCoordinateConverter.h>
+#import <KonocoMapKit/KonocoMapAnnotation.h>
+#import <KonocoMapKit/KonocoMapAnnotationView.h>
+#import <KonocoMapKit/KonocoPinAnnotationView.h>

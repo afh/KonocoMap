@@ -39,6 +39,7 @@
 - (IBAction)zoomOut:(id)sender;
 - (IBAction)toggleFullscreen:(id)sender;
 - (IBAction)toggleHeatMap:(id)sender;
+- (IBAction)toggleAnnotations:(id)sender;
 
 #pragma mark -
 #pragma mark Zoom, Center & Region

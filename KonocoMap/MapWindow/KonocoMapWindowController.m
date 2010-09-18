@@ -21,6 +21,7 @@
 //  along with Map.  If not, see <http://www.gnu.org/licenses/>.
 
 #import "KonocoMapWindowController.h"
+#import "KonocoPointOfInterest.h"
 
 @interface KonocoMapWindowController ()
 - (void)setStyleBorderless;
@@ -76,6 +77,22 @@
     [menuItem setState:![menuItem state]];
     mapView.showHeatMap = !mapView.showHeatMap;
     mapView.monochromeBaseLayer = mapView.showHeatMap;
+}
+
+- (IBAction)toggleAnnotations:(id)sender {
+    NSMenuItem *menuItem = (NSMenuItem *)sender;
+	BOOL currentState = ![menuItem state];
+    [menuItem setState:currentState];
+	if (YES == currentState) {
+		KonocoPointOfInterest *annotation = [[KonocoPointOfInterest alloc] initWithLatitude:52.520646 longitude:13.408617 ];
+		[mapView addAnnotation:annotation];
+		[annotation release];
+	}
+	else {
+		// TODO:
+		// remove annotation from map
+		// release annotation
+	}
 }
 
 #pragma mark -
@@ -172,5 +189,16 @@
     return [[sample.data objectForKey:@"value"] doubleValue];
 }
 
+
+- (NSView<KonocoMapAnnotationView> *)mapView:(KonocoMapView *)mapView viewForAnnotation:(id <KonocoMapAnnotation>)annotation
+{
+	NSImage *image = [NSImage imageNamed:@"07-map-marker.png"];
+	NSImage *highlightedImage = [NSImage imageNamed:@"07-map-marker_highlighted.png"];
+	NSAssert(nil != image, @"Image is nil");
+	KonocoPinAnnotationView *view = [[KonocoPinAnnotationView alloc] initWithImage:image
+																  highlightedImage:highlightedImage
+																		annotation:annotation];
+	return [view autorelease];
+}
 
 @end

@@ -24,6 +24,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import <CoreLocation/CoreLocation.h>
 #import <KonocoMapKit/KonocoCoordinateRegion.h>
+#import <KonocoMapKit/KonocoMapAnnotation.h>
+#import <KonocoMapKit/KonocoMapAnnotationView.h>
 
 @class KonocoMapView;
 @class KonocoMapLayer;
@@ -54,6 +56,12 @@
 - (CGFloat)mapView:(KonocoMapView *)mapView valueForSample:(KonocoHeatMapSample *)sample;
 - (NSColor *)mapView:(KonocoMapView *)mapView colorForValue:(CGFloat)value;
 
+#pragma mark -
+#pragma mark Map Annotations
+
+@optional
+- (NSView<KonocoMapAnnotationView> *)mapView:(KonocoMapView *)mapView viewForAnnotation:(id<KonocoMapAnnotation>)annotation;
+
 @end
 
 #pragma mark -
@@ -65,6 +73,8 @@
     KonocoHeatMapLayer *heatMap;
     NSTrackingArea *trackingArea;
     BOOL mouseMoved;
+	NSMutableArray *_annotations;
+	NSMutableArray *_annotationViews;
     
     id delegate;
 }
@@ -97,5 +107,7 @@
 - (void)setZoom:(CGFloat)level animated:(BOOL)animated;
 - (void)setCenter:(CLLocationCoordinate2D)coordinate animated:(BOOL)animated;
 - (void)setRegion:(KonocoCoordinateRegion)rect animated:(BOOL)animated;
+- (void)addAnnotation:(id<KonocoMapAnnotation>)annotation;
+- (CLLocationCoordinate2D)coordinateForPoint:(CGPoint)aPoint;
 
 @end
