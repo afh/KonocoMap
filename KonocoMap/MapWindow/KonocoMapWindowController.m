@@ -72,6 +72,8 @@
 }
 
 - (IBAction)toggleHeatMap:(id)sender {
+    NSMenuItem *menuItem = (NSMenuItem *)sender;
+    [menuItem setState:![menuItem state]];
     mapView.showHeatMap = !mapView.showHeatMap;
     mapView.monochromeBaseLayer = mapView.showHeatMap;
 }
