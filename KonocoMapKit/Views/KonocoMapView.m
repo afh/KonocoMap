@@ -495,7 +495,8 @@
 		CGPoint local_point = [self convertPoint:layer_point fromView:nil];
 		CGFloat inset = -MAX(annotationView.frame.size.width, annotationView.frame.size.height);
 		if (NSPointInRect(local_point, CGRectInset(self.frame, inset, inset))) {
-			[annotationView setFrameOrigin:local_point];
+			CGPoint renderPoint = CGPointMake(local_point.x - annotationView.centerOffset.x, local_point.y - annotationView.centerOffset.y);
+			[annotationView setFrameOrigin:renderPoint];
 		}
 	}
     

@@ -26,12 +26,13 @@
 
 @implementation KonocoPinAnnotationView
 @synthesize annotation = _annotation;
+@synthesize centerOffset = _centerOffset;
 
 - (id)initWithImage:(NSImage *)image
    highlightedImage:(NSImage *)highlightedImage
 		 annotation:(id<KonocoMapAnnotation>)anAnnotation
 {
-    self = [super initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
+    self = [super initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height + 15)];
     if (self) {
 		self.annotation = anAnnotation;
 		_image = [image retain];
@@ -51,7 +52,20 @@
 
 - (void)drawRect:(CGRect)rect {
 	NSImage *image = (isDragging) ? _highlightedImage : _image;
-	[image drawAtPoint:CGPointZero
+	CGFloat len = 4;
+	CGFloat yoff = len;
+	if (isDragging) {
+		[[NSColor redColor] set];
+		NSBezierPath *x = [NSBezierPath bezierPath];
+		[x moveToPoint:NSMakePoint(-len + _centerOffset.x, len + _centerOffset.y)];
+		[x lineToPoint:NSMakePoint(len + _centerOffset.x, 0 + _centerOffset.y)];
+		[x moveToPoint:NSMakePoint(-len + _centerOffset.x, 0 + _centerOffset.y)];
+		[x lineToPoint:NSMakePoint(len + _centerOffset.x, len + _centerOffset.y)];
+		[x setLineWidth:1.5];
+		[x stroke];
+		yoff += 10.0;
+	}
+	[image drawAtPoint:CGPointMake(0, yoff)
 			  fromRect:CGRectMake(0, 0, image.size.width, image.size.height)
 			 operation:NSCompositeSourceOver
 			  fraction:1.0];
@@ -67,6 +81,7 @@
 	_annotation.coordinate = coord;
 	isDragging = NO;
 	[self setNeedsDisplay:YES];
+	[NSCursor unhide];
 }
 
 - (void)mouseDown:(NSEvent *)theEvent
@@ -80,6 +95,7 @@
 
 - (void)startDrag
 {
+	[NSCursor hide];
 	isDragging = YES;
 	pinDragTimer = nil;
 	[self setNeedsDisplay:YES];

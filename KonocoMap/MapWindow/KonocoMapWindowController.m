@@ -198,6 +198,7 @@
 	KonocoPinAnnotationView *view = [[KonocoPinAnnotationView alloc] initWithImage:image
 																  highlightedImage:highlightedImage
 																		annotation:annotation];
+	view.centerOffset = CGPointMake(image.size.width/2, 0);
 	return [view autorelease];
 }
 

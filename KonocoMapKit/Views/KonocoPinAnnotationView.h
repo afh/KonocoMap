@@ -29,9 +29,11 @@
 	NSTimer *pinDragTimer;
 	NSImage *_image;
 	NSImage *_highlightedImage;
+	CGPoint _centerOffset;
 	id<KonocoMapAnnotation> _annotation;
 }
 @property (nonatomic, retain) id<KonocoMapAnnotation> annotation;
+@property (nonatomic, assign) CGPoint centerOffset;
 
 - (id)initWithImage:(NSImage *)image
    highlightedImage:(NSImage *)highlightedImage

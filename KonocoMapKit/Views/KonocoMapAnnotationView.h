@@ -27,4 +27,5 @@
 
 @protocol KonocoMapAnnotationView <NSObject>
 @property (nonatomic, retain) id<KonocoMapAnnotation> annotation;
+@property (nonatomic, assign) CGPoint centerOffset;
 @end
