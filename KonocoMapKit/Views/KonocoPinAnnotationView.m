@@ -73,6 +73,8 @@
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
+	[pinDragTimer invalidate];
+	pinDragTimer = nil;
 	CGPoint point = [theEvent locationInWindow];
 	CGPoint lpoint = [self convertPoint:point fromView:nil];
 	point.x -= lpoint.x;
