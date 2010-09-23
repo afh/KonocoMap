@@ -340,7 +340,7 @@
 - (void)mouseUp:(NSEvent *)event {
     if (mouseMoved == NO) {
         NSPoint event_location = [event locationInWindow];
-        CGPoint layer_point = [self.layer convertPoint:event_location toLayer:mapLayer];
+        CGPoint layer_point = [self.layer convertPoint:NSPointToCGPoint(event_location) toLayer:mapLayer];
         
         if ([self.delegate respondsToSelector:@selector(mapView:didTapAtCoordinate:)]) {
             [delegate mapView:self didTapAtCoordinate:[[KonocoCoordinateConverter sharedCoordinateConverter] coordinateFromPoint:CGPointMake(layer_point.x / baseLayer.tileSize.width, layer_point.y / baseLayer.tileSize.height)]];
@@ -492,11 +492,11 @@
 		origin.x *= baseLayer.tileSize.width;
 		origin.y *= baseLayer.tileSize.height;
 		CGPoint layer_point = [self.layer convertPoint:origin fromLayer:mapLayer];
-		CGPoint local_point = [self convertPoint:layer_point fromView:nil];
+		CGPoint local_point = NSPointToCGPoint([self convertPoint:NSPointFromCGPoint(layer_point) fromView:nil]);
 		CGFloat inset = -MAX(annotationView.frame.size.width, annotationView.frame.size.height);
-		if (NSPointInRect(local_point, CGRectInset(self.frame, inset, inset))) {
+		if (NSPointInRect(NSPointFromCGPoint(local_point), NSRectFromCGRect(CGRectInset(NSRectToCGRect(self.frame), inset, inset)))) {
 			CGPoint renderPoint = CGPointMake(local_point.x - annotationView.centerOffset.x, local_point.y - annotationView.centerOffset.y);
-			[annotationView setFrameOrigin:renderPoint];
+			[annotationView setFrameOrigin:NSPointFromCGPoint(renderPoint)];
 		}
 	}
     

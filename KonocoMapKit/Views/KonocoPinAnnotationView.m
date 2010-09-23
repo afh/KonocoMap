@@ -32,7 +32,7 @@
    highlightedImage:(NSImage *)highlightedImage
 		 annotation:(id<KonocoMapAnnotation>)anAnnotation
 {
-    self = [super initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height + 15)];
+    self = [super initWithFrame:NSMakeRect(0, 0, image.size.width, image.size.height + 15)];
     if (self) {
 		self.annotation = anAnnotation;
 		_image = [image retain];
@@ -50,7 +50,7 @@
 	[super dealloc];
 }
 
-- (void)drawRect:(CGRect)rect {
+- (void)drawRect:(NSRect)rect {
 	NSImage *image = (isDragging) ? _highlightedImage : _image;
 	CGFloat len = 4;
 	CGFloat yoff = len;
@@ -65,8 +65,8 @@
 		[x stroke];
 		yoff += 10.0;
 	}
-	[image drawAtPoint:CGPointMake(0, yoff)
-			  fromRect:CGRectMake(0, 0, image.size.width, image.size.height)
+	[image drawAtPoint:NSMakePoint(0, yoff)
+			  fromRect:NSMakeRect(0, 0, image.size.width, image.size.height)
 			 operation:NSCompositeSourceOver
 			  fraction:1.0];
 }
@@ -75,11 +75,11 @@
 {
 	[pinDragTimer invalidate];
 	pinDragTimer = nil;
-	CGPoint point = [theEvent locationInWindow];
-	CGPoint lpoint = [self convertPoint:point fromView:nil];
+	NSPoint point = [theEvent locationInWindow];
+	NSPoint lpoint = [self convertPoint:point fromView:nil];
 	point.x -= lpoint.x;
 	point.y -= lpoint.y;
-	CLLocationCoordinate2D coord = [((KonocoMapView *)[self superview]) coordinateForPoint:point];
+	CLLocationCoordinate2D coord = [((KonocoMapView *)[self superview]) coordinateForPoint:NSPointToCGPoint(point)];
 	_annotation.coordinate = coord;
 	isDragging = NO;
 	[self setNeedsDisplay:YES];
