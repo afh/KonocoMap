@@ -36,7 +36,6 @@
 		F6964ECF122D975000D490A6 /* KonocoHeatMapSample.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EBE122D975000D490A6 /* KonocoHeatMapSample.m */; };
 		F6964ED0122D975000D490A6 /* KonocoMapView.h in Headers */ = {isa = PBXBuildFile; fileRef = F6964EC0122D975000D490A6 /* KonocoMapView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6964ED1122D975000D490A6 /* KonocoMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = F6964EC1122D975000D490A6 /* KonocoMapView.m */; };
-		F6964F6B122D99A600D490A6 /* libproj.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = F6964F6A122D99A600D490A6 /* libproj.dylib */; };
 		F6977776116F80650089854D /* AUTHORS in Resources */ = {isa = PBXBuildFile; fileRef = F6977775116F80650089854D /* AUTHORS */; };
 		F697777A116F80920089854D /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = F6977779116F80920089854D /* COPYING */; };
 		F6B0054712325F9C001DBD98 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F6B0053D12325F9C001DBD98 /* main.m */; };
@@ -91,7 +90,6 @@
 		F6964EBE122D975000D490A6 /* KonocoHeatMapSample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KonocoHeatMapSample.m; sourceTree = "<group>"; };
 		F6964EC0122D975000D490A6 /* KonocoMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonocoMapView.h; sourceTree = "<group>"; };
 		F6964EC1122D975000D490A6 /* KonocoMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KonocoMapView.m; sourceTree = "<group>"; };
-		F6964F6A122D99A600D490A6 /* libproj.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libproj.dylib; path = usr/local/lib/libproj.dylib; sourceTree = SDKROOT; };
 		F6977775116F80650089854D /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
 		F6977779116F80920089854D /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		F6B0053D12325F9C001DBD98 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -124,7 +122,6 @@
 			files = (
 				F667564811F99E9D00EEC8E1 /* CoreLocation.framework in Frameworks */,
 				F667564911F99EAF00EEC8E1 /* QuartzCore.framework in Frameworks */,
-				F6964F6B122D99A600D490A6 /* libproj.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,7 +131,6 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F6964F6A122D99A600D490A6 /* libproj.dylib */,
 				F6D596591199F06A007E3C56 /* CoreLocation.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				F6DC7D7E116C8260005DE7F1 /* QuartzCore.framework */,
@@ -503,7 +499,7 @@
 					/opt/local/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-DDEBUG=1";
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
@@ -534,6 +530,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -547,14 +544,18 @@
 				INFOPLIST_FILE = KonocoMapKit/Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
 					"-framework",
 					AppKit,
+					"-force_load",
+					/opt/local/lib/libproj.a,
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = KonocoMapKit;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -562,6 +563,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -574,6 +576,7 @@
 				INFOPLIST_FILE = KonocoMapKit/Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-framework",
 					Foundation,
@@ -582,6 +585,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = KonocoMapKit;
+				VALID_ARCHS = "i386 x86_64";
 				ZERO_LINK = NO;
 			};
 			name = Release;
